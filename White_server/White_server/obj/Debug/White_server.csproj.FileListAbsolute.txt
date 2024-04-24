@@ -1,0 +1,7 @@
+X:\program\White_server\White_server\bin\Debug\White_server.exe.config
+X:\program\White_server\White_server\bin\Debug\White_server.exe
+X:\program\White_server\White_server\bin\Debug\White_server.pdb
+X:\program\White_server\White_server\obj\Debug\White_server.csproj.AssemblyReference.cache
+X:\program\White_server\White_server\obj\Debug\White_server.csproj.CoreCompileInputs.cache
+X:\program\White_server\White_server\obj\Debug\White_server.exe
+X:\program\White_server\White_server\obj\Debug\White_server.pdb
