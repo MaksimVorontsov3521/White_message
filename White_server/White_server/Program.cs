@@ -3,6 +3,7 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace White_server
 {
@@ -11,10 +12,42 @@ namespace White_server
         static void Main(string[] args)
         {
             Program program = new Program();
-            program.listen();          
+            program.work();
+            
         }
         List<Socket> Users = new List<Socket>();
-        public void listen()
+        async void work()
+        {
+            Thread myThread = new Thread(connect);
+            // запускаем поток myThread
+            myThread.Start();
+            while (true)
+            {               
+                listen_all();
+            }
+        }
+
+        public void listen_all()
+        {
+            byte[] buffer = new byte[1024];
+            for (int i = 0; i < Users.Count; i++)
+            {             
+                int bytesReceived = Users[i].Receive(buffer);
+                if (bytesReceived > 0)
+                {              
+                    string message = Encoding.ASCII.GetString(buffer, 0, bytesReceived);
+                    Console.WriteLine("new message - "+message);
+                    for (int j = 0; j < Users.Count; j++)
+                    {
+                        // Отправьте сообщение серверу клиентам
+                        string replyMessage = ($"{message}");
+                        byte[] replyBuffer = Encoding.ASCII.GetBytes(replyMessage);
+                        Users[j].Send(replyBuffer);
+                    }
+                }                   
+            }
+        }
+        public void connect()
         {
             // Укажите порт для прослушивания
             int port = 8000;
@@ -42,17 +75,13 @@ namespace White_server
                 // Выведите сообщение от клиента
                 for (int i = 0; i < Users.Count; i++)
                 {
-                    // Отправьте сообщение серверу клиенту
+                    // Отправьте сообщение серверу клиентам
                     string replyMessage = ($"new user {message} joined");
                     byte[] replyBuffer = Encoding.ASCII.GetBytes(replyMessage);
                     Users[i].Send(replyBuffer);
                 }
                 Console.WriteLine($"new user {message}");
-                // Закройте сокеты
-                //clientSocket.Close();
-                //serverSocket.Close();
             }
-
         }
     }
 }

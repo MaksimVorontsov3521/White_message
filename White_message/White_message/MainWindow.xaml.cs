@@ -26,6 +26,7 @@ namespace White_message
         {
             InitializeComponent();
         }
+        Socket clientSocket = null;
         private void Connect_Click(object sender, RoutedEventArgs e)
         {
             string serverIP = "127.0.0.1";
@@ -34,7 +35,7 @@ namespace White_message
             int port = 8000;
 
             // Создайте сокет TCP
-            Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
             // Подключитесь к серверу
             clientSocket.Connect(IPAddress.Parse(serverIP), port);
@@ -43,21 +44,44 @@ namespace White_message
             string message = Name.Text;
             byte[] buffer = Encoding.ASCII.GetBytes(message);
             clientSocket.Send(buffer);
-            listen(clientSocket);
+            work();
 
             // Закройте сокет
             //clientSocket.Close();
         }
-        async void listen(Socket clientSocket)
+        async void work()
+        {
+            string message=null;
+            while (true)
+            {
+                await Task.Run(()=> message=listen());
+                if (message != null)
+                {
+                    Chat.Text += message + "\n";
+                }
+                
+            }
+        }
+        public string listen()
         {
             // Получите ответ от сервера
             byte[] buffer = new byte[1024];
             int bytesReceived = clientSocket.Receive(buffer);
-            string replyMessage = Encoding.ASCII.GetString(buffer, 0, bytesReceived);
-            // Выведите ответ сервера
-            Chat.Text += replyMessage+"\n";
-            await Task.Delay(500);
-            listen(clientSocket);
+            string replyMessage = null;
+            if (bytesReceived > 0)
+            {
+                replyMessage = Encoding.ASCII.GetString(buffer, 0, bytesReceived);
+                // Выведите ответ сервера
+            }
+            return replyMessage;            
+        }
+
+        private void Send_Click(object sender, RoutedEventArgs e)
+        {
+            string message = Message.Text;
+            byte[] buffer = Encoding.ASCII.GetBytes(message);
+            clientSocket.Send(buffer);
+            Message.Clear();
         }
     }
 }
