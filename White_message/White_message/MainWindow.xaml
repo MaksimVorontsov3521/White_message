@@ -13,7 +13,7 @@
         <Button x:Name="Connect" Content="Connect" HorizontalAlignment="Left" Margin="7,306,0,0" VerticalAlignment="Top" Width="75" Background="White" Click="Connect_Click"/>
         <TextBox x:Name="Chat" HorizontalAlignment="Left" Height="243" Margin="116,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="491"/>
         <Button x:Name="Send" Content="Send" HorizontalAlignment="Left" Margin="116,344,0,0" VerticalAlignment="Top" Width="130" Height="45" Background="White" Click="Send_Click"/>
-        <TextBox x:Name="Message" HorizontalAlignment="Left" Height="50" Margin="116,276,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="491"/>
+        <TextBox x:Name="Message" HorizontalAlignment="Left" Height="50" Margin="116,276,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="491" KeyDown="Message_KeyDown"/>
         <Label Content="Online" Margin="618,19,0,0" VerticalAlignment="Top" Width="100" HorizontalAlignment="Left"/>
         <ListBox x:Name="OnLine" HorizontalAlignment="Left" Height="217" Margin="618,45,0,0" VerticalAlignment="Top" Width="100"/>
 

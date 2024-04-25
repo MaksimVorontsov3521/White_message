@@ -102,10 +102,21 @@ namespace White_message
 
         private void Send_Click(object sender, RoutedEventArgs e)
         {
+            send_all();
+        }
+
+        private void send_all()
+        {
             string message = Message.Text;
             byte[] buffer = Encoding.UTF8.GetBytes(message);
             clientSocket.Send(buffer);
             Message.Clear();
+        }
+
+        private void Message_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            { send_all(); }
         }
     }
 }
