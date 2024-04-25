@@ -26,6 +26,20 @@ namespace White_server
                 Sockets[i].Send(message);
             }
         }
+        private void update_OnLine()
+        {
+            byte[] buffer = null;
+            Thread.Sleep(10);
+            buffer = Encoding.UTF8.GetBytes($"//2");
+            send(buffer); buffer = null;
+            Thread.Sleep(10);
+            for (int i = 0; i < names.Count; i++)
+            {
+                buffer = Encoding.UTF8.GetBytes($"//1 {names[i]}");
+                send(buffer); buffer = null;
+                Thread.Sleep(10);
+            }
+        }
         private void work()
         {
             // Server settings
@@ -54,17 +68,8 @@ namespace White_server
                 // Говорим всем, что подключился клиент
                 Console.WriteLine($"Client connected: {clientSocket.RemoteEndPoint}\nName: {message}");               
                 buffer = Encoding.UTF8.GetBytes($"connected: {message}");
-                send(buffer); buffer = null;
-                Thread.Sleep(10);
-                buffer = Encoding.UTF8.GetBytes($"//2");
-                send(buffer);buffer = null;
-                Thread.Sleep(10);
-                for (int i = 0; i < names.Count; i++)
-                {
-                    buffer = Encoding.UTF8.GetBytes($"//1 {names[i]}");
-                    send(buffer);buffer = null;
-                    Thread.Sleep(10);
-                }
+                send(buffer);
+                update_OnLine();
                 // Handle client communication in a separate thread
                 Thread clientThread = new Thread(() => HandleClient(clientSocket, names.Count - 1));
                 clientThread.Start();
@@ -85,11 +90,11 @@ namespace White_server
                     {
                         Console.WriteLine($"Client disconnected: {clientSocket.RemoteEndPoint}");
                         string mess = $"{names[name]} - disconnected";
-                        string Response = $"{names[name]}: {mess}";
-                        byte[] ResponseBuffer = Encoding.UTF8.GetBytes(Response);
+                        byte[] ResponseBuffer = Encoding.UTF8.GetBytes(mess);
                         Sockets.RemoveAt(name);
                         names.RemoveAt(name);     
                         send(ResponseBuffer);
+                        update_OnLine();
                         break;
                     }
                     // Process received data (e.g., convert to string, handle message)
@@ -105,6 +110,12 @@ namespace White_server
             catch (Exception ex)
             {
                 Console.WriteLine($"Error handling client: {ex.Message}");
+                string mess = $"{names[name]} - disconnected";
+                byte[] ResponseBuffer = Encoding.UTF8.GetBytes(mess);
+                Sockets.RemoveAt(name);
+                names.RemoveAt(name);
+                send(ResponseBuffer);
+                update_OnLine();              
             }
             finally
             {
