@@ -36,7 +36,7 @@ namespace White_message
         }
         public void connection()
         {
-            string serverIP = "127.0.0.1";
+            string serverIP = "192.168.88.18";
             // Укажите порт сервера
             int port = 8000;
 
@@ -49,7 +49,7 @@ namespace White_message
 
                 // Отправьте сообщение серверу
                 string message = Name.Text;
-                byte[] buffer = Encoding.ASCII.GetBytes(message);
+                byte[] buffer = Encoding.UTF8.GetBytes(message);
                 clientSocket.Send(buffer);
                 work();
             }

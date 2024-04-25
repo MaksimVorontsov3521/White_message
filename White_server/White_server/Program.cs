@@ -44,7 +44,7 @@ namespace White_server
         {
             // Server settings
             const int port = 8000; // Replace with your desired port
-            string ipAddress = "127.0.0.1"; // Replace with your IP address or "*" for all interfaces
+            string ipAddress = "192.168.88.18"; // Replace with your IP address or "*" for all interfaces
 
             // Create server socket
             Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -71,12 +71,12 @@ namespace White_server
                 send(buffer);
                 update_OnLine();
                 // Handle client communication in a separate thread
-                Thread clientThread = new Thread(() => HandleClient(clientSocket, names.Count - 1));
+                Thread clientThread = new Thread(() => HandleClient(clientSocket,names[names.Count-1]));
                 clientThread.Start();
             }
         }
 
-        private void HandleClient(Socket clientSocket,int name)
+        private void HandleClient(Socket clientSocket,string name)
         {
             try
             {
@@ -89,19 +89,19 @@ namespace White_server
                     if (receivedBytes == 0)
                     {
                         Console.WriteLine($"Client disconnected: {clientSocket.RemoteEndPoint}");
-                        string mess = $"{names[name]} - disconnected";
+                        string mess = $"{names[names.IndexOf(name)]} - disconnected";
                         byte[] ResponseBuffer = Encoding.UTF8.GetBytes(mess);
-                        Sockets.RemoveAt(name);
-                        names.RemoveAt(name);     
+                        Sockets.RemoveAt(names.IndexOf(name));
+                        names.RemoveAt(names.IndexOf(name));     
                         send(ResponseBuffer);
                         update_OnLine();
                         break;
                     }
                     // Process received data (e.g., convert to string, handle message)
                     string message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
-                    Console.WriteLine($"Received from {names[name]}: {message}");
+                    Console.WriteLine($"Received from {names[names.IndexOf(name)]}: {message}");
                     // Send a message back to the client
-                    string response = $"{names[name]}: {message}";
+                    string response = $"{names[names.IndexOf(name)]}: {message}";
                     byte[] responseBuffer = Encoding.UTF8.GetBytes(response);
                     send(responseBuffer);
 
@@ -110,12 +110,12 @@ namespace White_server
             catch (Exception ex)
             {
                 Console.WriteLine($"Error handling client: {ex.Message}");
-                string mess = $"{names[name]} - disconnected";
+                string mess = $"{names[names.IndexOf(name)]} - disconnected";
                 byte[] ResponseBuffer = Encoding.UTF8.GetBytes(mess);
-                Sockets.RemoveAt(name);
-                names.RemoveAt(name);
+                Sockets.RemoveAt(names.IndexOf(name));
+                names.RemoveAt(names.IndexOf(name));
                 send(ResponseBuffer);
-                update_OnLine();              
+                update_OnLine();
             }
             finally
             {
