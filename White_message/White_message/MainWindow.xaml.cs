@@ -74,6 +74,9 @@ namespace White_message
                             case '1':
                                 OnLine.Items.Add(message.Substring(3));
                                 break;
+                            case '2':
+                                OnLine.Items.Clear();
+                                break;
                         }
                     }
                     else

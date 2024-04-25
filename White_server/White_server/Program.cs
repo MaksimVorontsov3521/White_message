@@ -19,6 +19,13 @@ namespace White_server
             Server server = new Server();
             server.work();
         }
+        private void send(byte[] message)
+        {
+            for (int i = 0; i < Sockets.Count; i++)
+            {
+                Sockets[i].Send(message);
+            }
+        }
         private void work()
         {
             // Server settings
@@ -36,18 +43,27 @@ namespace White_server
 
             // Accept and handle clients
             while (true)
-            {                
-                Socket clientSocket = serverSocket.Accept();              
-                byte[] buffer = new byte[1024];               
+            {
+                Socket clientSocket = serverSocket.Accept();
+                byte[] buffer = new byte[1024];
+                // Добавляем клиента в list<>
                 int receivedBytes = clientSocket.Receive(buffer);
                 string message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
                 names.Add(message);
-                Console.WriteLine($"Client connected: {clientSocket.RemoteEndPoint}\nName: {message}");
                 Sockets.Add(clientSocket);
-                buffer = Encoding.UTF8.GetBytes($"connected: {message}");               
-                for (int i = 0; i < Sockets.Count; i++)
+                // Говорим всем, что подключился клиент
+                Console.WriteLine($"Client connected: {clientSocket.RemoteEndPoint}\nName: {message}");               
+                buffer = Encoding.UTF8.GetBytes($"connected: {message}");
+                send(buffer); buffer = null;
+                Thread.Sleep(10);
+                buffer = Encoding.UTF8.GetBytes($"//2");
+                send(buffer);buffer = null;
+                Thread.Sleep(10);
+                for (int i = 0; i < names.Count; i++)
                 {
-                    Sockets[i].Send(buffer);              
+                    buffer = Encoding.UTF8.GetBytes($"//1 {names[i]}");
+                    send(buffer);buffer = null;
+                    Thread.Sleep(10);
                 }
                 // Handle client communication in a separate thread
                 Thread clientThread = new Thread(() => HandleClient(clientSocket, names.Count - 1));
@@ -57,11 +73,6 @@ namespace White_server
 
         private void HandleClient(Socket clientSocket,int name)
         {
-            byte[] comand = Encoding.UTF8.GetBytes($"//1 {names[name]}");
-            for (int i = 0; i < Sockets.Count; i++)
-            {
-                Sockets[i].Send(comand);
-            }
             try
             {
                 while (true)
@@ -77,11 +88,8 @@ namespace White_server
                         string Response = $"{names[name]}: {mess}";
                         byte[] ResponseBuffer = Encoding.UTF8.GetBytes(Response);
                         Sockets.RemoveAt(name);
-                        names.RemoveAt(name);
-                        for (int i = 0; i < Sockets.Count; i++)
-                        {
-                            Sockets[i].Send(ResponseBuffer);
-                        }
+                        names.RemoveAt(name);     
+                        send(ResponseBuffer);
                         break;
                     }
                     // Process received data (e.g., convert to string, handle message)
@@ -90,11 +98,8 @@ namespace White_server
                     // Send a message back to the client
                     string response = $"{names[name]}: {message}";
                     byte[] responseBuffer = Encoding.UTF8.GetBytes(response);
-                    for (int i = 0; i < Sockets.Count; i++)
-                    {
-                        Sockets[i].Send(responseBuffer);
-                    }
-                    
+                    send(responseBuffer);
+
                 }
             }
             catch (Exception ex)
