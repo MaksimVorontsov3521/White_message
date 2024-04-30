@@ -14,7 +14,10 @@ namespace White_server
         private OleDbConnection sqlConnection = null;
         public DataBase()
         {
-            sqlConnection = new OleDbConnection(ConfigurationManager.ConnectionStrings["Sqlcon"].ConnectionString);
+            string relativePath = "Data\\SrverDB.accdb";
+            string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
+            string connectionString = $"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={fullPath};";
+            sqlConnection = new OleDbConnection(connectionString);
             sqlConnection.Open();
             if (sqlConnection.State == ConnectionState.Open)
             {
@@ -25,7 +28,7 @@ namespace White_server
                 Console.WriteLine("Подключение к БД - не открыто");
             }
         }
-        public void new_message(string message)
+        public void new_message(string user,string message)
         { 
         
         }

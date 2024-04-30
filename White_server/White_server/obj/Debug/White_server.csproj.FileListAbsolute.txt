@@ -12,5 +12,3 @@ X:\program\3521п1ин2\White_server\White_server\obj\Debug\White_server.csproj.
 X:\program\3521п1ин2\White_server\White_server\obj\Debug\White_server.csproj.CoreCompileInputs.cache
 X:\program\3521п1ин2\White_server\White_server\obj\Debug\White_server.exe
 X:\program\3521п1ин2\White_server\White_server\obj\Debug\White_server.pdb
-X:\program\3521п1ин2\White_server\White_server\bin\Debug\Database1.mdf
-X:\program\3521п1ин2\White_server\White_server\bin\Debug\Database1_log.ldf

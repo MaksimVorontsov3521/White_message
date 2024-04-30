@@ -8,100 +8,88 @@ using System.Threading.Tasks;
 
 namespace White_server
 {
+    class Clients
+    {
+        public Socket Socket { get; set; }
+        public string Name { get; set; }
+        public Clients(Socket socket,string name)
+        {
+            Socket = socket;
+            Name = name;
+        }
+    }
 
     class Server
     {
-        List<Socket> Sockets = new List<Socket>();
-        List<string> names = new List<string>();
-            
+        List<Clients> Clients_list = new List<Clients>();
+        DataBase dataBase = null;
         static void Main(string[] args)
         {
             Server server = new Server();
+            // начало работы
             server.work();
-        }
-        private void send(byte[] message)
-        {
-            for (int i = 0; i < Sockets.Count; i++)
-            {
-                Sockets[i].Send(message);
-            }
-        }
-        private void update_OnLine()
-        {
-            byte[] buffer = null;
-            Thread.Sleep(10);
-            buffer = Encoding.UTF8.GetBytes($"//2");
-            send(buffer); buffer = null;
-            Thread.Sleep(10);
-            for (int i = 0; i < names.Count; i++)
-            {
-                buffer = Encoding.UTF8.GetBytes($"//1 {names[i]}");
-                send(buffer); buffer = null;
-                Thread.Sleep(10);
-            }
         }
         private void work()
         {
-            // Server settings
+            DataBase dataBase = new DataBase();
+            this.dataBase = dataBase;
+            // Настройки сервера
             const int port = 8000; // Replace with your desired port
             string ipAddress = "192.168.88.18"; // Replace with your IP address or "*" for all interfaces
-
-            // Create server socket
             Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-            // Bind and start listening
+            // Прослушка
             serverSocket.Bind(new IPEndPoint(IPAddress.Parse(ipAddress), port));
-            serverSocket.Listen(10); // Backlog (max queued connections)
-
+            serverSocket.Listen(10); // Backlog
             Console.WriteLine($"Server listening on port {port}...");
 
-            // Accept and handle clients
+            // Подключить клиента
             while (true)
             {
                 Socket clientSocket = serverSocket.Accept();
                 byte[] buffer = new byte[1024];
+
                 // Добавляем клиента в list<>
                 int receivedBytes = clientSocket.Receive(buffer);
                 string message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
-                names.Add(message);
-                Sockets.Add(clientSocket);
+                Clients client = new Clients(clientSocket,message);
+                Clients_list.Add(client);
+
                 // Говорим всем, что подключился клиент
                 Console.WriteLine($"Client connected: {clientSocket.RemoteEndPoint}\nName: {message}");               
                 buffer = Encoding.UTF8.GetBytes($"connected: {message}");
-                send(buffer);
-                update_OnLine();
+                send(buffer); update_OnLine();
+
                 // Handle client communication in a separate thread
-                Thread clientThread = new Thread(() => HandleClient(clientSocket,names[names.Count-1]));
+                Thread clientThread = new Thread(() => HandleClient(client));
                 clientThread.Start();
             }
         }
 
-        private void HandleClient(Socket clientSocket,string name)
-        {
+        private void HandleClient(Clients client)
+        {            
             try
             {
                 while (true)
                 {
-                    // Receive data from the client
+                    // Получаем данные от клиента в битах
                     byte[] buffer = new byte[1024];
-                    int receivedBytes = clientSocket.Receive(buffer);
+                    int receivedBytes = client.Socket.Receive(buffer);
 
+                    // Если клиен отключился от сервера удаляем его из списков
                     if (receivedBytes == 0)
                     {
-                        Console.WriteLine($"Client disconnected: {clientSocket.RemoteEndPoint}");
-                        string mess = $"{names[names.IndexOf(name)]} - disconnected";
-                        byte[] ResponseBuffer = Encoding.UTF8.GetBytes(mess);
-                        Sockets.RemoveAt(names.IndexOf(name));
-                        names.RemoveAt(names.IndexOf(name));     
-                        send(ResponseBuffer);
-                        update_OnLine();
-                        break;
+                        Console.WriteLine($"Client disconnected: {client.Socket.RemoteEndPoint}");
+                        disconect(client); break;
                     }
-                    // Process received data (e.g., convert to string, handle message)
+
+                    // Переводим биты в строки
                     string message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
-                    Console.WriteLine($"Received from {names[names.IndexOf(name)]}: {message}");
-                    // Send a message back to the client
-                    string response = $"{names[names.IndexOf(name)]}: {message}";
+                    Console.WriteLine($"Received from {client.Name}: {message}");
+                    dataBase.new_message(client.Name,message);
+
+                    // Отправляем сообщения клиентам
+                    string response = $"{client.Name}: {message}";
                     byte[] responseBuffer = Encoding.UTF8.GetBytes(response);
                     send(responseBuffer);
 
@@ -109,20 +97,50 @@ namespace White_server
             }
             catch (Exception ex)
             {
+                // Если клиен отключился от сервера удаляем его из списков
                 Console.WriteLine($"Error handling client: {ex.Message}");
-                string mess = $"{names[names.IndexOf(name)]} - disconnected";
-                byte[] ResponseBuffer = Encoding.UTF8.GetBytes(mess);
-                Sockets.RemoveAt(names.IndexOf(name));
-                names.RemoveAt(names.IndexOf(name));
-                send(ResponseBuffer);
-                update_OnLine();
+                disconect(client);
             }
             finally
             {
                 // Close the client socket
-                clientSocket.Close();
+                client.Socket.Close();
             }
         }
-    }
 
+        // отправить сообщение всем пользователям
+        private void send(byte[] message)
+        { 
+            for (int i = 0; i < Clients_list.Count; i++)
+            {
+                Clients_list[i].Socket.Send(message);
+            }
+        }
+
+        // обновление списка online у клиентов
+        private void update_OnLine()
+        {
+            byte[] buffer = null;
+            Thread.Sleep(10);
+            buffer = Encoding.UTF8.GetBytes($"//2");
+            send(buffer); buffer = null;
+            Thread.Sleep(10);
+            for (int i = 0; i < Clients_list.Count; i++)
+            {
+                buffer = Encoding.UTF8.GetBytes($"//1 {Clients_list[i].Name}");
+                send(buffer); buffer = null;
+                Thread.Sleep(10);
+            }
+        }
+
+        private void disconect(Clients client)
+        {
+            string mess = $"{client.Name} - disconnected";
+            byte[] ResponseBuffer = Encoding.UTF8.GetBytes(mess);
+            int indexof = Clients_list.IndexOf(client);
+            Clients_list.RemoveAt(indexof);
+            send(ResponseBuffer); update_OnLine();
+        }
+
+    }
 }
