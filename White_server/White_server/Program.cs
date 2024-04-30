@@ -67,7 +67,8 @@ namespace White_server
         }
 
         private void HandleClient(Clients client)
-        {            
+        {
+
             try
             {
                 while (true)
@@ -86,7 +87,9 @@ namespace White_server
                     // Переводим биты в строки
                     string message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
                     Console.WriteLine($"Received from {client.Name}: {message}");
-                    dataBase.new_message(client.Name,message);
+
+                    // записываем сообщение в базу данных
+                    dataBase.new_message(client.Name, message, "MainChat");
 
                     // Отправляем сообщения клиентам
                     string response = $"{client.Name}: {message}";

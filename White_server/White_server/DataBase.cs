@@ -28,9 +28,14 @@ namespace White_server
                 Console.WriteLine("Подключение к БД - не открыто");
             }
         }
-        public void new_message(string user,string message)
-        { 
-        
+        public void new_message(string user,string message,string chat)
+        {
+            DateTime now = DateTime.UtcNow;
+            string query = $"INSERT INTO {chat} (NickName,Message,ResivedTime) VALUES ('{user}','{message}','{now}')";
+            OleDbCommand com = new OleDbCommand(query, sqlConnection);
+            com.ExecuteNonQuery();
+               
+            
         }
 
     }
