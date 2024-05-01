@@ -24,9 +24,7 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="TabItem">
-                    <Grid Background="#FFE5E5E5">
-                        <Button x:Name="ChangeViewShit" Content="ChangeView" HorizontalAlignment="Left" Height="89" Margin="21,26,0,0" VerticalAlignment="Top" Width="115" Click="ChangeViewShit_Click"/>
-                    </Grid>
+                    <Grid Background="#FFE5E5E5"/>
                 </TabItem>
             </TabControl>
         </DockPanel>

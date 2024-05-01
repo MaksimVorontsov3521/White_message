@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.IO;
+using System.Reflection;
 
 namespace White_message
 {
@@ -117,6 +119,45 @@ namespace White_message
         {
             if (e.Key == Key.Enter)
             { send_all(); }
+        }
+
+        private void ChangeView_Click(object sender, RoutedEventArgs e)
+        {
+                string relativePath = "Data\\MainView.xaml";
+                string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
+                string buff;
+                using (StreamReader reader = new StreamReader(fullPath))
+                {
+                    buff = reader.ReadToEnd();
+                }
+
+                string Toofar = AppDomain.CurrentDomain.BaseDirectory;
+                Toofar = Toofar.Substring(0, Toofar.Length - 11);
+                Toofar += "\\MainWindow.xaml";
+                // MessageBox.Show(Toofar);
+
+                File.WriteAllText(Toofar, buff);
+                this.Close();           
+        }
+
+
+        private void ChangeViewShit_Click(object sender, RoutedEventArgs e)
+        {
+            string relativePath = "Data\\SecondView.xaml";
+            string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
+            string buff;
+            using (StreamReader reader = new StreamReader(fullPath))
+            {
+                buff = reader.ReadToEnd();
+            }
+
+            string Toofar = AppDomain.CurrentDomain.BaseDirectory;
+            Toofar = Toofar.Substring(0, Toofar.Length - 11);
+            Toofar += "\\MainWindow.xaml";
+            //MessageBox.Show(Toofar);
+
+            File.WriteAllText(Toofar, buff);
+            this.Close();
         }
     }
 }
