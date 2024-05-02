@@ -25,6 +25,10 @@ namespace White_message
     /// </summary>
     public partial class MainWindow : Window
     {
+        //сервер
+        string serverIP = "192.168.88.18";
+        int port = 8000;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -32,15 +36,10 @@ namespace White_message
         Socket clientSocket = null;
         private void Connect_Click(object sender, RoutedEventArgs e)
         {
-            //Thread con = new Thread(connection);
-            //con.Start();
             connection();
         }
         public void connection()
         {
-            string serverIP = "192.168.88.18";
-            // Укажите порт сервера
-            int port = 8000;
 
             // Создайте сокет TCP
             clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -50,19 +49,26 @@ namespace White_message
                 clientSocket.Connect(IPAddress.Parse(serverIP), port);
 
                 // Отправьте сообщение серверу
-                string message = Name.Text;
+                string message = Name.Text+"\n"+Password.Text;
                 byte[] buffer = Encoding.UTF8.GetBytes(message);
                 clientSocket.Send(buffer);
+                Connect.Visibility = Visibility.Hidden;
+                disConnect.Visibility = Visibility.Visible;
                 work();
             }
-            catch { MessageBox.Show("Сервер не доступен"); }
+            catch {
+                Connect.Visibility = Visibility.Visible;
+                disConnect.Visibility = Visibility.Hidden;
+                Chat.Text+="Сервер не доступен\n";
+            }
             // Закройте сокет
             //clientSocket.Close();
         }
         async void work()
         {
+            bool t = true;
             string message=null;
-            while (true)
+            while (t)
             {
                 await Task.Run(()=> message=listen());
                 if (message != null)
@@ -73,11 +79,27 @@ namespace White_message
                         char three = message[2];
                         switch (three)
                         {
+                            // разорванное соединение
+                            case '0':
+                                t = false;
+                                Chat.Text += "Сервер разорвал соединение\n";
+                                break;
+                                // кто онлайн?
                             case '1':
                                 OnLine.Items.Add(message.Substring(3));
                                 break;
                             case '2':
                                 OnLine.Items.Clear();
+                                break;
+                                // регистрация и аккаунты
+                            case '3':
+                                Chat.Text += "Неверное имя или пароль\n";
+                                break;
+                            case '4':
+                                Chat.Text += $"Создан новый аккаунт {Name.Text}\n";
+                                break;
+                            case '5':
+                                Chat.Text += "Такой login уже существует\n";
                                 break;
                         }
                     }
@@ -89,17 +111,25 @@ namespace White_message
             }
         }
         public string listen()
-        {         
-            // Получите ответ от сервера
-            byte[] buffer = new byte[1024];
-            int bytesReceived = clientSocket.Receive(buffer);
-            string replyMessage = null;
-            if (bytesReceived > 0)
-            {             
-                replyMessage = Encoding.UTF8.GetString(buffer, 0, bytesReceived);
-                // Выведите ответ сервера
+        {
+            try
+            {
+                // Получите ответ от сервера
+                byte[] buffer = new byte[1024];
+                int bytesReceived = clientSocket.Receive(buffer);
+                string replyMessage = null;
+                if (bytesReceived > 0)
+                {
+                    replyMessage = Encoding.UTF8.GetString(buffer, 0, bytesReceived);
+                    // Выведите ответ сервера
+                }
+                return replyMessage;
             }
-            return replyMessage;            
+            catch
+            {
+                clientSocket = null;
+                return "//0";
+            }
         }
 
         private void Send_Click(object sender, RoutedEventArgs e)
@@ -123,41 +153,70 @@ namespace White_message
 
         private void ChangeView_Click(object sender, RoutedEventArgs e)
         {
-                string relativePath = "Data\\MainView.xaml";
-                string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
-                string buff;
-                using (StreamReader reader = new StreamReader(fullPath))
-                {
-                    buff = reader.ReadToEnd();
-                }
+            MessageBox.Show("не сейчас");
+            //string relativePath = "Data\\MainView.xaml";
+            //string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
+            //string buff;
+            //using (StreamReader reader = new StreamReader(fullPath))
+            //{
+            //    buff = reader.ReadToEnd();
+            //}
 
-                string Toofar = AppDomain.CurrentDomain.BaseDirectory;
-                Toofar = Toofar.Substring(0, Toofar.Length - 11);
-                Toofar += "\\MainWindow.xaml";
-                // MessageBox.Show(Toofar);
+            //string Toofar = AppDomain.CurrentDomain.BaseDirectory;
+            //Toofar = Toofar.Substring(0, Toofar.Length - 11);
+            //Toofar += "\\MainWindow.xaml";
 
-                File.WriteAllText(Toofar, buff);
-                this.Close();           
+            //File.WriteAllText(Toofar, buff);
+            //this.Close();           
         }
 
 
         private void ChangeViewShit_Click(object sender, RoutedEventArgs e)
         {
-            string relativePath = "Data\\SecondView.xaml";
-            string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
-            string buff;
-            using (StreamReader reader = new StreamReader(fullPath))
+            MessageBox.Show("не сейчас");
+            //string relativePath = "Data\\SecondView.xaml";
+            //string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
+            //string buff;
+            //using (StreamReader reader = new StreamReader(fullPath))
+            //{
+            //    buff = reader.ReadToEnd();
+            //}
+
+            //string Toofar = AppDomain.CurrentDomain.BaseDirectory;
+            //Toofar = Toofar.Substring(0, Toofar.Length - 11);
+            //Toofar += "\\MainWindow.xaml";
+            ////MessageBox.Show(Toofar);
+
+            //File.WriteAllText(Toofar, buff);
+            //this.Close();
+        }
+
+        private void disConnect_Click(object sender, RoutedEventArgs e)
+        {
+            clientSocket = null;
+            disConnect.Visibility = Visibility.Hidden;
+            Connect.Visibility = Visibility.Visible;
+        }
+
+        private void Registration_Click(object sender, RoutedEventArgs e)
+        {
+            // Создайте сокет TCP
+            clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            try
             {
-                buff = reader.ReadToEnd();
+                // Подключитесь к серверу
+                clientSocket.Connect(IPAddress.Parse(serverIP), port);
+
+                // Отправьте сообщение серверу
+                string message = "\t" + Name.Text + "\n" + Password.Text;
+                byte[] buffer = Encoding.UTF8.GetBytes(message);
+                clientSocket.Send(buffer);
+                work();
             }
-
-            string Toofar = AppDomain.CurrentDomain.BaseDirectory;
-            Toofar = Toofar.Substring(0, Toofar.Length - 11);
-            Toofar += "\\MainWindow.xaml";
-            //MessageBox.Show(Toofar);
-
-            File.WriteAllText(Toofar, buff);
-            this.Close();
+            catch
+            {
+                Chat.Text += "Сервер не доступен\n";
+            }
         }
     }
 }

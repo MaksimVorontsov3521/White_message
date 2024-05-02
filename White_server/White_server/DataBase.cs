@@ -33,9 +33,31 @@ namespace White_server
             DateTime now = DateTime.UtcNow;
             string query = $"INSERT INTO {chat} (NickName,Message,ResivedTime) VALUES ('{user}','{message}','{now}')";
             OleDbCommand com = new OleDbCommand(query, sqlConnection);
-            com.ExecuteNonQuery();
-               
-            
+            com.ExecuteNonQuery();                        
+        }
+        public int Entrance(string name,string password)
+        {
+            string query = $"SELECT COUNT(*) From Accounts Where AccountName='{name}' AND AccountPassword='{password}'";
+            OleDbCommand com = new OleDbCommand(query, sqlConnection);
+            int a =(int)com.ExecuteScalar();
+            return a;
+        }
+        public bool new_user(string name, string password)
+        {
+            string query = $"SELECT COUNT(*) From Accounts Where AccountName='{name}'";
+            OleDbCommand com = new OleDbCommand(query, sqlConnection);
+            int a = (int)com.ExecuteScalar();
+            if (a >= 1)
+            {
+                return false;
+            }
+            else
+            {
+                query = $"INSERT INTO Accounts (AccountName, AccountPassword) VALUES (' {name} ', ' {password} ')";
+                com = new OleDbCommand(query, sqlConnection);
+                com.ExecuteScalar();
+                return true;
+            }
         }
 
     }

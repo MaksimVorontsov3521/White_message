@@ -21,6 +21,7 @@
                         <TextBox x:Name="Message" HorizontalAlignment="Left" Height="50" Margin="116,276,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="491" KeyDown="Message_KeyDown"/>
                         <Label Content="Online" DockPanel.Dock="Right" Margin="619,19,0,0" VerticalAlignment="Top" Width="100" HorizontalAlignment="Left"/>
                         <ListBox x:Name="OnLine" DockPanel.Dock="Right" HorizontalAlignment="Left" Height="217" Margin="618,45,0,0" VerticalAlignment="Top" Width="100"/>
+                        <Button x:Name="disConnect" Content="Disconnect" HorizontalAlignment="Left" Margin="10,306,0,0" VerticalAlignment="Top" Width="75" Visibility="Hidden" Background="White" Click="disConnect_Click"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="TabItem">

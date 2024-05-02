@@ -49,9 +49,20 @@ namespace White_server
                 Socket clientSocket = serverSocket.Accept();
                 byte[] buffer = new byte[1024];
 
-                // Добавляем клиента в list<>
+                // получаем сообщение от клиента
                 int receivedBytes = clientSocket.Receive(buffer);
                 string message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
+
+                // ищем клиента в базе
+                message=account(message);
+                if (message.StartsWith("//"))
+                {
+                    buffer = Encoding.UTF8.GetBytes(message);
+                    clientSocket.Send(buffer);
+                    continue;
+                }
+
+                // Добавляем клиента в list<>
                 Clients client = new Clients(clientSocket,message);
                 Clients_list.Add(client);
 
@@ -63,6 +74,30 @@ namespace White_server
                 // Handle client communication in a separate thread
                 Thread clientThread = new Thread(() => HandleClient(client));
                 clientThread.Start();
+            }
+        }
+
+        private string account(string message)
+        {
+            string name, password;
+            string[] parts = message.Split('\n');
+            name = parts[0];
+            password = parts[1];
+            if (message.StartsWith("\t"))
+            {
+                name=name.Substring(1);
+                if (dataBase.new_user(name, password))
+                { return "//4"; }
+                else { return "//5"; }
+
+            }
+            if (1 == dataBase.Entrance(name, password))
+            {
+                return name;
+            }
+            else
+            {
+                return "//3";
             }
         }
 
