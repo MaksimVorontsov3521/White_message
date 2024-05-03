@@ -79,6 +79,7 @@ namespace White_server
 
         private string account(string message)
         {
+            Console.WriteLine($"Entered {message}");
             string name, password;
             string[] parts = message.Split('\n');
             name = parts[0];
@@ -122,9 +123,17 @@ namespace White_server
                     // Переводим биты в строки
                     string message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
                     Console.WriteLine($"Received from {client.Name}: {message}");
+                    try
+                    {
+                        // записываем сообщение в базу данных
+                        dataBase.new_message(client.Name, message, "MainChat");
+                    }
+                    catch
+                    {
+                        client.Socket.Disconnect(false);
+                        disconect(client); break;
+                    }
 
-                    // записываем сообщение в базу данных
-                    dataBase.new_message(client.Name, message, "MainChat");
 
                     // Отправляем сообщения клиентам
                     string response = $"{client.Name}: {message}";

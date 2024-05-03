@@ -46,8 +46,7 @@ namespace White_message
             try
             {
                 // Подключитесь к серверу
-                clientSocket.Connect(IPAddress.Parse(serverIP), port);
-
+                clientSocket.Connect(IPAddress.Parse(serverIP), port);               
                 // Отправьте сообщение серверу
                 string message = Name.Text+"\n"+Password.Text;
                 byte[] buffer = Encoding.UTF8.GetBytes(message);
@@ -127,7 +126,8 @@ namespace White_message
             }
             catch
             {
-                clientSocket = null;
+                clientSocket.Disconnect(false);
+                //clientSocket = null;
                 return "//0";
             }
         }
@@ -140,8 +140,12 @@ namespace White_message
         private void send_all()
         {
             string message = Message.Text;
-            byte[] buffer = Encoding.UTF8.GetBytes(message);
-            clientSocket.Send(buffer);
+            for (int i = 0; i < message.Length; i += 250)
+            {
+                string block = message.Substring(i, Math.Min(250, message.Length - i));
+                byte[] buffer = Encoding.UTF8.GetBytes(block);
+                clientSocket.Send(buffer);
+            }
             Message.Clear();
         }
 
@@ -193,7 +197,9 @@ namespace White_message
 
         private void disConnect_Click(object sender, RoutedEventArgs e)
         {
-            clientSocket = null;
+            clientSocket.Disconnect(false);
+            OnLine.Items.Clear();
+            //clientSocket = null;
             disConnect.Visibility = Visibility.Hidden;
             Connect.Visibility = Visibility.Visible;
         }
@@ -216,6 +222,28 @@ namespace White_message
             catch
             {
                 Chat.Text += "Сервер не доступен\n";
+            }
+        }
+
+
+
+        private void Name_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (Name.Text.Contains('/'))
+            {
+                Name.Text = Name.Text.Replace('/', ' ');
+            }
+            if (Name.Text.Contains('\t'))
+            {
+                Name.Text = Name.Text.Replace('\t', ' ');
+            }
+        }
+
+        private void Password_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (Password.Text.Contains('\t'))
+            {
+                Password.Text = Password.Text.Replace('\t', ' ');
             }
         }
     }

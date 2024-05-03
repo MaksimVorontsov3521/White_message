@@ -14,7 +14,7 @@
                     <Grid Background="#FFE5E5E5">
                         <Label Content="white&#xD;&#xA;message" HorizontalAlignment="Left"  Margin="10,19,0,0" VerticalAlignment="Top" Height="65" Width="72" FontFamily="Comic Sans MS" FontSize="16"/>
                         <Label Content="Name:" HorizontalAlignment="Left" Margin="10,183,0,0" VerticalAlignment="Top" Width="55" FontSize="16"/>
-                        <TextBox x:Name="Name" HorizontalAlignment="Left" Height="23" Margin="10,219,0,0" TextWrapping="Wrap" Text="User1" VerticalAlignment="Top" Width="55"/>
+                        <TextBox x:Name="Name" HorizontalAlignment="Left" Height="23" Margin="10,219,0,0" TextWrapping="Wrap" Text="User1" VerticalAlignment="Top" Width="55" TextChanged="Name_TextChanged"/>
                         <Button x:Name="Connect" Content="Connect" HorizontalAlignment="Left" Margin="10,306,0,0" VerticalAlignment="Top" Width="75" Background="White" Click="Connect_Click"/>
                         <TextBox x:Name="Chat" HorizontalAlignment="Left" Height="243" Margin="116,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="491"/>
                         <Button x:Name="Send" Content="Send" HorizontalAlignment="Left" Margin="116,344,0,0" VerticalAlignment="Top" Width="130" Height="45" Background="White" Click="Send_Click"/>
@@ -23,7 +23,7 @@
                         <ListBox x:Name="OnLine" DockPanel.Dock="Right" HorizontalAlignment="Left" Height="217" Margin="618,45,0,0" VerticalAlignment="Top" Width="100"/>
                         <Button x:Name="disConnect" Content="Disconnect" HorizontalAlignment="Left" Margin="10,306,0,0" VerticalAlignment="Top" Width="75" Visibility="Hidden" Background="White" Click="disConnect_Click"/>
                         <Label Content="Password:" HorizontalAlignment="Left" Margin="10,247,0,0" VerticalAlignment="Top" />
-                        <TextBox x:Name="Password" HorizontalAlignment="Left" Height="23" Margin="10,273,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="55"/>
+                        <TextBox x:Name="Password" HorizontalAlignment="Left" Height="23" Margin="10,273,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="55" TextChanged="Password_TextChanged"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="TabItem">

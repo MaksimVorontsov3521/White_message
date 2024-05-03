@@ -53,7 +53,7 @@ namespace White_server
             }
             else
             {
-                query = $"INSERT INTO Accounts (AccountName, AccountPassword) VALUES (' {name} ', ' {password} ')";
+                query = $"INSERT INTO Accounts (AccountName, AccountPassword) VALUES ('{name}', '{password}')";
                 com = new OleDbCommand(query, sqlConnection);
                 com.ExecuteScalar();
                 return true;
