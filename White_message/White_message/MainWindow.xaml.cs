@@ -20,15 +20,11 @@ using System.Reflection;
 
 namespace White_message
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
+
     public partial class MainWindow : Window
-    {
-        //сервер
+    {    //сервер
         string serverIP = "192.168.88.18";
         int port = 8000;
-
         public MainWindow()
         {
             InitializeComponent();
@@ -46,9 +42,9 @@ namespace White_message
             try
             {
                 // Подключитесь к серверу
-                clientSocket.Connect(IPAddress.Parse(serverIP), port);               
+                clientSocket.Connect(IPAddress.Parse(serverIP), port);
                 // Отправьте сообщение серверу
-                string message = Name.Text+"\n"+Password.Text;
+                string message = Name.Text + "\n" + Password.Text;
                 byte[] buffer = Encoding.UTF8.GetBytes(message);
                 clientSocket.Send(buffer);
                 Connect.Visibility = Visibility.Hidden;
@@ -57,10 +53,11 @@ namespace White_message
                 previousMainChat(p);
                 work();
             }
-            catch {
+            catch
+            {
                 Connect.Visibility = Visibility.Visible;
                 disConnect.Visibility = Visibility.Hidden;
-                Chat.Text+="Сервер не доступен\n";
+                Chat.Text += "Сервер не доступен\n";
             }
 
         }
@@ -74,10 +71,10 @@ namespace White_message
         async void work()
         {
             bool t = true;
-            string message=null;
+            string message = null;
             while (t)
             {
-                await Task.Run(()=> message=listen());
+                await Task.Run(() => message = listen());
                 if (message != null)
                 {
                     bool DoubleSlash = message.StartsWith("//");
@@ -91,14 +88,14 @@ namespace White_message
                                 t = false;
                                 Chat.Text += "Сервер разорвал соединение\n";
                                 break;
-                                // кто онлайн?
+                            // кто онлайн?
                             case '1':
                                 OnLine.Items.Add(message.Substring(3));
                                 break;
                             case '2':
                                 OnLine.Items.Clear();
                                 break;
-                                // регистрация и аккаунты
+                            // регистрация и аккаунты
                             case '3':
                                 Chat.Text += "Неверное имя или пароль\n";
                                 break;
@@ -112,9 +109,9 @@ namespace White_message
                     }
                     else
                     { Chat.Text += message + "\n"; }
-                    
+
                 }
-                
+
             }
             clientSocket.Close();
         }
@@ -150,7 +147,7 @@ namespace White_message
             catch
             {
                 Chat.Text += "Сервер разорвал соединение\n";
-                
+
                 Message.Clear();
             }
         }
