@@ -53,6 +53,8 @@ namespace White_message
                 clientSocket.Send(buffer);
                 Connect.Visibility = Visibility.Hidden;
                 disConnect.Visibility = Visibility.Visible;
+                int p = 10;
+                previousMainChat(p);
                 work();
             }
             catch {
@@ -60,9 +62,15 @@ namespace White_message
                 disConnect.Visibility = Visibility.Hidden;
                 Chat.Text+="Сервер не доступен\n";
             }
-            // Закройте сокет
-            //clientSocket.Close();
+
         }
+        private void previousMainChat(int p)
+        {
+            string message = $"{p}";
+            byte[] buffer = Encoding.UTF8.GetBytes(message);
+            clientSocket.Send(buffer);
+        }
+
         async void work()
         {
             bool t = true;
@@ -108,6 +116,7 @@ namespace White_message
                 }
                 
             }
+            clientSocket.Close();
         }
         public string listen()
         {
@@ -126,7 +135,7 @@ namespace White_message
             }
             catch
             {
-                clientSocket.Disconnect(false);
+                clientSocket.Close();
                 //clientSocket = null;
                 return "//0";
             }
@@ -134,7 +143,16 @@ namespace White_message
 
         private void Send_Click(object sender, RoutedEventArgs e)
         {
-            send_all();
+            try
+            {
+                send_all();
+            }
+            catch
+            {
+                Chat.Text += "Сервер разорвал соединение\n";
+                
+                Message.Clear();
+            }
         }
 
         private void send_all()
@@ -197,12 +215,16 @@ namespace White_message
 
         private void disConnect_Click(object sender, RoutedEventArgs e)
         {
-            clientSocket.Disconnect(false);
+            clientSocket.Close();
             OnLine.Items.Clear();
             //clientSocket = null;
             disConnect.Visibility = Visibility.Hidden;
             Connect.Visibility = Visibility.Visible;
         }
+
+        /// <summary>
+        /// регистрация и сопутствующие методы
+        /// </summary>
 
         private void Registration_Click(object sender, RoutedEventArgs e)
         {
@@ -224,9 +246,8 @@ namespace White_message
                 Chat.Text += "Сервер не доступен\n";
             }
         }
-
-
-
+        // ограничения нужны потомучто я дебил и отправляю команды как сообщения с // в начале. Я знаю - это очень тупо и не безопастно
+        // ограничения для username
         private void Name_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (Name.Text.Contains('/'))
@@ -237,13 +258,21 @@ namespace White_message
             {
                 Name.Text = Name.Text.Replace('\t', ' ');
             }
+            if (Name.Text.Contains('\n'))
+            {
+                Name.Text = Name.Text.Replace('\n', ' ');
+            }
         }
-
+        // ограничения для password
         private void Password_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (Password.Text.Contains('\t'))
             {
                 Password.Text = Password.Text.Replace('\t', ' ');
+            }
+            if (Name.Text.Contains('\n'))
+            {
+                Name.Text = Name.Text.Replace('\n', ' ');
             }
         }
     }

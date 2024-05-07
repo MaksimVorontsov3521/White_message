@@ -35,6 +35,12 @@ namespace White_server
             OleDbCommand com = new OleDbCommand(query, sqlConnection);
             com.ExecuteNonQuery();                        
         }
+        //public void previousMainChat(int p)
+        //{
+        //    string query = $"INSERT INTO {chat} (NickName,Message,ResivedTime) VALUES ('{user}','{message}','{now}')";
+        //    OleDbCommand com = new OleDbCommand(query, sqlConnection);
+        //    com.ExecuteNonQuery();
+        //}
         public int Entrance(string name,string password)
         {
             string query = $"SELECT COUNT(*) From Accounts Where AccountName='{name}' AND AccountPassword='{password}'";
