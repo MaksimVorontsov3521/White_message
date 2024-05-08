@@ -33,14 +33,28 @@ namespace White_server
             DateTime now = DateTime.UtcNow;
             string query = $"INSERT INTO {chat} (NickName,Message,ResivedTime) VALUES ('{user}','{message}','{now}')";
             OleDbCommand com = new OleDbCommand(query, sqlConnection);
-            com.ExecuteNonQuery();                        
+            com.ExecuteNonQuery();     
+            
         }
-        //public void previousMainChat(int p)
-        //{
-        //    string query = $"INSERT INTO {chat} (NickName,Message,ResivedTime) VALUES ('{user}','{message}','{now}')";
-        //    OleDbCommand com = new OleDbCommand(query, sqlConnection);
-        //    com.ExecuteNonQuery();
-        //}
+        public List<List<string>> previous(int p,string chat)
+        {
+            List<List<string>> history = new List<List<string>>();      
+            List<string> historymessage = new List<string>();
+            List<string> historyUser = new List<string>();
+            string query = $"Select Top {p} * From {chat} ORDER BY ResivedTime";
+            OleDbCommand com = new OleDbCommand(query, sqlConnection);
+            using (OleDbDataReader reader = com.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    historyUser.Add(reader["NickName"]!= DBNull.Value ? reader["NickName"].ToString() : null);
+                    historymessage.Add(reader["Message"] != DBNull.Value ? reader["Message"].ToString() : null);
+                }
+            }
+            history.Add(historyUser);
+            history.Add(historymessage);
+            return history;
+        }
         public int Entrance(string name,string password)
         {
             string query = $"SELECT COUNT(*) From Accounts Where AccountName='{name}' AND AccountPassword='{password}'";

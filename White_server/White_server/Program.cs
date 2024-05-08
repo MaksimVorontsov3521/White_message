@@ -54,13 +54,14 @@ namespace White_server
                 string message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
 
                 // ищем клиента в базе
-                message=account(message);
+                message=account(message, clientSocket);
                 if (message.StartsWith("//"))
                 {
                     buffer = Encoding.UTF8.GetBytes(message);
                     clientSocket.Send(buffer);
                     continue;
                 }
+
 
 
                 // Добавляем клиента в list<>
@@ -77,18 +78,16 @@ namespace White_server
                 clientThread.Start();
             }
         }
-        List<string> MainChat = new List<string>();
-        async void previousMainChat(int p)
+        
+        private string account(string message, Socket clientSocket)
         {
             
-        }
-        private string account(string message)
-        {
-           // Console.WriteLine($"Entered {message}");
-            string name, password;
+            // Console.WriteLine($"Entered {message}");
+            string name, password, prev;
             string[] parts = message.Split('\n');
             name = parts[0];
             password = parts[1];
+            prev = parts[2];
             if (message.StartsWith("\t"))
             {
                 name=name.Substring(1);
@@ -99,7 +98,19 @@ namespace White_server
             }
             if (1 == dataBase.Entrance(name, password))
             {
-                return name;
+                byte[] buffer = new byte[1024];
+                List<List<string>> MainChat = new List<List<string>>();
+                MainChat = dataBase.previous(Convert.ToInt32(prev), "MainChat");
+                string prevmessage;
+                List<string> historymessage = MainChat[1];
+                List<string> historyUser = MainChat[0];
+                for (int i = 0; i < historyUser.Count; i++)
+                {
+                    prevmessage = $"{historyUser[i]}: {historymessage[i]}\n";
+                    buffer = Encoding.UTF8.GetBytes(prevmessage);
+                    clientSocket.Send(buffer);
+                }
+                return name;               
             }
             else
             {

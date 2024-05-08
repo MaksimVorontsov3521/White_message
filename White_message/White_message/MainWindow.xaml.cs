@@ -44,13 +44,12 @@ namespace White_message
                 // Подключитесь к серверу
                 clientSocket.Connect(IPAddress.Parse(serverIP), port);
                 // Отправьте сообщение серверу
-                string message = Name.Text + "\n" + Password.Text;
+                int p = 10;
+                string message = Name.Text + "\n" + Password.Text+"\n"+ p;
                 byte[] buffer = Encoding.UTF8.GetBytes(message);
                 clientSocket.Send(buffer);
                 Connect.Visibility = Visibility.Hidden;
-                disConnect.Visibility = Visibility.Visible;
-                int p = 10;
-                previousMainChat(p);
+                disConnect.Visibility = Visibility.Visible;              
                 work();
             }
             catch
@@ -60,12 +59,6 @@ namespace White_message
                 Chat.Text += "Сервер не доступен\n";
             }
 
-        }
-        private void previousMainChat(int p)
-        {
-            string message = $"{p}";
-            byte[] buffer = Encoding.UTF8.GetBytes(message);
-            clientSocket.Send(buffer);
         }
 
         async void work()
