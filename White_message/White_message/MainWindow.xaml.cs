@@ -44,7 +44,8 @@ namespace White_message
                 // Подключитесь к серверу
                 clientSocket.Connect(IPAddress.Parse(serverIP), port);
                 // Отправьте сообщение серверу
-                int p = 10;
+                int p = Convert.ToInt32(PrevTbox.Text);
+                if (Chat.Text.Contains(':')) { p = 0; }
                 string message = Name.Text + "\n" + Password.Text+"\n"+ p;
                 byte[] buffer = Encoding.UTF8.GetBytes(message);
                 clientSocket.Send(buffer);
@@ -57,6 +58,7 @@ namespace White_message
                 Connect.Visibility = Visibility.Visible;
                 disConnect.Visibility = Visibility.Hidden;
                 Chat.Text += "Сервер не доступен\n";
+                clientSocket.Close();
             }
 
         }
@@ -79,7 +81,7 @@ namespace White_message
                             // разорванное соединение
                             case '0':
                                 t = false;
-                                Chat.Text += "Сервер разорвал соединение\n";
+                                Chat.Text += "Cоединение разорванно\n";
                                 break;
                             // кто онлайн?
                             case '1':
@@ -98,10 +100,15 @@ namespace White_message
                             case '5':
                                 Chat.Text += "Такой login уже существует\n";
                                 break;
+                            case '6':
+                                Chat.Text += "Этот пользователь уже в сети\n";
+                                break;
                         }
                     }
                     else
-                    { Chat.Text += message + "\n"; }
+                    {
+                        Chat.Text += message + "\n";
+                    }
 
                 }
 
@@ -265,5 +272,7 @@ namespace White_message
                 Name.Text = Name.Text.Replace('\n', ' ');
             }
         }
+
+
     }
 }

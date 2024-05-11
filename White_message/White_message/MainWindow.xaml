@@ -26,10 +26,11 @@
                         <TextBox x:Name="Password" HorizontalAlignment="Left" Height="23" Margin="10,273,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="55" TextChanged="Password_TextChanged"/>
                     </Grid>
                 </TabItem>
-                <TabItem Header="TabItem">
+                <TabItem Header="TabItem" Height="20" VerticalAlignment="Top">
                     <Grid Background="#FFE5E5E5">
                         <Button x:Name="ChangeViewShit" Content="ChangeView" HorizontalAlignment="Left" Height="89" Margin="21,26,0,0" VerticalAlignment="Top" Width="115" Click="ChangeViewShit_Click"/>
                         <Button x:Name="Registration" Content="Registration" HorizontalAlignment="Left" Height="89" Margin="173,26,0,0" VerticalAlignment="Top" Width="122" Click="Registration_Click"/>
+                        <TextBox x:Name="PrevTbox" HorizontalAlignment="Left" Height="27" Margin="21,153,0,0" Text="10" TextWrapping="Wrap" VerticalAlignment="Top" Width="57" Background="#FFE5E5E5" BorderBrush="#FFE5E5E5"/>
                     </Grid>
                 </TabItem>
             </TabControl>

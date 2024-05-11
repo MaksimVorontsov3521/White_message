@@ -80,14 +80,18 @@ namespace White_server
         }
         
         private string account(string message, Socket clientSocket)
-        {
-            
+        {            
             // Console.WriteLine($"Entered {message}");
             string name, password, prev;
             string[] parts = message.Split('\n');
             name = parts[0];
             password = parts[1];
             prev = parts[2];
+            for (int i = 0; i < Clients_list.Count; i++)
+            {
+                if (Clients_list[i].Name == name)
+                { return "//6"; }
+            }
             if (message.StartsWith("\t"))
             {
                 name=name.Substring(1);
@@ -97,7 +101,10 @@ namespace White_server
 
             }
             if (1 == dataBase.Entrance(name, password))
-            {
+            {   if (prev == "0")
+                {
+                    return name;
+                }
                 byte[] buffer = new byte[1024];
                 List<List<string>> MainChat = new List<List<string>>();
                 MainChat = dataBase.previous(Convert.ToInt32(prev), "MainChat");
