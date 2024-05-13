@@ -1,0 +1,15 @@
+X:\program\ФФФФФФ\White_message\White_message\bin\Debug\White_message.exe.config
+X:\program\ФФФФФФ\White_message\White_message\bin\Debug\White_message.exe
+X:\program\ФФФФФФ\White_message\White_message\bin\Debug\White_message.pdb
+X:\program\ФФФФФФ\White_message\White_message\obj\Debug\White_message.csproj.AssemblyReference.cache
+X:\program\ФФФФФФ\White_message\White_message\obj\Debug\MainWindow.g.cs
+X:\program\ФФФФФФ\White_message\White_message\obj\Debug\App.g.cs
+X:\program\ФФФФФФ\White_message\White_message\obj\Debug\White_message_MarkupCompile.cache
+X:\program\ФФФФФФ\White_message\White_message\obj\Debug\White_message_MarkupCompile.lref
+X:\program\ФФФФФФ\White_message\White_message\obj\Debug\MainWindow.baml
+X:\program\ФФФФФФ\White_message\White_message\obj\Debug\White_message.g.resources
+X:\program\ФФФФФФ\White_message\White_message\obj\Debug\White_message.Properties.Resources.resources
+X:\program\ФФФФФФ\White_message\White_message\obj\Debug\White_message.csproj.GenerateResource.cache
+X:\program\ФФФФФФ\White_message\White_message\obj\Debug\White_message.csproj.CoreCompileInputs.cache
+X:\program\ФФФФФФ\White_message\White_message\obj\Debug\White_message.exe
+X:\program\ФФФФФФ\White_message\White_message\obj\Debug\White_message.pdb

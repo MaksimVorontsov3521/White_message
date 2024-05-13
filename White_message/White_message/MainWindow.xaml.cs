@@ -17,17 +17,25 @@ using System.Net.Sockets;
 using System.Threading;
 using System.IO;
 using System.Reflection;
+using System.Data;
+using System.Data.OleDb;
 
 namespace White_message
 {
-
+    /// <summary>
+    /// Логика взаимодействия для MainWindow.xaml
+    /// </summary>
     public partial class MainWindow : Window
-    {    //сервер
+    {
         string serverIP = "192.168.88.18";
         int port = 8000;
         public MainWindow()
         {
             InitializeComponent();
+            string relativePath = "Data\\SrverDB.accdb";
+            string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
+            string connectionString = $"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={fullPath};";
+
         }
         Socket clientSocket = null;
         private void Connect_Click(object sender, RoutedEventArgs e)
@@ -46,11 +54,11 @@ namespace White_message
                 // Отправьте сообщение серверу
                 int p = Convert.ToInt32(PrevTbox.Text);
                 if (Chat.Text.Contains(':')) { p = 0; }
-                string message = Name.Text + "\n" + Password.Text+"\n"+ p;
+                string message = Name.Text + "\n" + Password.Text + "\n" + p;
                 byte[] buffer = Encoding.UTF8.GetBytes(message);
                 clientSocket.Send(buffer);
                 Connect.Visibility = Visibility.Hidden;
-                disConnect.Visibility = Visibility.Visible;              
+                disConnect.Visibility = Visibility.Visible;
                 work();
             }
             catch
