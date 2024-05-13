@@ -32,11 +32,25 @@ namespace White_message
         public MainWindow()
         {
             InitializeComponent();
-            string relativePath = "Data\\SrverDB.accdb";
+            string relativePath = "Data.accdb";
             string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
             string connectionString = $"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={fullPath};";
-
+            sqlConnection = new OleDbConnection(connectionString);
+            sqlConnection.Open();
+            string query = $"Select PasswordUser,UserName,LengthP From Account";
+            OleDbCommand com = new OleDbCommand(query, sqlConnection);
+            using (OleDbDataReader reader = com.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Name.Text = (reader["UserName"] != DBNull.Value ? reader["UserName"].ToString() : null);
+                    Password.Text = (reader["PasswordUser"] != DBNull.Value ? reader["PasswordUser"].ToString() : null);
+                    PrevTbox.Text = (reader["LengthP"] != DBNull.Value ? reader["LengthP"].ToString() : null);
+                }
+            }
+            connection();
         }
+        private OleDbConnection sqlConnection = null;
         Socket clientSocket = null;
         private void Connect_Click(object sender, RoutedEventArgs e)
         {
@@ -282,5 +296,17 @@ namespace White_message
         }
 
 
+        private void PrivAply_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string query = $"Update Account Set LengthP = {Convert.ToInt32(PrevTbox.Text)}";
+                OleDbCommand com = new OleDbCommand(query, sqlConnection);
+                com.ExecuteNonQuery();
+            }
+            catch
+            { }
+
+        }
     }
 }
