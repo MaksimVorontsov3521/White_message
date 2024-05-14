@@ -18,20 +18,21 @@
                         <TextBox x:Name="Message" HorizontalAlignment="Left" Height="50" Margin="116,276,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="491" KeyDown="Message_KeyDown"/>
                         <Label Content="Online" DockPanel.Dock="Right" Margin="619,19,0,0" VerticalAlignment="Top" Width="100" HorizontalAlignment="Left"/>
                         <ListBox x:Name="OnLine" DockPanel.Dock="Right" HorizontalAlignment="Left" Height="217" Margin="618,45,0,0" VerticalAlignment="Top" Width="100"/>
-                        </Grid>
+                    </Grid>
                 </TabItem>
                 <TabItem Header="TabItem" Height="20" VerticalAlignment="Top">
                     <Grid Background="#FFE5E5E5">
                         <Button x:Name="ChangeViewShit" Content="ChangeView" HorizontalAlignment="Left" Height="89" Margin="21,26,0,0" VerticalAlignment="Top" Width="115" Click="ChangeViewShit_Click"/>
                         <Button x:Name="Registration" Content="Registration" HorizontalAlignment="Left" Height="89" Margin="173,26,0,0" VerticalAlignment="Top" Width="122" Click="Registration_Click"/>
                         <TextBox x:Name="PrevTbox" HorizontalAlignment="Left" Height="27" Margin="21,146,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="64" Background="#FFE5E5E5" BorderBrush="#FFE5E5E5" Text="10"/>
-                    <Label Content="Name:" HorizontalAlignment="Left" Margin="21,178,0,0" VerticalAlignment="Top" Width="55" FontSize="16"/>
+                        <Label Content="Name:" HorizontalAlignment="Left" Margin="21,178,0,0" VerticalAlignment="Top" Width="55" FontSize="16"/>
                         <TextBox x:Name="Password" HorizontalAlignment="Left" Height="23" Margin="100,209,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="80" TextChanged="Password_TextChanged"/>
-                    <Label Content="Password:" HorizontalAlignment="Left" Margin="100,178,0,0" VerticalAlignment="Top" FontSize="16" />
-                        <Button x:Name="disConnect" Content="Disconnect" HorizontalAlignment="Left" Margin="10,306,0,0" VerticalAlignment="Top" Width="75" Visibility="Hidden" Background="White" Click="disConnect_Click"/>
+                        <Label Content="Password:" HorizontalAlignment="Left" Margin="100,178,0,0" VerticalAlignment="Top" FontSize="16" />
+                        <Button x:Name="disConnect" Content="Disconnect" HorizontalAlignment="Left" Margin="51,237,0,0" VerticalAlignment="Top" Width="75" Visibility="Hidden" Background="White" Click="disConnect_Click"/>
                         <TextBox x:Name="Name" HorizontalAlignment="Left" Height="23" Margin="21,209,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="64" TextChanged="Name_TextChanged"/>
                         <Button x:Name="Connect" Content="Connect" HorizontalAlignment="Left" Margin="51,237,0,0" VerticalAlignment="Top" Width="75" Background="White" Click="Connect_Click"/>
                         <Button x:Name="PrivAply" Content="Aply" HorizontalAlignment="Left" Margin="105,146,0,0" VerticalAlignment="Top" Width="75" Click="PrivAply_Click"/>
+                        <Label x:Name="SettingsMessage" Content="" HorizontalAlignment="Left" Height="25" Margin="21,281,0,0" VerticalAlignment="Top" Width="159"/>
                     </Grid>
                 </TabItem>
             </TabControl>

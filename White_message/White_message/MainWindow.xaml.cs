@@ -27,16 +27,18 @@ namespace White_message
     /// </summary>
     public partial class MainWindow : Window
     {
-        string serverIP = "192.168.88.18";
+        string serverIP = "127.0.0.1";
         int port = 8000;
         public MainWindow()
         {
             InitializeComponent();
+            // подключение к базе данных
             string relativePath = "Data.accdb";
             string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
             string connectionString = $"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={fullPath};";
             sqlConnection = new OleDbConnection(connectionString);
             sqlConnection.Open();
+            // Обрещение к базе данных для данных пользователя
             string query = $"Select PasswordUser,UserName,LengthP From Account";
             OleDbCommand com = new OleDbCommand(query, sqlConnection);
             using (OleDbDataReader reader = com.ExecuteReader())
@@ -50,6 +52,7 @@ namespace White_message
             }
             connection();
         }
+        // подключения
         private OleDbConnection sqlConnection = null;
         Socket clientSocket = null;
         private void Connect_Click(object sender, RoutedEventArgs e)
@@ -58,7 +61,6 @@ namespace White_message
         }
         public void connection()
         {
-
             // Создайте сокет TCP
             clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             try
@@ -73,16 +75,36 @@ namespace White_message
                 clientSocket.Send(buffer);
                 Connect.Visibility = Visibility.Hidden;
                 disConnect.Visibility = Visibility.Visible;
+                SettingsMessage.Content = "Вы подключились";              
                 work();
             }
             catch
             {
+                //Сервер не доступен
                 Connect.Visibility = Visibility.Visible;
                 disConnect.Visibility = Visibility.Hidden;
                 Chat.Text += "Сервер не доступен\n";
+                SettingsMessage.Content = "Сервер не доступен";
                 clientSocket.Close();
+            }           
+        }
+        public void offlinebuf()
+        {
+            string[] offmesages = new string[3];
+            string query = $"Select Message,TimeSended,Chat_name From Offline";
+            OleDbCommand com = new OleDbCommand(query, sqlConnection);
+            using (OleDbDataReader reader = com.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    offmesages[0] = (reader["Message"] != DBNull.Value ? reader["Message"].ToString() : null);
+                    offmesages[1] = (reader["TimeSended"] != DBNull.Value ? reader["TimeSended"].ToString() : null);
+                    offmesages[2] = (reader["Chat_name"] != DBNull.Value ? reader["Chat_name"].ToString() : null);
+                    Thread.Sleep(10);
+                    byte[] buffer = Encoding.UTF8.GetBytes(offmesages[0]);
+                    clientSocket.Send(buffer);
+                }
             }
-
         }
 
         async void work()
@@ -103,27 +125,45 @@ namespace White_message
                             // разорванное соединение
                             case '0':
                                 t = false;
-                                Chat.Text += "Cоединение разорванно\n";
+                                Chat.Text += "\nCоединение разорванно\n";
                                 break;
                             // кто онлайн?
                             case '1':
-                                OnLine.Items.Add(message.Substring(3));
+                                OnLine.Items.Clear();
+                                string[] messages = message.Split('\t');
+                                Chat.Text +=  messages[0].Remove(0,3);
+                                for (int i = 1; i < messages.Length; i++)
+                                {
+                                    OnLine.Items.Add(messages[i]);
+                                }                               
                                 break;
                             case '2':
-                                OnLine.Items.Clear();
+                                // Пусто
                                 break;
                             // регистрация и аккаунты
                             case '3':
                                 Chat.Text += "Неверное имя или пароль\n";
+                                SettingsMessage.Content = "Неверное имя или пароль";
                                 break;
                             case '4':
                                 Chat.Text += $"Создан новый аккаунт {Name.Text}\n";
+                                SettingsMessage.Content = $"Создан новый аккаунт {Name.Text}";
                                 break;
                             case '5':
                                 Chat.Text += "Такой login уже существует\n";
+                                SettingsMessage.Content = "Такой login уже существует";
                                 break;
                             case '6':
                                 Chat.Text += "Этот пользователь уже в сети\n";
+                                SettingsMessage.Content = "Этот пользователь уже в сети";
+                                break;
+                            case '7':
+                                message = message.Remove(0, 3);
+                                string[] parts = message.Split('\t');
+                                for (int i = 0; i < parts.Length; i++)
+                                {
+                                    Chat.Text += parts[i]+"\n";
+                                }
                                 break;
                         }
                     }
@@ -155,7 +195,6 @@ namespace White_message
             catch
             {
                 clientSocket.Close();
-                //clientSocket = null;
                 return "//0";
             }
         }
@@ -168,10 +207,18 @@ namespace White_message
             }
             catch
             {
-                Chat.Text += "Сервер разорвал соединение\n";
-
+                Save();
                 Message.Clear();
             }
+        }
+
+        private void Save()
+        {
+            DateTime now = DateTime.UtcNow;
+            string query = $"Insert Into Offline (Message,TimeSended,Chat_name,UserName) VALUES ('{Message.Text}','{now}','MainChat','{Name.Text}')";
+            OleDbCommand com = new OleDbCommand(query, sqlConnection);
+            com.ExecuteNonQuery();
+            Chat.Text += $"Offline {Name.Text}: {Message.Text}";
         }
 
         private void send_all()
@@ -255,7 +302,7 @@ namespace White_message
                 clientSocket.Connect(IPAddress.Parse(serverIP), port);
 
                 // Отправьте сообщение серверу
-                string message = "\t" + Name.Text + "\n" + Password.Text;
+                string message = "\t" + Name.Text + "\n" + Password.Text+ "\n" + " ";
                 byte[] buffer = Encoding.UTF8.GetBytes(message);
                 clientSocket.Send(buffer);
                 work();
@@ -272,14 +319,17 @@ namespace White_message
             if (Name.Text.Contains('/'))
             {
                 Name.Text = Name.Text.Replace('/', ' ');
+                SettingsMessage.Content = "Недопустимый символ";
             }
             if (Name.Text.Contains('\t'))
             {
                 Name.Text = Name.Text.Replace('\t', ' ');
+                SettingsMessage.Content = "Недопустимый символ";
             }
             if (Name.Text.Contains('\n'))
             {
                 Name.Text = Name.Text.Replace('\n', ' ');
+                SettingsMessage.Content = "Недопустимый символ";
             }
         }
         // ограничения для password
@@ -288,10 +338,12 @@ namespace White_message
             if (Password.Text.Contains('\t'))
             {
                 Password.Text = Password.Text.Replace('\t', ' ');
+                SettingsMessage.Content = "Недопустимый символ";
             }
             if (Name.Text.Contains('\n'))
             {
                 Name.Text = Name.Text.Replace('\n', ' ');
+                SettingsMessage.Content = "Недопустимый символ";
             }
         }
 
@@ -300,12 +352,16 @@ namespace White_message
         {
             try
             {
-                string query = $"Update Account Set LengthP = {Convert.ToInt32(PrevTbox.Text)}";
+                string query = $"Update Account Set LengthP = {Convert.ToInt32(PrevTbox.Text)},UserName = '{Name.Text}',PasswordUser = '{Password.Text}'";
                 OleDbCommand com = new OleDbCommand(query, sqlConnection);
                 com.ExecuteNonQuery();
+                SettingsMessage.Content = "Изменения приняты";
             }
             catch
-            { }
+            {
+                SettingsMessage.Content = "Неверный формат ввода ";
+            }
+
 
         }
     }
