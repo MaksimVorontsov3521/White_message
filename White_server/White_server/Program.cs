@@ -55,7 +55,7 @@ namespace White_server
 
                 // ищем клиента в базе
                 message=account(message, clientSocket);
-                if (message.StartsWith("//"))
+                if (message.StartsWith("\t"))
                 {
                     buffer = Encoding.UTF8.GetBytes(message);
                     clientSocket.Send(buffer);
@@ -89,15 +89,15 @@ namespace White_server
             for (int i = 0; i < Clients_list.Count; i++)
             {
                 if (Clients_list[i].Name == name)
-                { return "//6"; }
+                { return "\t6"; }
             }
             // Регистрация
             if (message.StartsWith("\t"))
             {// 4- Создан новый аккаунт / 5- Такой login уже существует
                 name =name.Substring(1);
                 if (dataBase.new_user(name, password))
-                { return "//4"; }
-                else { return "//5"; }
+                { return "\t4"; }
+                else { return "\t5"; }
 
             }
             // отправка прошлых сообщений
@@ -110,7 +110,7 @@ namespace White_server
                 byte[] buffer = new byte[1024];
                 List<List<string>> MainChat = new List<List<string>>();
                 MainChat = dataBase.previous(Convert.ToInt32(prev), "MainChat");
-                string prevmessage = "//7";
+                string prevmessage = "\t7";
                 List<string> historymessage = MainChat[1];
                 List<string> historyUser = MainChat[0];
                 for (int i = 0; i < historyUser.Count; i++)
@@ -123,7 +123,7 @@ namespace White_server
             }
             else
             {// Неверное имя или пароль
-                return "//3";
+                return "\t3";
             }
         }
 
@@ -195,16 +195,16 @@ namespace White_server
             byte[] buffer = null;
             if (Clients_list.Count == 1)
             {
-                message += "\t" + message.Remove(0,11);
+                message += "\n" + message.Remove(0,11);
             }
             else
             {
-                for (int i = 1; i < Clients_list.Count; i++)
+                for (int i = 0; i < Clients_list.Count; i++)
                 {
-                    message += "\t" + Clients_list[i];
+                    message += "\n" + Clients_list[i].Name;
                 }
             }
-            buffer = Encoding.UTF8.GetBytes($"//1{message}");
+            buffer = Encoding.UTF8.GetBytes($"\t1{message}");
             send(buffer);
         }
 

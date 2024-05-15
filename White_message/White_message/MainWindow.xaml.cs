@@ -116,10 +116,10 @@ namespace White_message
                 await Task.Run(() => message = listen());
                 if (message != null)
                 {
-                    bool DoubleSlash = message.StartsWith("//");
+                    bool DoubleSlash = message.StartsWith("\t");
                     if (DoubleSlash)
                     {
-                        char three = message[2];
+                        char three = message[1];
                         switch (three)
                         {
                             // разорванное соединение
@@ -130,8 +130,8 @@ namespace White_message
                             // кто онлайн?
                             case '1':
                                 OnLine.Items.Clear();
-                                string[] messages = message.Split('\t');
-                                Chat.Text +=  messages[0].Remove(0,3);
+                                string[] messages = message.Split('\n');
+                                Chat.Text +=  messages[0].Remove(0,2)+"\n";
                                 for (int i = 1; i < messages.Length; i++)
                                 {
                                     OnLine.Items.Add(messages[i]);
@@ -157,6 +157,7 @@ namespace White_message
                                 Chat.Text += "Этот пользователь уже в сети\n";
                                 SettingsMessage.Content = "Этот пользователь уже в сети";
                                 break;
+                            // Получение прошлых сообщений
                             case '7':
                                 message = message.Remove(0, 3);
                                 string[] parts = message.Split('\t');
@@ -195,7 +196,7 @@ namespace White_message
             catch
             {
                 clientSocket.Close();
-                return "//0";
+                return "\t0";
             }
         }
 
@@ -316,11 +317,7 @@ namespace White_message
         // ограничения для username
         private void Name_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (Name.Text.Contains('/'))
-            {
-                Name.Text = Name.Text.Replace('/', ' ');
-                SettingsMessage.Content = "Недопустимый символ";
-            }
+
             if (Name.Text.Contains('\t'))
             {
                 Name.Text = Name.Text.Replace('\t', ' ');
@@ -363,6 +360,14 @@ namespace White_message
             }
 
 
+        }
+        private void Message_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (Message.Text.Contains('\t'))
+            {
+                Message.Text = Message.Text.Replace('\t', ' ');
+                SettingsMessage.Content = "Недопустимый символ";
+            }
         }
     }
 }

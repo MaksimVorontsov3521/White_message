@@ -15,7 +15,7 @@
                         <Label Content="white&#xD;&#xA;message" HorizontalAlignment="Left"  Margin="10,19,0,0" VerticalAlignment="Top" Height="65" Width="72" FontFamily="Comic Sans MS" FontSize="16"/>
                         <TextBox x:Name="Chat" HorizontalAlignment="Left" Height="243" Margin="116,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="491"/>
                         <Button x:Name="Send" Content="Send" HorizontalAlignment="Left" Margin="116,344,0,0" VerticalAlignment="Top" Width="130" Height="45" Background="White" Click="Send_Click"/>
-                        <TextBox x:Name="Message" HorizontalAlignment="Left" Height="50" Margin="116,276,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="491" KeyDown="Message_KeyDown"/>
+                        <TextBox x:Name="Message" HorizontalAlignment="Left" Height="50" Margin="116,276,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="491" KeyDown="Message_KeyDown" TextChanged="Message_TextChanged"/>
                         <Label Content="Online" DockPanel.Dock="Right" Margin="619,19,0,0" VerticalAlignment="Top" Width="100" HorizontalAlignment="Left"/>
                         <ListBox x:Name="OnLine" DockPanel.Dock="Right" HorizontalAlignment="Left" Height="217" Margin="618,45,0,0" VerticalAlignment="Top" Width="100"/>
                     </Grid>
