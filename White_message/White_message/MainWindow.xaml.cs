@@ -29,6 +29,7 @@ namespace White_message
     {
         string serverIP = "127.0.0.1";
         int port = 8000;
+        string UserChat = null;
         public MainWindow()
         {
             InitializeComponent();
@@ -55,6 +56,7 @@ namespace White_message
         // подключения
         private OleDbConnection sqlConnection = null;
         Socket clientSocket = null;
+        string UserName = null;
         private void Connect_Click(object sender, RoutedEventArgs e)
         {
             connection();
@@ -71,6 +73,7 @@ namespace White_message
                 int p = Convert.ToInt32(PrevTbox.Text);
                 if (Chat.Text.Contains(':')) { p = 0; }
                 string message = Name.Text + "\n" + Password.Text + "\n" + p;
+                UserName = Name.Text;
                 byte[] buffer = Encoding.UTF8.GetBytes(message);
                 clientSocket.Send(buffer);
                 Connect.Visibility = Visibility.Hidden;
@@ -115,9 +118,8 @@ namespace White_message
             {
                 await Task.Run(() => message = listen());
                 if (message != null)
-                {
-                    bool DoubleSlash = message.StartsWith("\t");
-                    if (DoubleSlash)
+                {                   
+                    if (message.StartsWith("\t"))
                     {
                         char three = message[1];
                         switch (three)
@@ -227,7 +229,9 @@ namespace White_message
             string message = Message.Text;
             for (int i = 0; i < message.Length; i += 250)
             {
-                string block = message.Substring(i, Math.Min(250, message.Length - i));
+                string block = UserChat+message.Substring(i, Math.Min(250, message.Length - i));
+                if (UserChat != null)
+                { Chat.Text += message; }
                 byte[] buffer = Encoding.UTF8.GetBytes(block);
                 clientSocket.Send(buffer);
             }
@@ -258,7 +262,6 @@ namespace White_message
             //File.WriteAllText(Toofar, buff);
             //this.Close();           
         }
-
 
         private void ChangeViewShit_Click(object sender, RoutedEventArgs e)
         {
@@ -368,6 +371,25 @@ namespace White_message
                 Message.Text = Message.Text.Replace('\t', ' ');
                 SettingsMessage.Content = "Недопустимый символ";
             }
+        }
+
+        private void OnLine_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Convert.ToString(OnLine.SelectedItem) == UserName)
+            {
+                Chat.Text += "It is you";
+            }
+            else 
+            { 
+            WhatChat.Content = OnLine.SelectedItem;
+            UserChat = "\t" + OnLine.SelectedItem + "\t" + $"From {UserName} ";
+            }
+        }
+
+        private void BackMainChat_Click(object sender, RoutedEventArgs e)
+        {
+            WhatChat.Content = "Main";
+            UserChat = null;
         }
     }
 }

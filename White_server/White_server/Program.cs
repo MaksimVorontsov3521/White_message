@@ -80,45 +80,58 @@ namespace White_server
         {
             // Console.WriteLine($"Entered {message}");
             // message = User1\n123\n10 - разбиваеться по \n
+
             string name, password, prev;
             string[] parts = message.Split('\n');
+
             name = parts[0];
             password = parts[1];
             prev = parts[2];
+
             // "Этот пользователь уже в сети"
+
             for (int i = 0; i < Clients_list.Count; i++)
             {
                 if (Clients_list[i].Name == name)
                 { return "\t6"; }
             }
-            // Регистрация
-            if (message.StartsWith("\t"))
-            {// 4- Создан новый аккаунт / 5- Такой login уже существует
-                name =name.Substring(1);
-                if (dataBase.new_user(name, password))
-                { return "\t4"; }
-                else { return "\t5"; }
 
+            // Регистрация
+
+            if (message.StartsWith("\t"))
+            {
+                // 4- Создан новый аккаунт / 5- Такой login уже существует
+                name =name.Substring(1);
+                return (dataBase.new_user(name, password)) ? "\t4" : "\t5";
             }
+
             // отправка прошлых сообщений
             if (1 == dataBase.Entrance(name, password))
             {   if (prev == "0")
                 {
                     return name;
                 }
+
                 // отправка прошлых сообщений
                 byte[] buffer = new byte[1024];
-                List<List<string>> MainChat = new List<List<string>>();
-                MainChat = dataBase.previous(Convert.ToInt32(prev), "MainChat");
                 string prevmessage = "\t7";
+
+                List<List<string>> MainChat = new List<List<string>>();
+
+                MainChat = dataBase.previous(Convert.ToInt32(prev), "MainChat");
+
                 List<string> historymessage = MainChat[1];
                 List<string> historyUser = MainChat[0];
+
                 for (int i = 0; i < historyUser.Count; i++)
                 {
                     prevmessage += $"{historyUser[i]}: {historymessage[i]} \t";
                 }
+
                 buffer = Encoding.UTF8.GetBytes(prevmessage);
+
                 clientSocket.Send(buffer);
+
                 return name;               
             }
             else
@@ -147,23 +160,37 @@ namespace White_server
 
                     // Переводим биты в строки
                     string message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
-                   // Console.WriteLine($"Received from {client.Name}: {message}");
-                    try
+                    if (message.StartsWith("\t"))
                     {
-                        // записываем сообщение в базу данных
-                        dataBase.new_message(client.Name, message, "MainChat");
+                        
+                        string[] parts = message.Split('\t');
+                        byte[] responseBuffer = Encoding.UTF8.GetBytes(parts[2]);
+                        for (int i = 0; i < Clients_list.Count; i++)
+                        {
+                            if (Clients_list[i].Name == parts[1])
+                            { 
+                                Clients_list[i].Socket.Send(responseBuffer);
+                            }
+                        }
                     }
-                    catch
+                    else
                     {
-                        client.Socket.Disconnect(false);
-                        disconect(client); break;
+                        try
+                        {
+                            // записываем сообщение в базу данных
+                            dataBase.new_message(client.Name, message, "MainChat");
+                        }
+                        catch
+                        {
+                            client.Socket.Disconnect(false);
+                            disconect(client); break;
+                        }
+
+                        // Отправляем сообщения клиентам
+                        string response = $"{client.Name}: {message}";
+                        byte[] responseBuffer = Encoding.UTF8.GetBytes(response);
+                        send(responseBuffer);
                     }
-
-
-                    // Отправляем сообщения клиентам
-                    string response = $"{client.Name}: {message}";
-                    byte[] responseBuffer = Encoding.UTF8.GetBytes(response);
-                    send(responseBuffer);
 
                 }
             }
@@ -182,7 +209,7 @@ namespace White_server
 
         // отправить сообщение всем пользователям
         private void send(byte[] message)
-        { 
+        {
             for (int i = 0; i < Clients_list.Count; i++)
             {
                 Clients_list[i].Socket.Send(message);
