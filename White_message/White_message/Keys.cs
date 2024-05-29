@@ -37,22 +37,41 @@ namespace White_message
             }
 
         }
-        public void decoder(uint[] message)
+        public string decoder(string intmessage, int bytesReceived)
         {
+            byte[] buffer = new byte[1024];
+            string[] letters = intmessage.Split(',');
+            uint[] message = new uint[letters.Length];
             for (int i = 0; i < message.Length; i++)
             {
+                message[i] = Convert.ToUInt32(letters);
                 message[i] = message[i] ^ Convert.ToUInt32(d);
                 message[i] = message[i] % openkey;
+                buffer[i] = Convert.ToByte(message[i]);
             }
+            string replyMessage = Encoding.UTF8.GetString(buffer, 0, bytesReceived);
+            return replyMessage;
         }
-        public uint[] coder(uint[] message, uint e, uint OpenKey)
+        public byte[] coder(byte[] Bmessage, uint e, uint OpenKey)
         {
-            for (int i = 0; i < message[i]; i++)
+            string intmessage = null;
+            uint[] message = new uint[Bmessage.Length];
+            for (int i = 0; i < message.Length; i++)
+            {
+                message[i] = Convert.ToUInt32(Bmessage[i]);
+            }
+            for (int i = 0; i < message.Length; i++)
             {
                 message[i] = (message[i] ^ e) % OpenKey;
             }
-            return message;
+            for (int i = 0; i < message.Length; i++)
+            {
+                intmessage += Convert.ToString(message[i]) + ",";
+            }
+            byte[] buffer = Encoding.UTF8.GetBytes(intmessage);
+            return buffer;
         }
+
         public static bool IsInteger(double number)
         {
             return number == Math.Truncate(number);
