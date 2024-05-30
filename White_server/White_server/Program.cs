@@ -170,9 +170,7 @@ namespace White_server
                     // Если клиен отключился от сервера удаляем его из списков
                     if (receivedBytes == 0)
                     {
-                        continue;
-                        //Console.WriteLine($"Client disconnected: {client.Socket.RemoteEndPoint}");
-                        //disconect(client); break;
+                        disconect(client); break;
                     }
 
                     // Переводим биты в строки
@@ -191,7 +189,6 @@ namespace White_server
                         }
                         catch
                         {
-                            client.Socket.Disconnect(false);
                             disconect(client); break;
                         }
 
@@ -212,16 +209,15 @@ namespace White_server
                         send(responseBuffer);
                         try
                         {
+                            string[] parts = message.Split('\0');
                             // записываем сообщение в базу данных
-                            dataBase.new_message(client.Name, message, "MainChat");
+                            dataBase.new_message(client.Name, parts[0], "MainChat");
 
                         }
                         catch
-                        {
-                            client.Socket.Disconnect(false);
+                        {                  
                             disconect(client); break;
                         }
-
 
                     }
 
@@ -232,11 +228,6 @@ namespace White_server
                 // Если клиен отключился от сервера удаляем его из списков
                 Console.WriteLine($"Error handling client: {ex.Message}");
                 disconect(client);
-            }
-            finally
-            {
-                // Close the client socket
-                client.Socket.Close();
             }
         }
 
@@ -271,11 +262,13 @@ namespace White_server
 
         private void disconect(Clients client)
         {
+            Console.WriteLine($"Client disconnected: {client.Socket.RemoteEndPoint}");
             string mess = $"{client.Name} - disconnected";
             byte[] ResponseBuffer = Encoding.UTF8.GetBytes(mess);
             int indexof = Clients_list.IndexOf(client);
             Clients_list.RemoveAt(indexof);
             update_OnLine($"disconnected: {client.Name}");
+            client.Socket.Close();
         }
 
     }
