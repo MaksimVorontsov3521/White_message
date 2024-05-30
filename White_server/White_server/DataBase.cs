@@ -76,6 +76,9 @@ namespace White_server
                 query = $"INSERT INTO Accounts (AccountName, AccountPassword) VALUES ('{name}', '{password}')";
                 com = new OleDbCommand(query, sqlConnection);
                 com.ExecuteScalar();
+                query = $"Create Table {name} (ID counter,NickName varchar(255),Message varchar(255),ResivedTime Time)";
+                com = new OleDbCommand(query, sqlConnection);
+                com.ExecuteScalar();
                 return true;
             }
         }

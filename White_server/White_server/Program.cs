@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace White_server
-{
+{   
     class Clients
     {
         public Socket Socket { get; set; }
@@ -23,11 +23,25 @@ namespace White_server
     {
         List<Clients> Clients_list = new List<Clients>();
         DataBase dataBase = null;
+        Keys Keys = new Keys();
+        int e = 0; uint OpenKey = 0;
         static void Main(string[] args)
         {
             Server server = new Server();
             // начало работы
             server.work();
+        }
+
+        private void workKeys(Socket clientSocket)
+        {
+            byte[] buffer = new byte[1024];
+            int receivedBytes = clientSocket.Receive(buffer);
+            string message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
+            string[] keys = message.Split('\t');
+            e = Convert.ToInt32(keys[0]); OpenKey = Convert.ToUInt32(keys[1]);
+            message = Convert.ToString(Keys.giveOpen_e()) + "\t" + Convert.ToString(Keys.giveOpenkey());
+            buffer = Encoding.UTF8.GetBytes(message);
+            clientSocket.Send(buffer);
         }
         private void work()
         {
@@ -49,15 +63,18 @@ namespace White_server
                 Socket clientSocket = serverSocket.Accept();
                 byte[] buffer = new byte[1024];
 
+                workKeys(clientSocket);
+
                 // получаем сообщение от клиента
                 int receivedBytes = clientSocket.Receive(buffer);
                 string message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
-
+                message = Keys.decoder(message, receivedBytes);
                 // ищем клиента в базе
                 message=account(message, clientSocket);
                 if (message.StartsWith("\t"))
                 {
                     buffer = Encoding.UTF8.GetBytes(message);
+                    buffer=Keys.coder(buffer, e, OpenKey);
                     clientSocket.Send(buffer);
                     continue;
                 }
@@ -78,7 +95,6 @@ namespace White_server
         
         private string account(string message, Socket clientSocket)
         {
-            // Console.WriteLine($"Entered {message}");
             // message = User1\n123\n10 - разбиваеться по \n
 
             string name, password, prev;
@@ -129,7 +145,7 @@ namespace White_server
                 }
 
                 buffer = Encoding.UTF8.GetBytes(prevmessage);
-
+                buffer = Keys.coder(buffer, e, OpenKey);
                 clientSocket.Send(buffer);
 
                 return name;               
@@ -154,17 +170,31 @@ namespace White_server
                     // Если клиен отключился от сервера удаляем его из списков
                     if (receivedBytes == 0)
                     {
-                        Console.WriteLine($"Client disconnected: {client.Socket.RemoteEndPoint}");
-                        disconect(client); break;
+                        continue;
+                        //Console.WriteLine($"Client disconnected: {client.Socket.RemoteEndPoint}");
+                        //disconect(client); break;
                     }
 
                     // Переводим биты в строки
                     string message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
+                    message = Keys.decoder(message, receivedBytes);
+
                     if (message.StartsWith("\t"))
                     {
-                        
                         string[] parts = message.Split('\t');
-                        byte[] responseBuffer = Encoding.UTF8.GetBytes(parts[2]);
+                        byte[] responseBuffer = Encoding.UTF8.GetBytes(parts[2]+parts[3]);                        
+                        responseBuffer = Keys.coder(responseBuffer, e, OpenKey);
+                        try
+                        {
+                            // записываем сообщение в базу данных
+                            dataBase.new_message(parts[2], parts[3], client.Name);
+                        }
+                        catch
+                        {
+                            client.Socket.Disconnect(false);
+                            disconect(client); break;
+                        }
+
                         for (int i = 0; i < Clients_list.Count; i++)
                         {
                             if (Clients_list[i].Name == parts[1])
@@ -175,10 +205,16 @@ namespace White_server
                     }
                     else
                     {
+                        // Отправляем сообщение всем клиентам
+                        string response = $"{client.Name}: {message}";
+                        byte[] responseBuffer = Encoding.UTF8.GetBytes(response);
+                        responseBuffer = Keys.coder(responseBuffer, e, OpenKey);
+                        send(responseBuffer);
                         try
                         {
                             // записываем сообщение в базу данных
                             dataBase.new_message(client.Name, message, "MainChat");
+
                         }
                         catch
                         {
@@ -186,10 +222,7 @@ namespace White_server
                             disconect(client); break;
                         }
 
-                        // Отправляем сообщения клиентам
-                        string response = $"{client.Name}: {message}";
-                        byte[] responseBuffer = Encoding.UTF8.GetBytes(response);
-                        send(responseBuffer);
+
                     }
 
                 }
@@ -232,6 +265,7 @@ namespace White_server
                 }
             }
             buffer = Encoding.UTF8.GetBytes($"\t1{message}");
+            buffer = Keys.coder(buffer, e, OpenKey);
             send(buffer);
         }
 
