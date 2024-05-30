@@ -30,6 +30,8 @@ namespace White_message
         string serverIP = "127.0.0.1";
         int port = 8000;
         string UserChat = null;
+        Keys Keys = null;
+        int e = 0; uint OpenKey = 0;
         public MainWindow()
         {
             InitializeComponent();
@@ -39,7 +41,8 @@ namespace White_message
             string connectionString = $"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={fullPath};";
             sqlConnection = new OleDbConnection(connectionString);
             sqlConnection.Open();
-            // Обрещение к базе данных для данных пользователя
+
+            // Обращение к базе данных для данных пользователя
             string query = $"Select PasswordUser,UserName,LengthP From Account";
             OleDbCommand com = new OleDbCommand(query, sqlConnection);
             using (OleDbDataReader reader = com.ExecuteReader())
@@ -51,6 +54,7 @@ namespace White_message
                     PrevTbox.Text = (reader["LengthP"] != DBNull.Value ? reader["LengthP"].ToString() : null);
                 }
             }
+            Keys = new Keys();
             connection();
         }
         // подключения
@@ -58,8 +62,19 @@ namespace White_message
         Socket clientSocket = null;
         string UserName = null;
         private void Connect_Click(object sender, RoutedEventArgs e)
-        {
+        {          
             connection();
+        }
+        public void workKeys()
+        {
+            string message; byte[] buffer = new byte[1024];
+            message = Convert.ToString(Keys.giveOpen_e()) + "\t" + Convert.ToString(Keys.giveOpenkey());
+            buffer = Encoding.UTF8.GetBytes(message);
+            clientSocket.Send(buffer);
+            int receivedBytes = clientSocket.Receive(buffer);
+            message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
+            string[] keys = message.Split('\t');
+            e = Convert.ToInt32(keys[0]); OpenKey = Convert.ToUInt32(keys[1]);
         }
         public void connection()
         {
@@ -69,23 +84,24 @@ namespace White_message
             {
                 // Подключитесь к серверу
                 clientSocket.Connect(IPAddress.Parse(serverIP), port);
+                workKeys();
                 // Отправьте сообщение серверу
                 int p = Convert.ToInt32(PrevTbox.Text);
                 if (Chat.Text.Contains(':')) { p = 0; }
                 string message = Name.Text + "\n" + Password.Text + "\n" + p;
                 UserName = Name.Text;
                 byte[] buffer = Encoding.UTF8.GetBytes(message);
+                //////////////
+                buffer = Keys.coder(buffer,e,OpenKey);
+                //////////////
                 clientSocket.Send(buffer);
-                Connect.Visibility = Visibility.Hidden;
-                disConnect.Visibility = Visibility.Visible;
                 SettingsMessage.Content = "Вы подключились";              
                 work();
+                regtangle.Visibility = Visibility.Hidden;
             }
             catch
             {
                 //Сервер не доступен
-                Connect.Visibility = Visibility.Visible;
-                disConnect.Visibility = Visibility.Hidden;
                 Chat.Text += "Сервер не доступен\n";
                 SettingsMessage.Content = "Сервер не доступен";
                 clientSocket.Close();
@@ -105,6 +121,7 @@ namespace White_message
                     offmesages[2] = (reader["Chat_name"] != DBNull.Value ? reader["Chat_name"].ToString() : null);
                     Thread.Sleep(10);
                     byte[] buffer = Encoding.UTF8.GetBytes(offmesages[0]);
+                    buffer = Keys.coder(buffer, e, OpenKey);
                     clientSocket.Send(buffer);
                 }
             }
@@ -146,18 +163,22 @@ namespace White_message
                             case '3':
                                 Chat.Text += "Неверное имя или пароль\n";
                                 SettingsMessage.Content = "Неверное имя или пароль";
+                                regtangle.Visibility = Visibility.Visible;
                                 break;
                             case '4':
                                 Chat.Text += $"Создан новый аккаунт {Name.Text}\n";
                                 SettingsMessage.Content = $"Создан новый аккаунт {Name.Text}";
+                                regtangle.Visibility = Visibility.Visible;
                                 break;
                             case '5':
                                 Chat.Text += "Такой login уже существует\n";
                                 SettingsMessage.Content = "Такой login уже существует";
+                                regtangle.Visibility = Visibility.Visible;
                                 break;
                             case '6':
                                 Chat.Text += "Этот пользователь уже в сети\n";
                                 SettingsMessage.Content = "Этот пользователь уже в сети";
+                                regtangle.Visibility = Visibility.Visible;
                                 break;
                             // Получение прошлых сообщений
                             case '7':
@@ -174,9 +195,7 @@ namespace White_message
                     {
                         Chat.Text += message + "\n";
                     }
-
                 }
-
             }
             clientSocket.Close();
         }
@@ -190,8 +209,8 @@ namespace White_message
                 string replyMessage = null;
                 if (bytesReceived > 0)
                 {
-                    replyMessage = Encoding.UTF8.GetString(buffer, 0, bytesReceived);
-                    // Выведите ответ сервера
+                    replyMessage = Encoding.UTF8.GetString(buffer, 0, bytesReceived);                 
+                    replyMessage = Keys.decoder(replyMessage, bytesReceived);
                 }
                 return replyMessage;
             }
@@ -231,8 +250,11 @@ namespace White_message
             {
                 string block = UserChat+message.Substring(i, Math.Min(250, message.Length - i));
                 if (UserChat != null)
-                { Chat.Text += message; }
+                { Chat.Text += "\n"+message; }
                 byte[] buffer = Encoding.UTF8.GetBytes(block);
+                //////////////
+                buffer = Keys.coder(buffer, e, OpenKey);
+                //////////////
                 clientSocket.Send(buffer);
             }
             Message.Clear();
@@ -288,8 +310,7 @@ namespace White_message
             clientSocket.Close();
             OnLine.Items.Clear();
             //clientSocket = null;
-            disConnect.Visibility = Visibility.Hidden;
-            Connect.Visibility = Visibility.Visible;
+            regtangle.Visibility = Visibility.Visible;          
         }
 
         /// <summary>
@@ -308,6 +329,9 @@ namespace White_message
                 // Отправьте сообщение серверу
                 string message = "\t" + Name.Text + "\n" + Password.Text+ "\n" + " ";
                 byte[] buffer = Encoding.UTF8.GetBytes(message);
+                //
+                buffer = Keys.coder(buffer, this.e, OpenKey);
+                //
                 clientSocket.Send(buffer);
                 work();
             }
@@ -347,7 +371,6 @@ namespace White_message
             }
         }
 
-
         private void PrivAply_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -364,6 +387,7 @@ namespace White_message
 
 
         }
+
         private void Message_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (Message.Text.Contains('\t'))
@@ -377,13 +401,15 @@ namespace White_message
         {
             if (Convert.ToString(OnLine.SelectedItem) == UserName)
             {
-                Chat.Text += "It is you";
+                WhatChat.Content = "It is you";
             }
-            else 
-            { 
-            WhatChat.Content = OnLine.SelectedItem;
-            UserChat = "\t" + OnLine.SelectedItem + "\t" + $"From {UserName} ";
+            else
+            {
+                WhatChat.Content = OnLine.SelectedItem;
             }
+            
+            UserChat = "\t" + OnLine.SelectedItem + "\t" + $"From {UserName} \t";
+           
         }
 
         private void BackMainChat_Click(object sender, RoutedEventArgs e)

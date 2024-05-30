@@ -28,18 +28,18 @@ X:\program\3521п1ин2\White_message\White_message\obj\Debug\White_message.cspr
 X:\program\3521п1ин2\White_message\White_message\obj\Debug\White_message.csproj.CoreCompileInputs.cache
 X:\program\3521п1ин2\White_message\White_message\obj\Debug\White_message.exe
 X:\program\3521п1ин2\White_message\White_message\obj\Debug\White_message.pdb
-C:\Users\user\Desktop\fufufu\White_message\White_message\White_message\bin\Debug\White_message.exe.config
-C:\Users\user\Desktop\fufufu\White_message\White_message\White_message\bin\Debug\White_message.exe
-C:\Users\user\Desktop\fufufu\White_message\White_message\White_message\bin\Debug\White_message.pdb
-C:\Users\user\Desktop\fufufu\White_message\White_message\White_message\obj\Debug\White_message.csproj.AssemblyReference.cache
-C:\Users\user\Desktop\fufufu\White_message\White_message\White_message\obj\Debug\MainWindow.g.cs
-C:\Users\user\Desktop\fufufu\White_message\White_message\White_message\obj\Debug\App.g.cs
-C:\Users\user\Desktop\fufufu\White_message\White_message\White_message\obj\Debug\White_message_MarkupCompile.cache
-C:\Users\user\Desktop\fufufu\White_message\White_message\White_message\obj\Debug\White_message_MarkupCompile.lref
-C:\Users\user\Desktop\fufufu\White_message\White_message\White_message\obj\Debug\MainWindow.baml
-C:\Users\user\Desktop\fufufu\White_message\White_message\White_message\obj\Debug\White_message.g.resources
-C:\Users\user\Desktop\fufufu\White_message\White_message\White_message\obj\Debug\White_message.Properties.Resources.resources
-C:\Users\user\Desktop\fufufu\White_message\White_message\White_message\obj\Debug\White_message.csproj.GenerateResource.cache
-C:\Users\user\Desktop\fufufu\White_message\White_message\White_message\obj\Debug\White_message.csproj.CoreCompileInputs.cache
-C:\Users\user\Desktop\fufufu\White_message\White_message\White_message\obj\Debug\White_message.exe
-C:\Users\user\Desktop\fufufu\White_message\White_message\White_message\obj\Debug\White_message.pdb
+X:\Desktop\Почемуто не работает как надо\White_message\White_message\bin\Debug\White_message.exe.config
+X:\Desktop\Почемуто не работает как надо\White_message\White_message\bin\Debug\White_message.exe
+X:\Desktop\Почемуто не работает как надо\White_message\White_message\bin\Debug\White_message.pdb
+X:\Desktop\Почемуто не работает как надо\White_message\White_message\obj\Debug\White_message.csproj.AssemblyReference.cache
+X:\Desktop\Почемуто не работает как надо\White_message\White_message\obj\Debug\MainWindow.g.cs
+X:\Desktop\Почемуто не работает как надо\White_message\White_message\obj\Debug\App.g.cs
+X:\Desktop\Почемуто не работает как надо\White_message\White_message\obj\Debug\White_message_MarkupCompile.cache
+X:\Desktop\Почемуто не работает как надо\White_message\White_message\obj\Debug\White_message_MarkupCompile.lref
+X:\Desktop\Почемуто не работает как надо\White_message\White_message\obj\Debug\MainWindow.baml
+X:\Desktop\Почемуто не работает как надо\White_message\White_message\obj\Debug\White_message.g.resources
+X:\Desktop\Почемуто не работает как надо\White_message\White_message\obj\Debug\White_message.Properties.Resources.resources
+X:\Desktop\Почемуто не работает как надо\White_message\White_message\obj\Debug\White_message.csproj.GenerateResource.cache
+X:\Desktop\Почемуто не работает как надо\White_message\White_message\obj\Debug\White_message.csproj.CoreCompileInputs.cache
+X:\Desktop\Почемуто не работает как надо\White_message\White_message\obj\Debug\White_message.exe
+X:\Desktop\Почемуто не работает как надо\White_message\White_message\obj\Debug\White_message.pdb
