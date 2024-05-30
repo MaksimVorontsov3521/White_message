@@ -15,7 +15,6 @@ namespace White_server
         public Keys()
         {
             createkeys(ref openkey, ref Open_e);
-            Console.WriteLine("Key is ready");
         }
         public ulong giveOpenkey()
         {
@@ -46,7 +45,8 @@ namespace White_server
                 d = (fi * ii + 1) / Open_e;
                 if ((fi * ii + 1) % Open_e == 0) { Integer = true; }
             }
-            return d < 1000;
+            // Console.WriteLine("Key is ready");
+            return d < 1000 && d > 50;
         }
         public string decoder(string intmessage, int bytesReceived)
         {

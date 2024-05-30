@@ -7,12 +7,12 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace White_server
-{   
+{
     class Clients
     {
         public Socket Socket { get; set; }
         public string Name { get; set; }
-        public Clients(Socket socket,string name)
+        public Clients(Socket socket, string name)
         {
             Socket = socket;
             Name = name;
@@ -23,7 +23,7 @@ namespace White_server
     {
         List<Clients> Clients_list = new List<Clients>();
         DataBase dataBase = null;
-        Keys Keys = new Keys();
+        Keys Keys = null;
         int e = 0; uint OpenKey = 0;
         static void Main(string[] args)
         {
@@ -31,68 +31,6 @@ namespace White_server
             // начало работы
             server.work();
         }
-
-        private void workKeys(Socket clientSocket)
-        {
-            byte[] buffer = new byte[1024];
-            int receivedBytes = clientSocket.Receive(buffer);
-            string message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
-            string[] keys = message.Split('\t');
-            e = Convert.ToInt32(keys[0]); OpenKey = Convert.ToUInt32(keys[1]);
-            message = Convert.ToString(Keys.giveOpen_e()) + "\t" + Convert.ToString(Keys.giveOpenkey());
-            buffer = Encoding.UTF8.GetBytes(message);
-            clientSocket.Send(buffer);
-        }
-        private void work()
-        {
-            DataBase dataBase = new DataBase();
-            this.dataBase = dataBase;
-            // Настройки сервера
-            const int port = 8000; // Replace with your desired port
-            string ipAddress = "127.0.0.1"; // Replace with your IP address or "*" for all interfaces
-            Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
-            // Прослушка
-            serverSocket.Bind(new IPEndPoint(IPAddress.Parse(ipAddress), port));
-            serverSocket.Listen(10); // Backlog
-            Console.WriteLine($"Server listening on port {port}...");
-
-            // Подключить клиента
-            while (true)
-            {
-                Socket clientSocket = serverSocket.Accept();
-                byte[] buffer = new byte[1024];
-
-                workKeys(clientSocket);
-
-                // получаем сообщение от клиента
-                int receivedBytes = clientSocket.Receive(buffer);
-                string message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
-                message = Keys.decoder(message, receivedBytes);
-                // ищем клиента в базе
-                message=account(message, clientSocket);
-                if (message.StartsWith("\t"))
-                {
-                    buffer = Encoding.UTF8.GetBytes(message);
-                    buffer=Keys.coder(buffer, e, OpenKey);
-                    clientSocket.Send(buffer);
-                    continue;
-                }
-
-                // Добавляем клиента в list<>
-                Clients client = new Clients(clientSocket,message);
-                Clients_list.Add(client);
-                Thread.Sleep(100);
-                // Говорим всем, что подключился клиент
-                update_OnLine($"connected: {message}");
-                Console.WriteLine($"Client connected: {clientSocket.RemoteEndPoint} - Name: {message}");
-
-                // Handle client communication in a separate thread
-                Thread clientThread = new Thread(() => HandleClient(client));
-                clientThread.Start();
-            }
-        }
-        
         private string account(string message, Socket clientSocket)
         {
             // message = User1\n123\n10 - разбиваеться по \n
@@ -117,13 +55,14 @@ namespace White_server
             if (message.StartsWith("\t"))
             {
                 // 4- Создан новый аккаунт / 5- Такой login уже существует
-                name =name.Substring(1);
+                name = name.Substring(1);
                 return (dataBase.new_user(name, password)) ? "\t4" : "\t5";
             }
 
             // отправка прошлых сообщений
             if (1 == dataBase.Entrance(name, password))
-            {   if (prev == "0")
+            {
+                if (prev == "0")
                 {
                     return name;
                 }
@@ -148,7 +87,7 @@ namespace White_server
                 buffer = Keys.coder(buffer, e, OpenKey);
                 clientSocket.Send(buffer);
 
-                return name;               
+                return name;
             }
             else
             {// Неверное имя или пароль
@@ -156,16 +95,97 @@ namespace White_server
             }
         }
 
-        private void HandleClient(Clients client)
+        private void workKeys(Socket clientSocket)
         {
+            try
+            {
+                byte[] buffer = new byte[1024];
+                int receivedBytes = clientSocket.Receive(buffer);
+                string message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
+                string[] keys = message.Split('\t');
+                e = Convert.ToInt32(keys[0]); OpenKey = Convert.ToUInt32(keys[1]);
+                Thread.Sleep(100);
+                message = Convert.ToString(Keys.giveOpen_e()) + "\t" + Convert.ToString(Keys.giveOpenkey());
+                buffer = Encoding.UTF8.GetBytes(message);
+                clientSocket.Send(buffer);
+            }
+            catch { }
+        }
+        private void work()
+        {
+            DataBase dataBase = new DataBase();
+            this.dataBase = dataBase;
+            // Настройки сервера
+            const int port = 8000; // Replace with your desired port
+            string ipAddress = "127.0.0.1"; // Replace with your IP address or "*" for all interfaces
+            Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+            // Прослушка
+            serverSocket.Bind(new IPEndPoint(IPAddress.Parse(ipAddress), port));
+            serverSocket.Listen(10); // Backlog
+            Console.WriteLine($"Server listening on port {port}...");
+
+            // Подключить клиента
+            while (true)
+            {
+                Socket clientSocket = serverSocket.Accept();
+                // Handle client communication in a separate thread
+                Thread clientThread = new Thread(() => HandleClient(clientSocket));
+                clientThread.Start();
+            }
+        }
+
+        private void HandleClient(Socket clientSocket)
+        {
+            Keys = new Keys();
+            byte[] buffer = new byte[1024];
+            string message=null; int receivedBytes;
+            workKeys(clientSocket);
+            // получаем сообщение от клиента
+            receivedBytes = clientSocket.Receive(buffer);
+            message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
+        workK:
+            try
+            {
+                message = Keys.decoder(message, receivedBytes);
+            }
+            catch 
+            {
+                try
+                {
+                    workKeys(clientSocket);
+                    buffer = Encoding.UTF8.GetBytes("\t2");
+                    buffer = Keys.coder(buffer, e, OpenKey);
+                    clientSocket.Send(buffer);
+                    goto workK;
+                }
+                catch { return; }
+            }
+            // ищем клиента в базе
+            message = account(message, clientSocket);
+            if (message.StartsWith("\t"))
+            {
+                buffer = Encoding.UTF8.GetBytes(message);
+                buffer = Keys.coder(buffer, e, OpenKey);
+                clientSocket.Send(buffer);
+                return;
+            }
+
+            // Добавляем клиента в list<>
+            Clients client = new Clients(clientSocket, message);
+            Clients_list.Add(client);
+            Thread.Sleep(100);
+            // Говорим всем, что подключился клиент
+            update_OnLine($"connected: {message}");
+            Console.WriteLine($"Client connected: {clientSocket.RemoteEndPoint} - Name: {message}");
+
 
             try
             {
                 while (true)
                 {
                     // Получаем данные от клиента в битах
-                    byte[] buffer = new byte[1024];
-                    int receivedBytes = client.Socket.Receive(buffer);
+                    receivedBytes = client.Socket.Receive(buffer);
 
                     // Если клиен отключился от сервера удаляем его из списков
                     if (receivedBytes == 0)
@@ -174,13 +194,13 @@ namespace White_server
                     }
 
                     // Переводим биты в строки
-                    string message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
+                    message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
                     message = Keys.decoder(message, receivedBytes);
 
                     if (message.StartsWith("\t"))
                     {
                         string[] parts = message.Split('\t');
-                        byte[] responseBuffer = Encoding.UTF8.GetBytes(parts[2]+parts[3]);                        
+                        byte[] responseBuffer = Encoding.UTF8.GetBytes(parts[2] + parts[3]);
                         responseBuffer = Keys.coder(responseBuffer, e, OpenKey);
                         try
                         {
@@ -195,7 +215,7 @@ namespace White_server
                         for (int i = 0; i < Clients_list.Count; i++)
                         {
                             if (Clients_list[i].Name == parts[1])
-                            { 
+                            {
                                 Clients_list[i].Socket.Send(responseBuffer);
                             }
                         }
@@ -215,7 +235,7 @@ namespace White_server
 
                         }
                         catch
-                        {                  
+                        {
                             disconect(client); break;
                         }
 
@@ -246,7 +266,7 @@ namespace White_server
             byte[] buffer = null;
             if (Clients_list.Count == 1)
             {
-                message += "\n" + message.Remove(0,11);
+                message += "\n" + message.Remove(0, 11);
             }
             else
             {

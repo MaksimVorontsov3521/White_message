@@ -71,6 +71,7 @@ namespace White_message
             message = Convert.ToString(Keys.giveOpen_e()) + "\t" + Convert.ToString(Keys.giveOpenkey());
             buffer = Encoding.UTF8.GetBytes(message);
             clientSocket.Send(buffer);
+            Thread.Sleep(100);
             int receivedBytes = clientSocket.Receive(buffer);
             message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
             string[] keys = message.Split('\t');
@@ -85,6 +86,8 @@ namespace White_message
                 // Подключитесь к серверу
                 clientSocket.Connect(IPAddress.Parse(serverIP), port);
                 workKeys();
+
+
                 // Отправьте сообщение серверу
                 int p = Convert.ToInt32(PrevTbox.Text);
                 if (Chat.Text.Contains(':')) { p = 0; }
@@ -157,7 +160,7 @@ namespace White_message
                                 }                               
                                 break;
                             case '2':
-                                // Пусто
+                                workKeys();
                                 break;
                             // регистрация и аккаунты
                             case '3':
