@@ -8,39 +8,38 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
 
-        <DockPanel>
+        <Grid Background="#FFE5E5E5">
+            <TextBox x:Name="PrevTbox" HorizontalAlignment="Left" Height="27" Margin="21,146,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="64" Background="#FFE5E5E5" BorderBrush="#FFE5E5E5" Text="10"/>
+            <Button x:Name="disConnect" Content="Disconnect" HorizontalAlignment="Left" Margin="51,237,0,0" VerticalAlignment="Top" Width="75" Visibility="Hidden" Background="White" Click="disConnect_Click"/>
+            <Button x:Name="PrivAply" Content="Aply" HorizontalAlignment="Left" Margin="105,146,0,0" VerticalAlignment="Top" Width="75" Click="PrivAply_Click"/>
+        </Grid>
+        <Grid >
+            <Grid.Background>
+                <ImageBrush ></ImageBrush>
+            </Grid.Background>
+            <TextBox x:Name="Chat" HorizontalAlignment="Left" Height="239" Margin="10,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="597" Background="#FFD8D8D8"/>
+            <Button x:Name="Send" Content="Send" HorizontalAlignment="Left" Margin="618,325,0,0" VerticalAlignment="Top" Width="65" Height="50" Background="White" Click="Send_Click"/>
+            <TextBox x:Name="Message" HorizontalAlignment="Left" Height="50" Margin="10,325,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="597" KeyDown="Message_KeyDown" TextChanged="Message_TextChanged" Background="#FFD8D8D8"/>
+            <Label Content="Пользователи" DockPanel.Dock="Right" Margin="652,19,0,0" VerticalAlignment="Top" Width="88" HorizontalAlignment="Left"/>
+            <ListBox x:Name="OnLine" DockPanel.Dock="Right" HorizontalAlignment="Left" Height="222" Margin="618,45,0,0" VerticalAlignment="Top" Width="158" SelectionChanged="OnLine_SelectionChanged"/>
+            <Label x:Name="WhatChat" Content="Main" HorizontalAlignment="Left" Margin="10,19,0,0" VerticalAlignment="Top" FontSize="14"/>
+            <Button x:Name="ChangeView" Content="Светлая/тёмная" HorizontalAlignment="Left" Height="50" Margin="697,326,0,0" VerticalAlignment="Top" Width="79" Click="ChangeViewDark_Click" Background="#FFD9D9D8" FontSize="10"/>
+            <Button x:Name="BackMainChat" Content="Main Chat" HorizontalAlignment="Left" Margin="618,264,0,0" VerticalAlignment="Top" Width="158" Click="BackMainChat_Click"/>
+            <Label Content="Сообщение" HorizontalAlignment="Left" Margin="10,299,0,0" VerticalAlignment="Top" FontSize="14"/>
+        </Grid>
+        <Grid x:Name="regtangle"    >
+            <Grid.Background>
+                <ImageBrush ></ImageBrush>
+            </Grid.Background>
+            <Label Content="Пароль" HorizontalAlignment="Left" Margin="357,201,0,0" VerticalAlignment="Top" FontSize="16" />
+            <TextBox x:Name="Password" HorizontalAlignment="Left" Height="23" Margin="288,237,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="223" TextChanged="Password_TextChanged" Background="#FFFCAB7E"/>
+            <Button x:Name="Connect" Content="Вход" HorizontalAlignment="Left" Margin="251,281,0,0" VerticalAlignment="Top" Width="119" Background="#FFFF8033" Click="Connect_Click" Height="46"/>
+            <Label Content="Логин" HorizontalAlignment="Left" Margin="369,139,0,0" VerticalAlignment="Top" Width="55" FontSize="16"/>
 
-            <TabControl Grid.Row="1" Grid.Column="1" DockPanel.Dock="Top">
-                <TabItem Header="TabItem">
-                    <Grid Background="#FFE5E5E5">
-                        <Label Content="white&#xD;&#xA;message" HorizontalAlignment="Left"  Margin="10,19,0,0" VerticalAlignment="Top" Height="65" Width="72" FontFamily="Comic Sans MS" FontSize="16"/>
-                        <TextBox x:Name="Chat" HorizontalAlignment="Left" Height="239" Margin="116,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="491"/>
-                        <Button x:Name="Send" Content="Send" HorizontalAlignment="Left" Margin="116,344,0,0" VerticalAlignment="Top" Width="130" Height="45" Background="White" Click="Send_Click"/>
-                        <TextBox x:Name="Message" HorizontalAlignment="Left" Height="50" Margin="116,289,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="491" KeyDown="Message_KeyDown" TextChanged="Message_TextChanged"/>
-                        <Label Content="Online" DockPanel.Dock="Right" Margin="619,19,0,0" VerticalAlignment="Top" Width="100" HorizontalAlignment="Left"/>
-                        <ListBox x:Name="OnLine" DockPanel.Dock="Right" HorizontalAlignment="Left" Height="217" Margin="618,45,0,0" VerticalAlignment="Top" Width="100" SelectionChanged="OnLine_SelectionChanged"/>
-                        <Label x:Name="WhatChat" Content="Main" HorizontalAlignment="Left" Margin="116,14,0,0" VerticalAlignment="Top"/>
-                        <Button x:Name="BackMainChat" Content="Main Chat" HorizontalAlignment="Left" Margin="632,264,0,0" VerticalAlignment="Top" Width="75" Click="BackMainChat_Click"/>
-                    </Grid>
-                </TabItem>
-                <TabItem Header="TabItem" Height="20" VerticalAlignment="Top">
-                    <Grid Background="#FFE5E5E5">
-                        <Button x:Name="ChangeViewShit" Content="ChangeView" HorizontalAlignment="Left" Height="89" Margin="21,26,0,0" VerticalAlignment="Top" Width="115" Click="ChangeViewShit_Click"/>
-                        <TextBox x:Name="PrevTbox" HorizontalAlignment="Left" Height="27" Margin="21,146,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="64" Background="#FFE5E5E5" BorderBrush="#FFE5E5E5" Text="10"/>
-                        <Button x:Name="disConnect" Content="Disconnect" HorizontalAlignment="Left" Margin="51,237,0,0" VerticalAlignment="Top" Width="75" Visibility="Hidden" Background="White" Click="disConnect_Click"/>
-                        <Button x:Name="PrivAply" Content="Aply" HorizontalAlignment="Left" Margin="105,146,0,0" VerticalAlignment="Top" Width="75" Click="PrivAply_Click"/>
-                    </Grid>
-                </TabItem>
-            </TabControl>
-        </DockPanel>
-        <Grid x:Name="regtangle" Background="Yellow" Visibility="Hidden"  >
-            <Label Content="Password:" HorizontalAlignment="Left" Margin="100,178,0,0" VerticalAlignment="Top" FontSize="16" />
-            <TextBox x:Name="Password" HorizontalAlignment="Left" Height="23" Margin="100,209,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="80" TextChanged="Password_TextChanged"/>
-            <Button x:Name="Connect" Content="Connect" HorizontalAlignment="Left" Margin="51,237,0,0" VerticalAlignment="Top" Width="75" Background="White" Click="Connect_Click"/>
-            <Label Content="Name:" HorizontalAlignment="Left" Margin="21,178,0,0" VerticalAlignment="Top" Width="55" FontSize="16"/>
-            <Button x:Name="Registration" Content="Registration" HorizontalAlignment="Left" Height="89" Margin="173,26,0,0" VerticalAlignment="Top" Width="122" Click="Registration_Click"/>
+            <Button x:Name="Registration"  Content="Регистрация"  HorizontalAlignment="Left" Height="46" Margin="427,281,0,0" VerticalAlignment="Top" Width="121" Click="Registration_Click" RenderTransformOrigin="0,0" Background="#FFFF8033"/>
+
             <Label x:Name="SettingsMessage" Content="" HorizontalAlignment="Left" Height="25" Margin="21,281,0,0" VerticalAlignment="Top" Width="159"/>
-            <TextBox x:Name="Name" HorizontalAlignment="Left" Height="23" Margin="21,209,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="64" TextChanged="Name_TextChanged"/>
+            <TextBox x:Name="Name" HorizontalAlignment="Left" Height="23" Margin="288,170,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="223" TextChanged="Name_TextChanged" Background="#FFFCAB7E"/>
         </Grid>
     </Grid>
 </Window>

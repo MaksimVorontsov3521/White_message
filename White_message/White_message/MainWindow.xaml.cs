@@ -27,6 +27,7 @@ namespace White_message
     /// </summary>
     public partial class MainWindow : Window
     {
+        // глобальные переменные
         string serverIP = "127.0.0.1";
         int port = 8000;
         string UserChat = null;
@@ -35,106 +36,16 @@ namespace White_message
         public MainWindow()
         {
             InitializeComponent();
-            // подключение к базе данных
-            string relativePath = "Data.accdb";
-            string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
-            string connectionString = $"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={fullPath};";
-            sqlConnection = new OleDbConnection(connectionString);
-            sqlConnection.Open();
-
-            // Обращение к базе данных для данных пользователя
-            string query = $"Select PasswordUser,UserName,LengthP From Account";
-            OleDbCommand com = new OleDbCommand(query, sqlConnection);
-            using (OleDbDataReader reader = com.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    Name.Text = (reader["UserName"] != DBNull.Value ? reader["UserName"].ToString() : null);
-                    Password.Text = (reader["PasswordUser"] != DBNull.Value ? reader["PasswordUser"].ToString() : null);
-                    PrevTbox.Text = (reader["LengthP"] != DBNull.Value ? reader["LengthP"].ToString() : null);
-                }
-            }
+            Databaseconfig();
             Keys = new Keys();
             connection();
         }
+        
         // подключения
         private OleDbConnection sqlConnection = null;
         Socket clientSocket = null;
         string UserName = null;
-        private void Connect_Click(object sender, RoutedEventArgs e)
-        {          
-            connection();
-        }
-        public void workKeys()
-        {
-            string message; byte[] buffer = new byte[1024];
-            // Receive
-            
-            int receivedBytes = clientSocket.Receive(buffer);
-            if (receivedBytes > 0)
-            {
-                message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
-                string[] keys = message.Split('\t');
-                e = Convert.ToInt32(keys[0]); OpenKey = Convert.ToUInt32(keys[1]);
-                //Send
-                message = Convert.ToString(Keys.giveOpen_e()) + "\t" + Convert.ToString(Keys.giveOpenkey());
-                buffer = Encoding.UTF8.GetBytes(message);
-                clientSocket.Send(buffer);
-            }
-        }
-        public void connection()
-        {
-            // Создайте сокет TCP
-            clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            try
-            {
-                // Подключитесь к серверу
-                clientSocket.Connect(IPAddress.Parse(serverIP), port);
-                workKeys();
-
-
-                // Отправьте сообщение серверу
-                int p = Convert.ToInt32(PrevTbox.Text);
-                if (Chat.Text.Contains(':')) { p = 0; }
-                string message = Name.Text + "\n" + Password.Text + "\n" + p;
-                UserName = Name.Text;
-                byte[] buffer = Encoding.UTF8.GetBytes(message);
-                //////////////
-                buffer = Keys.coder(buffer,e,OpenKey);
-                //////////////
-                clientSocket.Send(buffer);
-                SettingsMessage.Content = "Вы подключились";              
-                work();
-                regtangle.Visibility = Visibility.Hidden;
-            }
-            catch
-            {
-                //Сервер не доступен
-                Chat.Text += "Сервер не доступен\n";
-                SettingsMessage.Content = "Сервер не доступен";
-                clientSocket.Close();
-            }           
-        }
-        public void offlinebuf()
-        {
-            string[] offmesages = new string[3];
-            string query = $"Select Message,TimeSended,Chat_name From Offline";
-            OleDbCommand com = new OleDbCommand(query, sqlConnection);
-            using (OleDbDataReader reader = com.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    offmesages[0] = (reader["Message"] != DBNull.Value ? reader["Message"].ToString() : null);
-                    offmesages[1] = (reader["TimeSended"] != DBNull.Value ? reader["TimeSended"].ToString() : null);
-                    offmesages[2] = (reader["Chat_name"] != DBNull.Value ? reader["Chat_name"].ToString() : null);
-                    Thread.Sleep(10);
-                    byte[] buffer = Encoding.UTF8.GetBytes(offmesages[0]);
-                    buffer = Keys.coder(buffer, e, OpenKey);
-                    clientSocket.Send(buffer);
-                }
-            }
-        }
-
+        // обработка сообщений
         async void work()
         {
             bool t = true;
@@ -143,7 +54,7 @@ namespace White_message
             {
                 await Task.Run(() => message = listen());
                 if (message != null)
-                {                   
+                {
                     if (message.StartsWith("\t"))
                     {
                         char three = message[1];
@@ -158,11 +69,11 @@ namespace White_message
                             case '1':
                                 OnLine.Items.Clear();
                                 string[] messages = message.Split('\n');
-                                Chat.Text +=  messages[0].Remove(0,2)+"\n";
+                                Chat.Text += messages[0].Remove(0, 2) + "\n";
                                 for (int i = 1; i < messages.Length; i++)
                                 {
                                     OnLine.Items.Add(messages[i]);
-                                }                               
+                                }
                                 break;
                             case '2':
                                 workKeys();
@@ -194,8 +105,11 @@ namespace White_message
                                 string[] parts = message.Split('\t');
                                 for (int i = 0; i < parts.Length; i++)
                                 {
-                                    Chat.Text += parts[i]+"\n";
+                                    Chat.Text += parts[i] + "\n";
                                 }
+                                break;
+                            case '8':
+                                continue;
                                 break;
                         }
                     }
@@ -204,9 +118,11 @@ namespace White_message
                         Chat.Text += message + "\n";
                     }
                 }
+                else { message = "\t8"; }
             }
             clientSocket.Close();
         }
+
         public string listen()
         {
             try
@@ -215,40 +131,25 @@ namespace White_message
                 byte[] buffer = new byte[1024];
                 int bytesReceived = clientSocket.Receive(buffer);
                 string replyMessage = null;
+                if (bytesReceived == 0)
+                {
+                    clientSocket.Close();
+                    Chat.Text+= "\nCоединение разорванно\n";
+                }
                 if (bytesReceived > 0)
                 {
                     replyMessage = Encoding.UTF8.GetString(buffer, 0, bytesReceived);                 
                     replyMessage = Keys.decoder(replyMessage, bytesReceived);
+                    return replyMessage;
                 }
-                return replyMessage;
+                return null;
             }
             catch
             {
-                clientSocket.Close();
-                return "\t0";
+                return null;
+                //clientSocket.Close();
+                //return "\t0";
             }
-        }
-
-        private void Send_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                send_all();
-            }
-            catch
-            {
-                Save();
-                Message.Clear();
-            }
-        }
-
-        private void Save()
-        {
-            DateTime now = DateTime.UtcNow;
-            string query = $"Insert Into Offline (Message,TimeSended,Chat_name,UserName) VALUES ('{Message.Text}','{now}','MainChat','{Name.Text}')";
-            OleDbCommand com = new OleDbCommand(query, sqlConnection);
-            com.ExecuteNonQuery();
-            Chat.Text += $"Offline {Name.Text}: {Message.Text}";
         }
 
         private void send_all()
@@ -268,12 +169,79 @@ namespace White_message
             Message.Clear();
         }
 
+        // база данных
+        private void Databaseconfig()
+        {
+            // подключение к базе данных
+            string relativePath = "Data.accdb";
+            string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
+            string connectionString = $"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={fullPath};";
+            sqlConnection = new OleDbConnection(connectionString);
+            sqlConnection.Open();
+
+            // Обращение к базе данных для данных пользователя
+            string query = $"Select PasswordUser,UserName,LengthP From Account";
+            OleDbCommand com = new OleDbCommand(query, sqlConnection);
+            using (OleDbDataReader reader = com.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Name.Text = (reader["UserName"] != DBNull.Value ? reader["UserName"].ToString() : null);
+                    Password.Text = (reader["PasswordUser"] != DBNull.Value ? reader["PasswordUser"].ToString() : null);
+                    PrevTbox.Text = (reader["LengthP"] != DBNull.Value ? reader["LengthP"].ToString() : null);
+                }
+            }
+        }
+
+        // работв offline
+        private void Save()
+        {
+            DateTime now = DateTime.UtcNow;
+            string query = $"Insert Into Offline (Message,TimeSended,Chat_name,UserName) VALUES ('{Message.Text}','{now}','MainChat','{Name.Text}')";
+            OleDbCommand com = new OleDbCommand(query, sqlConnection);
+            com.ExecuteNonQuery();
+            Chat.Text += $"Offline {Name.Text}: {Message.Text}";
+        }
+        public void offlinebuf()
+        {
+            string[] offmesages = new string[3];
+            string query = $"Select Message,TimeSended,Chat_name From Offline";
+            OleDbCommand com = new OleDbCommand(query, sqlConnection);
+            using (OleDbDataReader reader = com.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    offmesages[0] = (reader["Message"] != DBNull.Value ? reader["Message"].ToString() : null);
+                    offmesages[1] = (reader["TimeSended"] != DBNull.Value ? reader["TimeSended"].ToString() : null);
+                    offmesages[2] = (reader["Chat_name"] != DBNull.Value ? reader["Chat_name"].ToString() : null);
+                    Thread.Sleep(10);
+                    byte[] buffer = Encoding.UTF8.GetBytes(offmesages[0]);
+                    buffer = Keys.coder(buffer, e, OpenKey);
+                    clientSocket.Send(buffer);
+                }
+            }
+        }
+
+        //кнопка для отправки сообщений и enter
+        private void Send_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                send_all();
+            }
+            catch
+            {
+                Save();
+                Message.Clear();
+            }
+        }
         private void Message_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             { send_all(); }
         }
 
+        // изменение вида окна
         private void ChangeView_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("не сейчас");
@@ -292,8 +260,7 @@ namespace White_message
             //File.WriteAllText(Toofar, buff);
             //this.Close();           
         }
-
-        private void ChangeViewShit_Click(object sender, RoutedEventArgs e)
+        private void ChangeViewDark_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("не сейчас");
             //string relativePath = "Data\\SecondView.xaml";
@@ -313,6 +280,62 @@ namespace White_message
             //this.Close();
         }
 
+        // Соединение
+        public void connection()
+        {
+            // Создайте сокет TCP
+            clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            try
+            {
+                // Подключитесь к серверу
+                clientSocket.Connect(IPAddress.Parse(serverIP), port);
+                workKeys();
+
+
+                // Отправьте сообщение серверу
+                int p = Convert.ToInt32(PrevTbox.Text);
+                if (Chat.Text.Contains(':')) { p = 0; }
+                string message = Name.Text + "\n" + Password.Text + "\n" + p;
+                UserName = Name.Text;
+                byte[] buffer = Encoding.UTF8.GetBytes(message);
+                //////////////
+                buffer = Keys.coder(buffer, e, OpenKey);
+                //////////////
+                clientSocket.Send(buffer);
+                SettingsMessage.Content = "Вы подключились";
+                work();
+                regtangle.Visibility = Visibility.Hidden;
+            }
+            catch
+            {
+                //Сервер не доступен
+                Chat.Text += "Сервер не доступен\n";
+                SettingsMessage.Content = "Сервер не доступен";
+                clientSocket.Close();
+            }
+        }
+        public void workKeys()
+        {
+            // создание и обмен ключами
+            string message; byte[] buffer = new byte[1024];
+            // Receive
+
+            int receivedBytes = clientSocket.Receive(buffer);
+            if (receivedBytes > 0)
+            {
+                message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
+                string[] keys = message.Split('\t');
+                e = Convert.ToInt32(keys[0]); OpenKey = Convert.ToUInt32(keys[1]);
+                //Send
+                message = Convert.ToString(Keys.giveOpen_e()) + "\t" + Convert.ToString(Keys.giveOpenkey());
+                buffer = Encoding.UTF8.GetBytes(message);
+                clientSocket.Send(buffer);
+            }
+        }
+        private void Connect_Click(object sender, RoutedEventArgs e)
+        {
+            connection();
+        }
         private void disConnect_Click(object sender, RoutedEventArgs e)
         {
             clientSocket.Close();
@@ -321,10 +344,8 @@ namespace White_message
             regtangle.Visibility = Visibility.Visible;          
         }
 
-        /// <summary>
-        /// регистрация и сопутствующие методы
-        /// </summary>
 
+        // регистрация 
         private void Registration_Click(object sender, RoutedEventArgs e)
         {
             // Создайте сокет TCP
@@ -348,6 +369,7 @@ namespace White_message
                 Chat.Text += "Сервер не доступен\n";
             }
         }
+        
         // ограничения нужны потомучто я дебил и отправляю команды как сообщения с // в начале. Я знаю - это очень тупо и не безопастно
         // ограничения для username
         private void Name_TextChanged(object sender, TextChangedEventArgs e)
@@ -378,7 +400,8 @@ namespace White_message
                 SettingsMessage.Content = "Недопустимый символ";
             }
         }
-
+        
+        // не помню что это 
         private void PrivAply_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -395,7 +418,8 @@ namespace White_message
 
 
         }
-
+        
+        // ограничения для чата
         private void Message_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (Message.Text.Contains('\t'))
@@ -405,6 +429,7 @@ namespace White_message
             }
         }
 
+        // изменение чатов
         private void OnLine_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (Convert.ToString(OnLine.SelectedItem) == UserName)
@@ -419,7 +444,6 @@ namespace White_message
             UserChat = "\t" + OnLine.SelectedItem + "\t" + $"From {UserName} \t";
            
         }
-
         private void BackMainChat_Click(object sender, RoutedEventArgs e)
         {
             WhatChat.Content = "Main";
