@@ -24,11 +24,15 @@ namespace White_server
         {
             return Open_e;
         }
-        private bool createkeys(ref ulong openkey, ref ulong Open_e)
+        private void createkeys(ref ulong openkey, ref ulong Open_e)
         {
-            ulong[] simplenum = { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131 };
-            Random random = new Random();
-            ulong A, B; A = simplenum[random.Next(0, 31)]; B = simplenum[random.Next(0, 31)];
+            ulong A = 0, B = 0;
+            ulong[] simplenum = { 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131 };
+            while (A == B)
+            {
+                Random random = new Random();
+                A = simplenum[random.Next(0, 28)]; B = simplenum[random.Next(0, 28)];
+            }
             openkey = A * B;
             ulong fi = (A - 1) * (B - 1);
             int i = -1;
@@ -38,20 +42,22 @@ namespace White_server
                 Open_e = fi % simplenum[i];
             } while (Open_e == 0);
             Open_e = simplenum[i];
+
             d = 1.5; ulong ii = 0; bool Integer = false;
             while (Integer == false)
             {
                 ii++;
                 d = (fi * ii + 1) / Open_e;
-                if ((fi * ii + 1) % Open_e == 0) { Integer = true; }
+                if ((fi * ii + 1) % Open_e == 0)
+                {
+                    Integer = true;
+                }
             }
-            // Console.WriteLine("Key is ready");
-            return d < 1000 && d > 50;
         }
         public string decoder(string intmessage, int bytesReceived)
         {
-            byte[] buffer = new byte[1024];
             string[] letters = intmessage.Split(',');
+            byte[] buffer = new byte[letters.Length];
             ulong[] message = new ulong[letters.Length - 1];
             for (int i = 0; i < message.Length; i++)
             {
@@ -61,7 +67,7 @@ namespace White_server
                 message[i] = (ulong)buff;
                 buffer[i] = Convert.ToByte(message[i]);
             }
-            string replyMessage = Encoding.UTF8.GetString(buffer, 0, bytesReceived - 1);
+            string replyMessage = Encoding.UTF8.GetString(buffer);
             return replyMessage;
         }
         public byte[] coder(byte[] Bmessage, int e, uint OpenKey)

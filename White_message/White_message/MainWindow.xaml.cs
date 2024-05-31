@@ -68,14 +68,19 @@ namespace White_message
         public void workKeys()
         {
             string message; byte[] buffer = new byte[1024];
-            message = Convert.ToString(Keys.giveOpen_e()) + "\t" + Convert.ToString(Keys.giveOpenkey());
-            buffer = Encoding.UTF8.GetBytes(message);
-            clientSocket.Send(buffer);
-            Thread.Sleep(100);
+            // Receive
+            
             int receivedBytes = clientSocket.Receive(buffer);
-            message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
-            string[] keys = message.Split('\t');
-            e = Convert.ToInt32(keys[0]); OpenKey = Convert.ToUInt32(keys[1]);
+            if (receivedBytes > 0)
+            {
+                message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
+                string[] keys = message.Split('\t');
+                e = Convert.ToInt32(keys[0]); OpenKey = Convert.ToUInt32(keys[1]);
+                //Send
+                message = Convert.ToString(Keys.giveOpen_e()) + "\t" + Convert.ToString(Keys.giveOpenkey());
+                buffer = Encoding.UTF8.GetBytes(message);
+                clientSocket.Send(buffer);
+            }
         }
         public void connection()
         {

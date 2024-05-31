@@ -23,15 +23,14 @@ namespace White_server
     {
         List<Clients> Clients_list = new List<Clients>();
         DataBase dataBase = null;
-        Keys Keys = null;
-        int e = 0; uint OpenKey = 0;
+        Keys Keys = null;       
         static void Main(string[] args)
         {
             Server server = new Server();
             // начало работы
             server.work();
         }
-        private string account(string message, Socket clientSocket)
+        private string account(string message, Socket clientSocket, int e, uint OpenKey)
         {
             // message = User1\n123\n10 - разбиваеться по \n
 
@@ -95,19 +94,23 @@ namespace White_server
             }
         }
 
-        private void workKeys(Socket clientSocket)
+        private void workKeys(Socket clientSocket,ref int e, ref uint OpenKey)
         {
             try
             {
-                byte[] buffer = new byte[1024];
-                int receivedBytes = clientSocket.Receive(buffer);
-                string message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
-                string[] keys = message.Split('\t');
-                e = Convert.ToInt32(keys[0]); OpenKey = Convert.ToUInt32(keys[1]);
-                Thread.Sleep(100);
+                string message; byte[] buffer = new byte[1024];
+                // send
                 message = Convert.ToString(Keys.giveOpen_e()) + "\t" + Convert.ToString(Keys.giveOpenkey());
                 buffer = Encoding.UTF8.GetBytes(message);
                 clientSocket.Send(buffer);
+                // Receive
+                int receivedBytes = clientSocket.Receive(buffer);
+                if (receivedBytes > 0)
+                {                   
+                    message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
+                    string[] keys = message.Split('\t');
+                    e = Convert.ToInt32(keys[0]); OpenKey = Convert.ToUInt32(keys[1]);
+                }
             }
             catch { }
         }
@@ -115,6 +118,7 @@ namespace White_server
         {
             DataBase dataBase = new DataBase();
             this.dataBase = dataBase;
+
             // Настройки сервера
             const int port = 8000; // Replace with your desired port
             string ipAddress = "127.0.0.1"; // Replace with your IP address or "*" for all interfaces
@@ -137,32 +141,19 @@ namespace White_server
 
         private void HandleClient(Socket clientSocket)
         {
+            int e = 0; uint OpenKey = 0;
             Keys = new Keys();
+            workKeys(clientSocket, ref e, ref OpenKey);
+
             byte[] buffer = new byte[1024];
-            string message=null; int receivedBytes;
-            workKeys(clientSocket);
-            // получаем сообщение от клиента
-            receivedBytes = clientSocket.Receive(buffer);
-            message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
-        workK:
-            try
-            {
-                message = Keys.decoder(message, receivedBytes);
-            }
-            catch 
-            {
-                try
-                {
-                    workKeys(clientSocket);
-                    buffer = Encoding.UTF8.GetBytes("\t2");
-                    buffer = Keys.coder(buffer, e, OpenKey);
-                    clientSocket.Send(buffer);
-                    goto workK;
-                }
-                catch { return; }
-            }
+
+            int receivedBytes = clientSocket.Receive(buffer);
+            string message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
+            message = Keys.decoder(message, receivedBytes);
+
             // ищем клиента в базе
-            message = account(message, clientSocket);
+            try { message = account(message, clientSocket, e, OpenKey); } catch { return; }
+            
             if (message.StartsWith("\t"))
             {
                 buffer = Encoding.UTF8.GetBytes(message);
@@ -176,27 +167,28 @@ namespace White_server
             Clients_list.Add(client);
             Thread.Sleep(100);
             // Говорим всем, что подключился клиент
-            update_OnLine($"connected: {message}");
+            update_OnLine($"connected: {message}",e,OpenKey);
             Console.WriteLine($"Client connected: {clientSocket.RemoteEndPoint} - Name: {message}");
-
 
             try
             {
                 while (true)
                 {
                     // Получаем данные от клиента в битах
+                    buffer = new byte[1024];
                     receivedBytes = client.Socket.Receive(buffer);
+                    Console.WriteLine(receivedBytes);
 
                     // Если клиен отключился от сервера удаляем его из списков
                     if (receivedBytes == 0)
                     {
-                        disconect(client); break;
+                        Console.WriteLine($"Client disconnected: {client.Socket.RemoteEndPoint}");
+                        disconect(client,e,OpenKey); break;
                     }
 
                     // Переводим биты в строки
                     message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
                     message = Keys.decoder(message, receivedBytes);
-
                     if (message.StartsWith("\t"))
                     {
                         string[] parts = message.Split('\t');
@@ -209,7 +201,7 @@ namespace White_server
                         }
                         catch
                         {
-                            disconect(client); break;
+                            disconect(client,e,OpenKey); break;
                         }
 
                         for (int i = 0; i < Clients_list.Count; i++)
@@ -222,11 +214,6 @@ namespace White_server
                     }
                     else
                     {
-                        // Отправляем сообщение всем клиентам
-                        string response = $"{client.Name}: {message}";
-                        byte[] responseBuffer = Encoding.UTF8.GetBytes(response);
-                        responseBuffer = Keys.coder(responseBuffer, e, OpenKey);
-                        send(responseBuffer);
                         try
                         {
                             string[] parts = message.Split('\0');
@@ -236,9 +223,13 @@ namespace White_server
                         }
                         catch
                         {
-                            disconect(client); break;
+                            disconect(client,e,OpenKey); break;
                         }
-
+                        // Отправляем сообщение всем клиентам
+                        string response = $"{client.Name}: {message}";
+                        byte[] responseBuffer = Encoding.UTF8.GetBytes(response);
+                        responseBuffer = Keys.coder(responseBuffer, e, OpenKey);
+                        send(responseBuffer);
                     }
 
                 }
@@ -247,7 +238,7 @@ namespace White_server
             {
                 // Если клиен отключился от сервера удаляем его из списков
                 Console.WriteLine($"Error handling client: {ex.Message}");
-                disconect(client);
+                disconect(client,e,OpenKey);
             }
         }
 
@@ -261,7 +252,7 @@ namespace White_server
         }
 
         // обновление списка online у клиентов
-        private void update_OnLine(string message)
+        private void update_OnLine(string message,int e, uint OpenKey)
         {
             byte[] buffer = null;
             if (Clients_list.Count == 1)
@@ -276,18 +267,18 @@ namespace White_server
                 }
             }
             buffer = Encoding.UTF8.GetBytes($"\t1{message}");
-            buffer = Keys.coder(buffer, e, OpenKey);
+            buffer = Keys.coder(buffer,e,OpenKey);
             send(buffer);
         }
 
-        private void disconect(Clients client)
+        private void disconect(Clients client, int e, uint OpenKey)
         {
             Console.WriteLine($"Client disconnected: {client.Socket.RemoteEndPoint}");
             string mess = $"{client.Name} - disconnected";
             byte[] ResponseBuffer = Encoding.UTF8.GetBytes(mess);
             int indexof = Clients_list.IndexOf(client);
             Clients_list.RemoveAt(indexof);
-            update_OnLine($"disconnected: {client.Name}");
+            update_OnLine($"disconnected: {client.Name}",e,OpenKey);
             client.Socket.Close();
         }
 
