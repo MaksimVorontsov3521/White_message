@@ -391,5 +391,10 @@ namespace White_message
             WhatChat.Content = "Main";
             UserChat = null;
         }
+
+        private void ChangeViewDark_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

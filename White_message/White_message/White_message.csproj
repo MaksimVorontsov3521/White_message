@@ -94,5 +94,14 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ФонWM.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="WhiteMessageLogoV2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bez_imeni-2.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
