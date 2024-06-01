@@ -13,10 +13,12 @@ namespace White_server
     {
         public Socket Socket { get; set; }
         public string Name { get; set; }
-        public Clients(Socket socket, string name)
+        public Keys Keys  { get; set; }
+        public Clients(Socket socket, string name,Keys keys)
         {
             Socket = socket;
             Name = name;
+            Keys = keys;
         }
     }
 
@@ -24,8 +26,7 @@ namespace White_server
     {
         List<Clients> Clients_list = new List<Clients>();
         DataBase dataBase = null;
-        Keys Keys = null;
-        
+
         static void Main(string[] args)
         {
             Server server = new Server();
@@ -51,48 +52,53 @@ namespace White_server
             while (true)
             {
                 Socket clientSocket = serverSocket.Accept();
-                // Handle client communication in a separate thread
                 Thread clientThread = new Thread(() => HandleClient(clientSocket));
                 clientThread.Start();
             }
         }
 
+        private void keyExchange(Socket clientSocket,Keys keys)
+        {
+            byte[] buffer = Encoding.UTF8.GetBytes(keys.myPublicKey);
+            clientSocket.Send(buffer);
+            int receivedBytes = clientSocket.Receive(buffer);
+            if (receivedBytes > 0)
+            {
+                keys.NPublicKey = Encoding.UTF8.GetString(buffer);
+            }
+            else { clientSocket.Close(); }
+
+        }
 
         private void HandleClient(Socket clientSocket)
         {
-            // Подключение клиента
-            int e = 0; uint OpenKey = 0;
-            Keys = new Keys();
-            workKeys(clientSocket, ref e, ref OpenKey);
+            Keys keys = new Keys();
+            keyExchange(clientSocket, keys);
 
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[128];
             int receivedBytes = clientSocket.Receive(buffer);
-            string message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
-            message = Keys.decoder(message, receivedBytes);
+            string message = keys.Decrypt(buffer);
 
             // ищем клиента в базе
-            try { message = account(message, clientSocket, e, OpenKey); } catch { return; }
+            try { message = account(message, clientSocket); } catch { return; }
             
             if (message.StartsWith("\t"))
-            {
-                buffer = Encoding.UTF8.GetBytes(message);
-                buffer = Keys.coder(buffer, e, OpenKey);
-                clientSocket.Send(buffer);
+            {               
+                clientSocket.Send(keys.Encrypt(message));
                 return;
             }
 
             // Добавляем клиента в list<>
-            Clients client = new Clients(clientSocket, message);
+            Clients client = new Clients(clientSocket, message,keys);
             Clients_list.Add(client);
-            Thread.Sleep(100);
             // Говорим всем, что подключился клиент
-            update_OnLine($"connected: {message}",e,OpenKey);
+            update_OnLine($"connected: {message}");
             Console.WriteLine($"Client connected: {clientSocket.RemoteEndPoint} - Name: {message}");
-            clientWork(client, e, OpenKey);
+            clientWork(client);
 
         }
 
-        private void clientWork(Clients client,int e, uint OpenKey)
+        private void clientWork(Clients client)
         {
             try
             {
@@ -105,16 +111,16 @@ namespace White_server
                     if (receivedBytes == 0)
                     {
                         Console.WriteLine($"Client disconnected: {client.Socket.RemoteEndPoint}");
-                        disconect(client, e, OpenKey); break;
+                        disconect(client); break;
                     }
 
                     if (message.StartsWith("\t"))
                     {
-                        privateChat(message, client, e, OpenKey);
+                        privateChat(message, client);
                     }
                     else
                     {
-                        publicChat(message, client, e, OpenKey);
+                        publicChat(message, client);
                     }
 
                 }
@@ -123,7 +129,7 @@ namespace White_server
             {
                 // Если клиен отключился от сервера удаляем его из списков
                 Console.WriteLine($"Error handling client: {ex.Message}");
-                disconect(client, e, OpenKey);
+                disconect(client);
             }
         }
 
@@ -132,18 +138,15 @@ namespace White_server
         private string listen(Clients client, ref int receivedBytes)
         {
             // Получаем данные от клиента в битах и переводим биты в строки
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[128];
             receivedBytes = client.Socket.Receive(buffer);
-            string message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
-            message = Keys.decoder(message, receivedBytes);
-            return message;
+            return client.Keys.Decrypt(buffer);
         }
 
-        private void privateChat(string message, Clients client, int e, uint OpenKey)
+        private void privateChat(string message, Clients client)
         {
             string[] parts = message.Split('\t');
-            byte[] responseBuffer = Encoding.UTF8.GetBytes(parts[2] + parts[3]);
-            responseBuffer = Keys.coder(responseBuffer, e, OpenKey);
+            string answer = parts[2] + parts[3];
             try
             {
                 // записываем сообщение в базу данных
@@ -158,12 +161,12 @@ namespace White_server
             {
                 if (Clients_list[i].Name == parts[1])
                 {
-                    Clients_list[i].Socket.Send(responseBuffer);
+                    Clients_list[i].Socket.Send(client.Keys.Encrypt(answer));
                 }
             }
         }
 
-        private void publicChat(string message, Clients client, int e, uint OpenKey)
+        private void publicChat(string message, Clients client)
         {
             try
             {
@@ -177,16 +180,13 @@ namespace White_server
             }
             // Отправляем сообщение всем клиентам
             string response = $"{client.Name}: {message}";
-            byte[] responseBuffer = Encoding.UTF8.GetBytes(response);
-            responseBuffer = Keys.coder(responseBuffer, e, OpenKey);
-            send(responseBuffer);
+            send(response);
 
         }
 
         // обновление списка online у клиентов
-        private void update_OnLine(string message,int e, uint OpenKey)
+        private void update_OnLine(string message)
         {
-            byte[] buffer = null;
             if (Clients_list.Count == 1)
             {
                 message += "\n" + message.Remove(0, 11);
@@ -198,13 +198,11 @@ namespace White_server
                     message += "\n" + Clients_list[i].Name;
                 }
             }
-            buffer = Encoding.UTF8.GetBytes($"\t1{message}");
-            buffer = Keys.coder(buffer,e,OpenKey);
-            send(buffer);
+            send($"\t1{message}");
         }
 
         // Соединение
-        private string account(string message, Socket clientSocket, int e, uint OpenKey)
+        private string account(string message, Socket clientSocket)
         {
             // message = User1\n123\n10 - разбиваеться по \n
 
@@ -235,25 +233,24 @@ namespace White_server
                     return name;
                 }
 
-                // отправка прошлых сообщений
-                byte[] buffer = new byte[1024];
-                string prevmessage = "\t7";
+                //// отправка прошлых сообщений
+                //byte[] buffer = new byte[1024];
+                //string prevmessage = "\t7";
 
-                List<List<string>> MainChat = new List<List<string>>();
+                //List<List<string>> MainChat = new List<List<string>>();
 
-                MainChat = dataBase.previous(Convert.ToInt32(prev), "MainChat");
+                //MainChat = dataBase.previous(Convert.ToInt32(prev), "MainChat");
 
-                List<string> historymessage = MainChat[1];
-                List<string> historyUser = MainChat[0];
+                //List<string> historymessage = MainChat[1];
+                //List<string> historyUser = MainChat[0];
 
-                for (int i = 0; i < historyUser.Count; i++)
-                {
-                    prevmessage += $"{historyUser[i]}: {historymessage[i]} \t";
-                }
+                //for (int i = 0; i < historyUser.Count; i++)
+                //{
+                //    prevmessage += $"{historyUser[i]}: {historymessage[i]} \t";
+                //}
 
-                buffer = Encoding.UTF8.GetBytes(prevmessage);
-                buffer = Keys.coder(buffer, e, OpenKey);
-                clientSocket.Send(buffer);
+                //buffer = Encoding.UTF8.GetBytes(prevmessage);
+                //clientSocket.Send(buffer);
 
                 return name;
             }
@@ -264,44 +261,24 @@ namespace White_server
             }
         }
 
-        private void workKeys(Socket clientSocket, ref int e, ref uint OpenKey)
-        {
-            try
-            {
-                string message; byte[] buffer = new byte[1024];
-                // send
-                message = Convert.ToString(Keys.giveOpen_e()) + "\t" + Convert.ToString(Keys.giveOpenkey());
-                buffer = Encoding.UTF8.GetBytes(message);
-                clientSocket.Send(buffer);
-                // Receive
-                int receivedBytes = clientSocket.Receive(buffer);
-                if (receivedBytes > 0)
-                {
-                    message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
-                    string[] keys = message.Split('\t');
-                    e = Convert.ToInt32(keys[0]); OpenKey = Convert.ToUInt32(keys[1]);
-                }
-            }
-            catch { }
-        }
 
-        private void disconect(Clients client, int e, uint OpenKey)
+        private void disconect(Clients client)
         {
             Console.WriteLine($"Client disconnected: {client.Socket.RemoteEndPoint}");
             string mess = $"{client.Name} - disconnected";
             byte[] ResponseBuffer = Encoding.UTF8.GetBytes(mess);
             int indexof = Clients_list.IndexOf(client);
             Clients_list.RemoveAt(indexof);
-            update_OnLine($"disconnected: {client.Name}",e,OpenKey);
+            update_OnLine($"disconnected: {client.Name}");
             client.Socket.Close();
         }
 
         // отправить сообщение всем пользователям
-        private void send(byte[] message)
+        private void send(string message)
         {
             for (int i = 0; i < Clients_list.Count; i++)
-            {
-                Clients_list[i].Socket.Send(message);
+            {               
+                Clients_list[i].Socket.Send(Clients_list[i].Keys.Encrypt(message));
             }
         }
     }

@@ -32,7 +32,7 @@ namespace White_message
         int port = 8000;
         string UserChat = null;
         Keys Keys = null;
-        int e = 0; uint OpenKey = 0;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -76,7 +76,7 @@ namespace White_message
                                 }
                                 break;
                             case '2':
-                                workKeys();
+
                                 break;
                             // регистрация и аккаунты
                             case '3':
@@ -128,9 +128,8 @@ namespace White_message
             try
             {
                 // Получите ответ от сервера
-                byte[] buffer = new byte[1024];
-                int bytesReceived = clientSocket.Receive(buffer);
-                string replyMessage = null;
+                byte[] buffer = new byte[128];
+                int bytesReceived = clientSocket.Receive(buffer);              
                 if (bytesReceived == 0)
                 {
                     clientSocket.Close();
@@ -138,8 +137,8 @@ namespace White_message
                 }
                 if (bytesReceived > 0)
                 {
-                    replyMessage = Encoding.UTF8.GetString(buffer, 0, bytesReceived);                 
-                    replyMessage = Keys.decoder(replyMessage, bytesReceived);
+                    string replyMessage = Keys.Decrypt(buffer);                
+
                     return replyMessage;
                 }
                 return null;
@@ -147,8 +146,6 @@ namespace White_message
             catch
             {
                 return null;
-                //clientSocket.Close();
-                //return "\t0";
             }
         }
 
@@ -160,40 +157,65 @@ namespace White_message
                 string block = UserChat+message.Substring(i, Math.Min(250, message.Length - i));
                 if (UserChat != null)
                 { Chat.Text += "\n"+message; }
-                byte[] buffer = Encoding.UTF8.GetBytes(block);
-                //////////////
-                buffer = Keys.coder(buffer, e, OpenKey);
-                //////////////
-                clientSocket.Send(buffer);
+                clientSocket.Send(Keys.Encrypt(block));
             }
             Message.Clear();
         }
 
-        // база данных
-        private void Databaseconfig()
-        {
-            // подключение к базе данных
-            string relativePath = "Data.accdb";
-            string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
-            string connectionString = $"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={fullPath};";
-            sqlConnection = new OleDbConnection(connectionString);
-            sqlConnection.Open();
 
-            // Обращение к базе данных для данных пользователя
-            string query = $"Select PasswordUser,UserName,LengthP From Account";
-            OleDbCommand com = new OleDbCommand(query, sqlConnection);
-            using (OleDbDataReader reader = com.ExecuteReader())
+        // Соединение
+        public void connection()
+        {
+            // Создайте сокет TCP
+            clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            try
             {
-                while (reader.Read())
-                {
-                    Name.Text = (reader["UserName"] != DBNull.Value ? reader["UserName"].ToString() : null);
-                    Password.Text = (reader["PasswordUser"] != DBNull.Value ? reader["PasswordUser"].ToString() : null);
-                    PrevTbox.Text = (reader["LengthP"] != DBNull.Value ? reader["LengthP"].ToString() : null);
-                }
+                // Подключитесь к серверу
+                clientSocket.Connect(IPAddress.Parse(serverIP), port);
+                keyExchange();
+
+                // Отправьте сообщение серверу
+                string message = Name.Text + "\n" + Password.Text + "\n" + 10;
+                UserName = Name.Text;
+                clientSocket.Send(Keys.Encrypt(message));
+                SettingsMessage.Content = "Вы подключились";
+                regtangle.Visibility = Visibility.Hidden;
+                work();                
+            }
+            catch
+            {
+                //Сервер не доступен
+                Chat.Text += "Сервер не доступен\n";
+                SettingsMessage.Content = "Сервер не доступен";
+                clientSocket.Close();
             }
         }
+        private void keyExchange()
+        {
+            byte[] buffer = new byte[1024];
+            int receivedBytes = clientSocket.Receive(buffer);
+            if (receivedBytes > 0)
+            {
+                Keys.NPublicKey = Encoding.UTF8.GetString(buffer);
+            }
+            else { clientSocket.Close(); }
+            buffer = Encoding.UTF8.GetBytes(Keys.myPublicKey);
+            clientSocket.Send(buffer);
 
-        // работв offline
+        }
+        private void Connect_Click(object sender, RoutedEventArgs e)
+        {
+            connection();
+        }
+        private void disConnect_Click(object sender, RoutedEventArgs e)
+        {
+            clientSocket.Close();
+            OnLine.Items.Clear();
+            //clientSocket = null;
+            regtangle.Visibility = Visibility.Visible;          
+        }
+
+        // работа offline
         private void Save()
         {
             DateTime now = DateTime.UtcNow;
@@ -216,8 +238,31 @@ namespace White_message
                     offmesages[2] = (reader["Chat_name"] != DBNull.Value ? reader["Chat_name"].ToString() : null);
                     Thread.Sleep(10);
                     byte[] buffer = Encoding.UTF8.GetBytes(offmesages[0]);
-                    buffer = Keys.coder(buffer, e, OpenKey);
                     clientSocket.Send(buffer);
+                }
+            }
+        }
+
+        // база данных
+        private void Databaseconfig()
+        {
+            // подключение к базе данных
+            string relativePath = "Data.accdb";
+            string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
+            string connectionString = $"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={fullPath};";
+            sqlConnection = new OleDbConnection(connectionString);
+            sqlConnection.Open();
+
+            // Обращение к базе данных для данных пользователя
+            string query = $"Select PasswordUser,UserName,LengthP From Account";
+            OleDbCommand com = new OleDbCommand(query, sqlConnection);
+            using (OleDbDataReader reader = com.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Name.Text = (reader["UserName"] != DBNull.Value ? reader["UserName"].ToString() : null);
+                    Password.Text = (reader["PasswordUser"] != DBNull.Value ? reader["PasswordUser"].ToString() : null);
+                    PrevTbox.Text = (reader["LengthP"] != DBNull.Value ? reader["LengthP"].ToString() : null);
                 }
             }
         }
@@ -280,71 +325,6 @@ namespace White_message
             //this.Close();
         }
 
-        // Соединение
-        public void connection()
-        {
-            // Создайте сокет TCP
-            clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            try
-            {
-                // Подключитесь к серверу
-                clientSocket.Connect(IPAddress.Parse(serverIP), port);
-                workKeys();
-
-
-                // Отправьте сообщение серверу
-                int p = Convert.ToInt32(PrevTbox.Text);
-                if (Chat.Text.Contains(':')) { p = 0; }
-                string message = Name.Text + "\n" + Password.Text + "\n" + p;
-                UserName = Name.Text;
-                byte[] buffer = Encoding.UTF8.GetBytes(message);
-                //////////////
-                buffer = Keys.coder(buffer, e, OpenKey);
-                //////////////
-                clientSocket.Send(buffer);
-                SettingsMessage.Content = "Вы подключились";
-                work();
-                regtangle.Visibility = Visibility.Hidden;
-            }
-            catch
-            {
-                //Сервер не доступен
-                Chat.Text += "Сервер не доступен\n";
-                SettingsMessage.Content = "Сервер не доступен";
-                clientSocket.Close();
-            }
-        }
-        public void workKeys()
-        {
-            // создание и обмен ключами
-            string message; byte[] buffer = new byte[1024];
-            // Receive
-
-            int receivedBytes = clientSocket.Receive(buffer);
-            if (receivedBytes > 0)
-            {
-                message = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
-                string[] keys = message.Split('\t');
-                e = Convert.ToInt32(keys[0]); OpenKey = Convert.ToUInt32(keys[1]);
-                //Send
-                message = Convert.ToString(Keys.giveOpen_e()) + "\t" + Convert.ToString(Keys.giveOpenkey());
-                buffer = Encoding.UTF8.GetBytes(message);
-                clientSocket.Send(buffer);
-            }
-        }
-        private void Connect_Click(object sender, RoutedEventArgs e)
-        {
-            connection();
-        }
-        private void disConnect_Click(object sender, RoutedEventArgs e)
-        {
-            clientSocket.Close();
-            OnLine.Items.Clear();
-            //clientSocket = null;
-            regtangle.Visibility = Visibility.Visible;          
-        }
-
-
         // регистрация 
         private void Registration_Click(object sender, RoutedEventArgs e)
         {
@@ -358,9 +338,7 @@ namespace White_message
                 // Отправьте сообщение серверу
                 string message = "\t" + Name.Text + "\n" + Password.Text+ "\n" + " ";
                 byte[] buffer = Encoding.UTF8.GetBytes(message);
-                //
-                buffer = Keys.coder(buffer, this.e, OpenKey);
-                //
+
                 clientSocket.Send(buffer);
                 work();
             }
