@@ -6,6 +6,22 @@
         xmlns:local="clr-namespace:White_message"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="qwer">
+            <Setter Property="Background"
+    Value="{Binding Background, RelativeSource={RelativeSource Self}}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="20" Background="{TemplateBinding Background}">
+                            <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
 
         <Grid Background="#FFE5E5E5">
@@ -27,7 +43,7 @@
             <Label Content="Пользователи" DockPanel.Dock="Right" Margin="652,19,0,0" VerticalAlignment="Top" Width="88" HorizontalAlignment="Left"/>
             <ListBox x:Name="OnLine" DockPanel.Dock="Right" HorizontalAlignment="Left" Height="222" Margin="618,45,0,0" VerticalAlignment="Top" Width="158" SelectionChanged="OnLine_SelectionChanged"/>
             <Label x:Name="WhatChat" Content="Main" HorizontalAlignment="Left" Margin="10,19,0,0" VerticalAlignment="Top" FontSize="14"/>
-            <Button x:Name="ChangeView" Content="Светлая/тёмная" HorizontalAlignment="Left" Height="50" Margin="697,326,0,0" VerticalAlignment="Top" Width="79" Click="ChangeViewDark_Click" Background="#FFD9D9D8" FontSize="10"/>
+            <Button x:Name="ChangeView" Style="{StaticResource  qwer}" Content="Светлая/тёмная" HorizontalAlignment="Left" Height="50" Margin="697,326,0,0" VerticalAlignment="Top" Width="79" Click="ChangeViewDark_Click" Background="#FFD9D9D8" FontSize="10"/>
             <Button x:Name="BackMainChat" Content="Main Chat" HorizontalAlignment="Left" Margin="618,264,0,0" VerticalAlignment="Top" Width="158" Click="BackMainChat_Click"/>
             <Label Content="Сообщение" HorizontalAlignment="Left" Margin="10,299,0,0" VerticalAlignment="Top" FontSize="14"/>
         </Grid>
@@ -38,11 +54,10 @@
 
             <Label Content="Пароль" HorizontalAlignment="Left" Margin="359,247,0,0" VerticalAlignment="Top" FontSize="16" />
             <TextBox x:Name="Password" HorizontalAlignment="Left" Height="23" Margin="288,283,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="223" TextChanged="Password_TextChanged" Background="#FFFCAB7E"/>
-            <Button x:Name="Connect" Content="Вход" HorizontalAlignment="Left" Margin="251,327,0,0" VerticalAlignment="Top" Width="119" Background="#FFFF8033" Click="Connect_Click" Height="46"/>
+            <Button x:Name="Connect" Style="{StaticResource  qwer}" Content="Вход" HorizontalAlignment="Left" Margin="251,327,0,0" VerticalAlignment="Top" Width="119" Click="Connect_Click" Height="46" Background="#FFFF8033"/>
+
             <Label Content="Логин" HorizontalAlignment="Left" Margin="369,183,0,0" VerticalAlignment="Top" Width="55" FontSize="16"/>
-
-            <Button x:Name="Registration"  Content="Регистрация"  HorizontalAlignment="Left" Height="46" Margin="427,327,0,0" VerticalAlignment="Top" Width="121" Click="Registration_Click" RenderTransformOrigin="0,0" Background="#FFFF8033"/>
-
+            <Button x:Name="Registration" Style="{StaticResource  qwer}" Content="Регистрация"  HorizontalAlignment="Left" Height="46" Margin="427,327,0,0" VerticalAlignment="Top" Width="121" Click="Registration_Click" RenderTransformOrigin="0,0" Background="#FFFF8033"/>
             <Label x:Name="SettingsMessage" Content="" HorizontalAlignment="Left" Height="25" Margin="21,281,0,0" VerticalAlignment="Top" Width="159"/>
             <TextBox x:Name="Name" HorizontalAlignment="Left" Height="23" Margin="288,219,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="223" TextChanged="Name_TextChanged" Background="#FFFCAB7E"/>
             <Rectangle HorizontalAlignment="Left" Height="142" Margin="251,36,0,0"  VerticalAlignment="Top" Width="297">
