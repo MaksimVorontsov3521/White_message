@@ -5,19 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
 using System.Data;
-using System.Data.OleDb;
+using System.Data.SqlClient;
 
 namespace White_server
 {
     class DataBase
     {
-        private OleDbConnection sqlConnection = null;
+        private SqlConnection sqlConnection = null;
         public DataBase()
         {
-            string relativePath = "Data\\SrverDB.accdb";
+            string relativePath = "Database1.mdf";
             string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
-            string connectionString = $"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={fullPath};";
-            sqlConnection = new OleDbConnection(connectionString);
+            string connectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={fullPath};Integrated Security=True";
+            sqlConnection = new SqlConnection(connectionString);
             sqlConnection.Open();
             if (sqlConnection.State == ConnectionState.Open)
             {
@@ -31,41 +31,55 @@ namespace White_server
         public void new_message(string user,string message,string chat)
         {
             DateTime now = DateTime.UtcNow;
-            string query = $"INSERT INTO {chat} (NickName,Message,ResivedTime) VALUES ('{user}','{message}','{now}')";
-            OleDbCommand com = new OleDbCommand(query, sqlConnection);
-            com.ExecuteNonQuery();     
-            
+            string query = $"INSERT INTO Message (Message,Receiver,Sender,ResivedTime) VALUES ('{message}','{chat}','{user}','{now}')";
+            SqlCommand com = new SqlCommand(query, sqlConnection);
+            com.ExecuteNonQuery();               
         }
-        public List<List<string>> previous(int p,string chat)
+        public string previous(int p)
         {
-            List<List<string>> history = new List<List<string>>();      
-            List<string> historymessage = new List<string>();
-            List<string> historyUser = new List<string>();
-            string query = $"Select Top {p} * From {chat} ORDER BY ResivedTime";
-            OleDbCommand com = new OleDbCommand(query, sqlConnection);
-            using (OleDbDataReader reader = com.ExecuteReader())
+            //string message = null;
+            //string query = $"Select Top {p} * From Message where Receiver = '{chat}' ORDER BY ResivedTime";
+            //SqlCommand com = new SqlCommand(query, sqlConnection);
+            //using (SqlDataReader reader = com.ExecuteReader())
+            //{
+            //    while (reader.Read())
+            //    {
+            //        message +=(reader["Sender"]!= DBNull.Value ? reader["Sender"].ToString() : null);
+            //        message += "\t";
+            //        message +=(reader["Message"] != DBNull.Value ? reader["Message"].ToString() : null);
+            //        message += "\t";
+            //        message += (reader["ResivedTime"] != DBNull.Value ? reader["ResivedTime"].ToString() : null);
+            //        message += "\t";
+            //    }
+            //}
+            string message = null;
+            string query = $"Select Top {p} * From Message where Receiver = 'MainChat' ORDER BY ResivedTime";
+            SqlCommand com = new SqlCommand(query, sqlConnection);
+            using (SqlDataReader reader = com.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    historyUser.Add(reader["NickName"]!= DBNull.Value ? reader["NickName"].ToString() : null);
-                    historymessage.Add(reader["Message"] != DBNull.Value ? reader["Message"].ToString() : null);
+                    message += (reader["Sender"] != DBNull.Value ? reader["Sender"].ToString() : null);
+                    message += "\t";
+                    message += (reader["Message"] != DBNull.Value ? reader["Message"].ToString() : null);
+                    message += "\t";
+                    message += (reader["ResivedTime"] != DBNull.Value ? reader["ResivedTime"].ToString() : null);
+                    message += "\t";
                 }
             }
-            history.Add(historyUser);
-            history.Add(historymessage);
-            return history;
+            return message;
         }
         public int Entrance(string name,string password)
         {
             string query = $"SELECT COUNT(*) From Accounts Where AccountName='{name}' AND AccountPassword='{password}'";
-            OleDbCommand com = new OleDbCommand(query, sqlConnection);
+            SqlCommand com = new SqlCommand(query, sqlConnection);
             int a =(int)com.ExecuteScalar();
             return a;
         }
         public bool new_user(string name, string password)
         {
             string query = $"SELECT COUNT(*) From Accounts Where AccountName='{name}'";
-            OleDbCommand com = new OleDbCommand(query, sqlConnection);
+            SqlCommand com = new SqlCommand(query, sqlConnection);
             int a = (int)com.ExecuteScalar();
             if (a >= 1)
             {
@@ -74,10 +88,7 @@ namespace White_server
             else
             {
                 query = $"INSERT INTO Accounts (AccountName, AccountPassword) VALUES ('{name}', '{password}')";
-                com = new OleDbCommand(query, sqlConnection);
-                com.ExecuteScalar();
-                query = $"Create Table {name} (ID counter,NickName varchar(255),Message varchar(255),ResivedTime Time)";
-                com = new OleDbCommand(query, sqlConnection);
+                com = new SqlCommand(query, sqlConnection);
                 com.ExecuteScalar();
                 return true;
             }

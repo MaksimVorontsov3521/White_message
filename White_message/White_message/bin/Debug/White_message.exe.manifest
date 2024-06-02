@@ -42,24 +42,42 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="White_message.exe" size="24592">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="White_message.exe" size="23568">
       <assemblyIdentity name="White_message" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>5BWA6d+nqcZJtay3dG23NGCmB8Gq15K92LuuhdoDi/o=</dsig:DigestValue>
+        <dsig:DigestValue>5vrJb86JklFuRiB6mAcGw20DEGgJvNwVmc7P7YCLcoo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="White_message.exe.config" size="189">
+  <file name="Database1.mdf" size="8388608" writeableType="applicationData">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>R+Wg8QGvQVHX8T0ta/qbhH1bXkqY0fRnS3wBV3J0bN8=</dsig:DigestValue>
+      <dsig:DigestValue>rWu/kkVtqFPi3SVIHNieaxxUoaaH6iCBg5Flw2rV4oo=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Database1_log.ldf" size="8388608" writeableType="applicationData">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>DZZQ6waISAm7abO3T06ox900PwiySIHORxYMn+z6v+E=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="White_message.exe.config" size="295">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>vZlK50MBmj2CvJfv4LFqzbtPeNnQnhx1AD03e9rN21o=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

@@ -1,8 +1,0 @@
-// убрать и вернуть из отслеживания в локальным репозиторием файла бд
-git rm --cached SrverDB.accdb
-git add SrverDB.accdb
-*.accdb(В gitignore)
-
-// убрать и вернуть из отслеживания в удалйнном репозиторие
-git update-index --assume-unchanged application/Data/*
-https://habr.com/ru/articles/709246/

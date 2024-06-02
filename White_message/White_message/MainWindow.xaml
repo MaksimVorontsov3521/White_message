@@ -22,7 +22,7 @@
             <TextBox x:Name="Message" HorizontalAlignment="Left" Height="50" Margin="10,325,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="597" KeyDown="Message_KeyDown" TextChanged="Message_TextChanged" Background="#FFD8D8D8"/>
             <Label Content="Пользователи" DockPanel.Dock="Right" Margin="652,19,0,0" VerticalAlignment="Top" Width="88" HorizontalAlignment="Left"/>
             <ListBox x:Name="OnLine" DockPanel.Dock="Right" HorizontalAlignment="Left" Height="222" Margin="618,45,0,0" VerticalAlignment="Top" Width="158" SelectionChanged="OnLine_SelectionChanged"/>
-            <Label x:Name="WhatChat" Content="Main" HorizontalAlignment="Left" Margin="10,19,0,0" VerticalAlignment="Top" FontSize="14"/>
+            <Label x:Name="WhatChat" Content="MainChat" HorizontalAlignment="Left" Margin="10,19,0,0" VerticalAlignment="Top" FontSize="14"/>
             <Button x:Name="ChangeView" Content="Светлая/тёмная" HorizontalAlignment="Left" Height="50" Margin="697,326,0,0" VerticalAlignment="Top" Width="79" Click="ChangeViewDark_Click" Background="#FFD9D9D8" FontSize="10"/>
             <Button x:Name="BackMainChat" Content="Main Chat" HorizontalAlignment="Left" Margin="618,264,0,0" VerticalAlignment="Top" Width="158" Click="BackMainChat_Click"/>
             <Label Content="Сообщение" HorizontalAlignment="Left" Margin="10,299,0,0" VerticalAlignment="Top" FontSize="14"/>

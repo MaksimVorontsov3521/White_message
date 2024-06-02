@@ -27,12 +27,16 @@ namespace White_server
         }
         public byte[] Encrypt(string message)
         {
-            byte[] data = Encoding.UTF8.GetBytes(message);
-            using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
+            if (message != null)
             {
-                rsa.FromXmlString(NPublicKey);
-                return rsa.Encrypt(data, false);
+                byte[] data = Encoding.UTF8.GetBytes(message);
+                using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
+                {
+                    rsa.FromXmlString(NPublicKey);
+                    return rsa.Encrypt(data, false);
+                }
             }
+            return null;
         }
         public string Decrypt(byte[] data)
         {

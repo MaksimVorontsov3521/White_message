@@ -18,7 +18,8 @@ using System.Threading;
 using System.IO;
 using System.Reflection;
 using System.Data;
-using System.Data.OleDb;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace White_message
 {
@@ -32,17 +33,17 @@ namespace White_message
         int port = 8000;
         string UserChat = null;
         Keys Keys = null;
+        Data data = null;
 
         public MainWindow()
         {
             InitializeComponent();
-            Databaseconfig();
+            data = new Data();
             Keys = new Keys();
             connection();
         }
         
         // подключения
-        private OleDbConnection sqlConnection = null;
         Socket clientSocket = null;
         string UserName = null;
         // обработка сообщений
@@ -102,11 +103,7 @@ namespace White_message
                             // Получение прошлых сообщений
                             case '7':
                                 message = message.Remove(0, 3);
-                                string[] parts = message.Split('\t');
-                                for (int i = 0; i < parts.Length; i++)
-                                {
-                                    Chat.Text += parts[i] + "\n";
-                                }
+                                data.History(message);
                                 break;
                             case '8':
                                 continue;
@@ -122,7 +119,7 @@ namespace White_message
             }
             clientSocket.Close();
         }
-
+        // прослушка
         public string listen()
         {
             try
@@ -148,7 +145,7 @@ namespace White_message
                 return null;
             }
         }
-
+        // отпраить всем
         private void send_all()
         {
             string message = Message.Text;
@@ -162,10 +159,10 @@ namespace White_message
             Message.Clear();
         }
 
-
         // Соединение
         public void connection()
         {
+            Name.Text = data.autoName();Password.Text = data.autoPassword();
             // Создайте сокет TCP
             clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             try
@@ -215,57 +212,6 @@ namespace White_message
             regtangle.Visibility = Visibility.Visible;          
         }
 
-        // работа offline
-        private void Save()
-        {
-            DateTime now = DateTime.UtcNow;
-            string query = $"Insert Into Offline (Message,TimeSended,Chat_name,UserName) VALUES ('{Message.Text}','{now}','MainChat','{Name.Text}')";
-            OleDbCommand com = new OleDbCommand(query, sqlConnection);
-            com.ExecuteNonQuery();
-            Chat.Text += $"Offline {Name.Text}: {Message.Text}";
-        }
-        public void offlinebuf()
-        {
-            string[] offmesages = new string[3];
-            string query = $"Select Message,TimeSended,Chat_name From Offline";
-            OleDbCommand com = new OleDbCommand(query, sqlConnection);
-            using (OleDbDataReader reader = com.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    offmesages[0] = (reader["Message"] != DBNull.Value ? reader["Message"].ToString() : null);
-                    offmesages[1] = (reader["TimeSended"] != DBNull.Value ? reader["TimeSended"].ToString() : null);
-                    offmesages[2] = (reader["Chat_name"] != DBNull.Value ? reader["Chat_name"].ToString() : null);
-                    Thread.Sleep(10);
-                    byte[] buffer = Encoding.UTF8.GetBytes(offmesages[0]);
-                    clientSocket.Send(buffer);
-                }
-            }
-        }
-
-        // база данных
-        private void Databaseconfig()
-        {
-            // подключение к базе данных
-            string relativePath = "Data.accdb";
-            string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
-            string connectionString = $"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={fullPath};";
-            sqlConnection = new OleDbConnection(connectionString);
-            sqlConnection.Open();
-
-            // Обращение к базе данных для данных пользователя
-            string query = $"Select PasswordUser,UserName,LengthP From Account";
-            OleDbCommand com = new OleDbCommand(query, sqlConnection);
-            using (OleDbDataReader reader = com.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    Name.Text = (reader["UserName"] != DBNull.Value ? reader["UserName"].ToString() : null);
-                    Password.Text = (reader["PasswordUser"] != DBNull.Value ? reader["PasswordUser"].ToString() : null);
-                    PrevTbox.Text = (reader["LengthP"] != DBNull.Value ? reader["LengthP"].ToString() : null);
-                }
-            }
-        }
 
         //кнопка для отправки сообщений и enter
         private void Send_Click(object sender, RoutedEventArgs e)
@@ -276,7 +222,6 @@ namespace White_message
             }
             catch
             {
-                Save();
                 Message.Clear();
             }
         }
@@ -328,13 +273,9 @@ namespace White_message
         // регистрация 
         private void Registration_Click(object sender, RoutedEventArgs e)
         {
-            // Создайте сокет TCP
-            clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
             try
             {
-                // Подключитесь к серверу
-                clientSocket.Connect(IPAddress.Parse(serverIP), port);
-
                 // Отправьте сообщение серверу
                 string message = "\t" + Name.Text + "\n" + Password.Text+ "\n" + " ";
                 byte[] buffer = Encoding.UTF8.GetBytes(message);
@@ -379,22 +320,22 @@ namespace White_message
             }
         }
         
-        // не помню что это 
+        // Запомнить пароль
         private void PrivAply_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                string query = $"Update Account Set LengthP = {Convert.ToInt32(PrevTbox.Text)},UserName = '{Name.Text}',PasswordUser = '{Password.Text}'";
-                OleDbCommand com = new OleDbCommand(query, sqlConnection);
-                com.ExecuteNonQuery();
+                var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                config.AppSettings.Settings["Login"].Value = Name.Text;
+                config.AppSettings.Settings["Password"].Value = Password.Text;
+                config.Save();
+                ConfigurationManager.RefreshSection("appSettings");
                 SettingsMessage.Content = "Изменения приняты";
             }
             catch
             {
                 SettingsMessage.Content = "Неверный формат ввода ";
             }
-
-
         }
         
         // ограничения для чата
@@ -424,7 +365,7 @@ namespace White_message
         }
         private void BackMainChat_Click(object sender, RoutedEventArgs e)
         {
-            WhatChat.Content = "Main";
+            WhatChat.Content = "MainChat";
             UserChat = null;
         }
     }

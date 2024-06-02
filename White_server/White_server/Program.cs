@@ -94,12 +94,25 @@ namespace White_server
             // Говорим всем, что подключился клиент
             update_OnLine($"connected: {message}");
             Console.WriteLine($"Client connected: {clientSocket.RemoteEndPoint} - Name: {message}");
+            previous(client);
             clientWork(client);
 
         }
 
+        private void previous(Clients client)
+        {
+            string message = "\t7";
+            message=dataBase.previous(10);
+            try
+            {
+                client.Socket.Send(client.Keys.Encrypt(message));
+            }
+            catch { }
+        }
+
         private void clientWork(Clients client)
         {
+
             try
             {
                 while (true)
@@ -228,30 +241,6 @@ namespace White_server
             // отправка прошлых сообщений
             if (1 == dataBase.Entrance(name, password))
             {
-                if (prev == "0")
-                {
-                    return name;
-                }
-
-                //// отправка прошлых сообщений
-                //byte[] buffer = new byte[1024];
-                //string prevmessage = "\t7";
-
-                //List<List<string>> MainChat = new List<List<string>>();
-
-                //MainChat = dataBase.previous(Convert.ToInt32(prev), "MainChat");
-
-                //List<string> historymessage = MainChat[1];
-                //List<string> historyUser = MainChat[0];
-
-                //for (int i = 0; i < historyUser.Count; i++)
-                //{
-                //    prevmessage += $"{historyUser[i]}: {historymessage[i]} \t";
-                //}
-
-                //buffer = Encoding.UTF8.GetBytes(prevmessage);
-                //clientSocket.Send(buffer);
-
                 return name;
             }
             // Неверное имя или пароль
