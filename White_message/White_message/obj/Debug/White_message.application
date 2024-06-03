@@ -7,14 +7,14 @@
     <framework targetVersion="4.7.2" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="White_message.exe.manifest" size="3668">
+    <dependentAssembly dependencyType="install" codebase="White_message.exe.manifest" size="4144">
       <assemblyIdentity name="White_message.exe" version="1.0.0.1" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>7aLDG9tFA95xs6PLXkyzM5MeOP2rD/YoQYQma8YvA2E=</dsig:DigestValue>
+        <dsig:DigestValue>G9Lqoila7OLGy5K3ABMg6H/4tbjHGs8OOIJ4a9XRyiM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
