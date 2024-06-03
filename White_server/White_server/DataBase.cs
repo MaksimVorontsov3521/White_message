@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Configuration;
+using System.Threading;
+using System.IO;
 
 namespace White_server
 {
@@ -14,20 +17,51 @@ namespace White_server
         private string connectionString;
         public DataBase()
         {
+            Thread save = new Thread(SaveDataBase);
+            DateTime now = DateTime.UtcNow;
+            save.Start();
             string relativePath = "Database1.mdf";
-            string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
+            string fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
             connectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={fullPath};Integrated Security=True";
-            SqlConnection sqlConnection = new SqlConnection(connectionString);
-            sqlConnection.Open();
-            if (sqlConnection.State == ConnectionState.Open)
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
             {
-                Console.WriteLine("Подключение к БД - открыто");
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
+                {
+                    Console.WriteLine("Подключение к БД - открыто");
+                }
+                else
+                {
+                    Console.WriteLine("Подключение к БД - не открыто");
+                }
+                sqlConnection.Close();
+
             }
-            else
+        }
+
+        private void SaveDataBase()
+        {
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            DateTime LastSave = Convert.ToDateTime(config.AppSettings.Settings["LastSave"].Value);
+            Console.WriteLine(LastSave.AddDays(6));
+            if (LastSave.AddDays(6) > DateTime.Now)
             {
-                Console.WriteLine("Подключение к БД - не открыто");
+                string relativePath = "Database1.mdf"; string relativePath2 = $"Database1Copy{DateTime.UtcNow.Day}_{DateTime.UtcNow.Month}_{DateTime.UtcNow.Year}.mdf";
+                string source = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
+                string destination = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath2);
+                try
+                {
+                    File.Copy(source, destination);
+                    DateTime now = DateTime.UtcNow;
+                    config.AppSettings.Settings["LastSave"].Value = Convert.ToString(now);
+                    Console.WriteLine("Успех?");
+                }
+                catch (IOException e)
+                {
+                    Console.WriteLine("Ошибка копирования Базы Данных: " + e.Message);
+                }
+                Thread.Sleep(3600000);
             }
-            sqlConnection.Close();
         }
         public void new_message(string user, string message, string chat)
         {

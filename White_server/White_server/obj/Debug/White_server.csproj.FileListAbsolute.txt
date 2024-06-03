@@ -19,3 +19,10 @@ X:\program\Clone Key\White_message\White_server\White_server\obj\Debug\White_ser
 X:\program\Clone Key\White_message\White_server\White_server\obj\Debug\White_server.csproj.CoreCompileInputs.cache
 X:\program\Clone Key\White_message\White_server\White_server\obj\Debug\White_server.exe
 X:\program\Clone Key\White_message\White_server\White_server\obj\Debug\White_server.pdb
+X:\program\WhiteMessageFold\White_message\White_server\White_server\bin\Debug\White_server.exe.config
+X:\program\WhiteMessageFold\White_message\White_server\White_server\bin\Debug\White_server.exe
+X:\program\WhiteMessageFold\White_message\White_server\White_server\bin\Debug\White_server.pdb
+X:\program\WhiteMessageFold\White_message\White_server\White_server\obj\Debug\White_server.csproj.AssemblyReference.cache
+X:\program\WhiteMessageFold\White_message\White_server\White_server\obj\Debug\White_server.csproj.CoreCompileInputs.cache
+X:\program\WhiteMessageFold\White_message\White_server\White_server\obj\Debug\White_server.exe
+X:\program\WhiteMessageFold\White_message\White_server\White_server\obj\Debug\White_server.pdb
