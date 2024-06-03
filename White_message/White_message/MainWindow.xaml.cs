@@ -42,7 +42,35 @@ namespace White_message
             Keys = new Keys();
             connection();
         }
-        
+        // Соединение
+        public void connection()
+        {
+            Name.Text = data.autoName(); Password.Text = data.autoPassword();
+            // Создайте сокет TCP
+            clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            try
+            {
+                // Подключитесь к серверу
+                clientSocket.Connect(IPAddress.Parse(serverIP), port);
+                keyExchange();
+
+                // Отправьте сообщение серверу
+                string message = Name.Text + "\n" + Password.Text + "\n" + 10;
+                UserName = Name.Text;
+                clientSocket.Send(Keys.Encrypt(message));
+                SettingsMessage.Content = "Вы подключились";
+                regtangle.Visibility = Visibility.Hidden;
+                work();
+            }
+            catch
+            {
+                //Сервер не доступен
+                Chat.Text += "Сервер не доступен\n";
+                SettingsMessage.Content = "Сервер не доступен";
+                clientSocket.Close();
+            }
+        }
+
         // подключения
         Socket clientSocket = null;
         string UserName = null;
@@ -102,8 +130,8 @@ namespace White_message
                                 break;
                             // Получение прошлых сообщений
                             case '7':
-                                message = message.Remove(0, 3);
-                                data.History(message);
+                                data.History(listenHistory());
+                                Chat.Text += data.Showhistory("MainChat");
                                 break;
                             case '8':
                                 continue;
@@ -119,6 +147,44 @@ namespace White_message
             }
             clientSocket.Close();
         }
+        public string listenHistory()
+        {
+            string message=null;
+            while (true)
+            {
+                try
+                {
+                    // Получите ответ от сервера
+                    byte[] buffer = new byte[128];
+                    
+                    int bytesReceived = clientSocket.Receive(buffer);
+                    if (bytesReceived == 0)
+                    {
+                        clientSocket.Close();
+                        Chat.Text += "\nCоединение разорванно\n";
+                    }
+                    if (bytesReceived == 0)
+                    {
+                        return null;
+
+                    }
+                    string replyMessage = Keys.Decrypt(buffer);
+                    if (replyMessage.StartsWith("\t"))
+                    {
+                        return message;
+                    }
+                    else 
+                    {
+                        message += replyMessage+"\t";
+                    }                 
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
         // прослушка
         public string listen()
         {
@@ -159,34 +225,7 @@ namespace White_message
             Message.Clear();
         }
 
-        // Соединение
-        public void connection()
-        {
-            Name.Text = data.autoName();Password.Text = data.autoPassword();
-            // Создайте сокет TCP
-            clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            try
-            {
-                // Подключитесь к серверу
-                clientSocket.Connect(IPAddress.Parse(serverIP), port);
-                keyExchange();
-
-                // Отправьте сообщение серверу
-                string message = Name.Text + "\n" + Password.Text + "\n" + 10;
-                UserName = Name.Text;
-                clientSocket.Send(Keys.Encrypt(message));
-                SettingsMessage.Content = "Вы подключились";
-                regtangle.Visibility = Visibility.Hidden;
-                work();                
-            }
-            catch
-            {
-                //Сервер не доступен
-                Chat.Text += "Сервер не доступен\n";
-                SettingsMessage.Content = "Сервер не доступен";
-                clientSocket.Close();
-            }
-        }
+       
         private void keyExchange()
         {
             byte[] buffer = new byte[1024];

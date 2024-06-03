@@ -92,6 +92,3 @@ X:\program\Clone Key\White_message\White_message\White_message\bin\Debug\White_m
 X:\program\Clone Key\White_message\White_message\White_message\bin\Debug\White_message.application
 X:\program\Clone Key\White_message\White_message\White_message\obj\Debug\White_message.exe.manifest
 X:\program\Clone Key\White_message\White_message\White_message\obj\Debug\White_message.application
-X:\program\Clone Key\White_message\White_message\White_message\bin\Debug\Database1.mdf
-X:\program\Clone Key\White_message\White_message\White_message\bin\Debug\Database1_log.ldf
-X:\program\Clone Key\White_message\White_message\White_message\obj\Debug\White_message_Content.g.cs

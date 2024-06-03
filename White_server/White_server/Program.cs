@@ -94,25 +94,38 @@ namespace White_server
             // Говорим всем, что подключился клиент
             update_OnLine($"connected: {message}");
             Console.WriteLine($"Client connected: {clientSocket.RemoteEndPoint} - Name: {message}");
-            previous(client);
             clientWork(client);
 
         }
 
         private void previous(Clients client)
         {
-            string message = "\t7";
-            message=dataBase.previous(10);
-            try
+            client.Socket.Send(client.Keys.Encrypt("\t7"));
+            string message = dataBase.previous(10);
+            string[] parts = message.Split('\t');
+            List<byte[]> EN = new List<byte[]>();
+            for (int i = 0; i < parts.Length; i++)
             {
-                client.Socket.Send(client.Keys.Encrypt(message));
+                byte []Encrypt = client.Keys.Encrypt(parts[i]);
+                EN.Add(Encrypt);
             }
-            catch { }
+            for (int j = 0; j < EN.Count; j++)
+            {
+                byte[] Encrypt = EN[j];
+                for (int i = 0; i < Encrypt.Length; i += 128)
+                {
+                    byte[] packet = new byte[128];
+                    Array.Copy(Encrypt, i, packet, 0, 128);
+                    client.Socket.Send(packet);
+                }
+            }
+            client.Socket.Send(client.Keys.Encrypt("\t8"));
+
         }
 
         private void clientWork(Clients client)
         {
-
+            previous(client);
             try
             {
                 while (true)

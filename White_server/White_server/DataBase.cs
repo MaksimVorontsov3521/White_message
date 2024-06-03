@@ -11,13 +11,13 @@ namespace White_server
 {
     class DataBase
     {
-        private SqlConnection sqlConnection = null;
+        private string connectionString;
         public DataBase()
         {
             string relativePath = "Database1.mdf";
             string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
-            string connectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={fullPath};Integrated Security=True";
-            sqlConnection = new SqlConnection(connectionString);
+            connectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={fullPath};Integrated Security=True";
+            SqlConnection sqlConnection = new SqlConnection(connectionString);
             sqlConnection.Open();
             if (sqlConnection.State == ConnectionState.Open)
             {
@@ -27,13 +27,21 @@ namespace White_server
             {
                 Console.WriteLine("Подключение к БД - не открыто");
             }
+            sqlConnection.Close();
         }
-        public void new_message(string user,string message,string chat)
+        public void new_message(string user, string message, string chat)
         {
-            DateTime now = DateTime.UtcNow;
-            string query = $"INSERT INTO Message (Message,Receiver,Sender,ResivedTime) VALUES ('{message}','{chat}','{user}','{now}')";
-            SqlCommand com = new SqlCommand(query, sqlConnection);
-            com.ExecuteNonQuery();               
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                sqlConnection.Open();
+                DateTime now = DateTime.UtcNow;
+                string query = $"INSERT INTO Message (Message,Receiver,Sender,ResivedTime) VALUES ('{message}','{chat}','{user}','{now}')";
+                SqlCommand com = new SqlCommand(query, sqlConnection);
+                com.ExecuteNonQuery();
+                sqlConnection.Close();
+
+            }
+        
         }
         public string previous(int p)
         {
@@ -52,45 +60,62 @@ namespace White_server
             //        message += "\t";
             //    }
             //}
-            string message = null;
-            string query = $"Select Top {p} * From Message where Receiver = 'MainChat' ORDER BY ResivedTime";
-            SqlCommand com = new SqlCommand(query, sqlConnection);
-            using (SqlDataReader reader = com.ExecuteReader())
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
             {
-                while (reader.Read())
+                sqlConnection.Open();
+                string message = null;
+                string query = $"Select Top {p} * From Message where Receiver = 'MainChat' ORDER BY ResivedTime";
+                SqlCommand com = new SqlCommand(query, sqlConnection);
+                using (SqlDataReader reader = com.ExecuteReader())
                 {
-                    message += (reader["Sender"] != DBNull.Value ? reader["Sender"].ToString() : null);
-                    message += "\t";
-                    message += (reader["Message"] != DBNull.Value ? reader["Message"].ToString() : null);
-                    message += "\t";
-                    message += (reader["ResivedTime"] != DBNull.Value ? reader["ResivedTime"].ToString() : null);
-                    message += "\t";
+                    while (reader.Read())
+                    {
+                        message += (reader["Sender"] != DBNull.Value ? reader["Sender"].ToString() : null);
+                        message += "\t";
+                        message += (reader["Message"] != DBNull.Value ? reader["Message"].ToString() : null);
+                        message += "\t";
+                        message += (reader["ResivedTime"] != DBNull.Value ? reader["ResivedTime"].ToString() : null);
+                        message += "\t";
+                    }
                 }
+                sqlConnection.Close();
+                return message;
             }
-            return message;
         }
         public int Entrance(string name,string password)
         {
-            string query = $"SELECT COUNT(*) From Accounts Where AccountName='{name}' AND AccountPassword='{password}'";
-            SqlCommand com = new SqlCommand(query, sqlConnection);
-            int a =(int)com.ExecuteScalar();
-            return a;
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                sqlConnection.Open();
+                string query = $"SELECT COUNT(*) From Accounts Where AccountName='{name}' AND AccountPassword='{password}'";
+                SqlCommand com = new SqlCommand(query, sqlConnection);
+                int a = (int)com.ExecuteScalar();
+                sqlConnection.Close();
+                return a;
+            }
+
         }
         public bool new_user(string name, string password)
         {
-            string query = $"SELECT COUNT(*) From Accounts Where AccountName='{name}'";
-            SqlCommand com = new SqlCommand(query, sqlConnection);
-            int a = (int)com.ExecuteScalar();
-            if (a >= 1)
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
             {
-                return false;
-            }
-            else
-            {
-                query = $"INSERT INTO Accounts (AccountName, AccountPassword) VALUES ('{name}', '{password}')";
-                com = new SqlCommand(query, sqlConnection);
-                com.ExecuteScalar();
-                return true;
+                sqlConnection.Open();
+                string query = $"SELECT COUNT(*) From Accounts Where AccountName='{name}'";
+                SqlCommand com = new SqlCommand(query, sqlConnection);
+                int a = (int)com.ExecuteScalar();
+                if (a >= 1)
+                {
+                    sqlConnection.Close();
+                    return false;
+                }
+                else
+                {
+                    query = $"INSERT INTO Accounts (AccountName, AccountPassword) VALUES ('{name}', '{password}')";
+                    com = new SqlCommand(query, sqlConnection);
+                    com.ExecuteScalar();
+                    sqlConnection.Close();
+                    return true;
+                }                
             }
         }
 
