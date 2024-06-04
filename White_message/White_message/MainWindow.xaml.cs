@@ -40,12 +40,12 @@ namespace White_message
             InitializeComponent();
             data = new Data();
             Keys = new Keys();
-            connection();
+            Name.Text = data.autoName(); Password.Text = data.autoPassword();
+            connection();            
         }
         // Соединение
         public void connection()
-        {
-            Name.Text = data.autoName(); Password.Text = data.autoPassword();
+        {            
             // Создайте сокет TCP
             clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             try
@@ -105,7 +105,7 @@ namespace White_message
                                 }
                                 break;
                             case '2':
-
+                                // пусто
                                 break;
                             // регистрация и аккаунты
                             case '3':
@@ -131,7 +131,11 @@ namespace White_message
                             // Получение прошлых сообщений
                             case '7':
                                 data.History(listenHistory());
-                                Chat.Text += data.Showhistory("MainChat");
+                                Chat.Text += data.Showhistory("MainChat", "MainChat");
+                                break;
+                            case '9':
+                                data.History(listenHistory());
+                                Chat.Text = data.Showhistory(Convert.ToString(OnLine.SelectedItem), Name.Text);
                                 break;
                             case '8':
                                 continue;
@@ -218,8 +222,8 @@ namespace White_message
             for (int i = 0; i < message.Length; i += 250)
             {
                 string block = UserChat+message.Substring(i, Math.Min(250, message.Length - i));
-                if (UserChat != null)
-                { Chat.Text += "\n"+message; }
+                //if (UserChat != null)
+                //{ Chat.Text += "\n"+message; }
                 clientSocket.Send(Keys.Encrypt(block));
             }
             Message.Clear();
@@ -398,14 +402,20 @@ namespace White_message
             {
                 WhatChat.Content = OnLine.SelectedItem;
             }
+            if (data.anyMessagesFromUser(Convert.ToString(OnLine.SelectedItem)) > 0)
+            {
+                clientSocket.Send(Keys.Encrypt("\tA"+ Convert.ToString(OnLine.SelectedItem)));
+            }
             
-            UserChat = "\t" + OnLine.SelectedItem + "\t" + $"From {UserName} \t";
-           
+            UserChat = "\t" + OnLine.SelectedItem + "\t" + UserName+ "\t";           
+
         }
         private void BackMainChat_Click(object sender, RoutedEventArgs e)
         {
+            OnLine.SelectedIndex = -1;
             WhatChat.Content = "MainChat";
             UserChat = null;
+            Chat.Text = data.Showhistory("MainChat", "MainChat");
         }
     }
 }

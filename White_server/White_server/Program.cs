@@ -103,10 +103,26 @@ namespace White_server
             client.Socket.Send(client.Keys.Encrypt("\t7"));
             string message = dataBase.previous(10);
             string[] parts = message.Split('\t');
+            sendLong(parts, client);
+            client.Socket.Send(client.Keys.Encrypt("\t"));
+        }
+
+        private void previous(Clients clients,string User)
+        {
+            clients.Socket.Send(clients.Keys.Encrypt("\t9"));
+            string message = dataBase.previousUser(10, clients.Name, User);
+            string[] parts = message.Split('\t');
+            sendLong(parts, clients);
+            clients.Socket.Send(clients.Keys.Encrypt("\t"));
+
+        }
+
+        private void sendLong(string[] parts,Clients client)
+        {
             List<byte[]> EN = new List<byte[]>();
             for (int i = 0; i < parts.Length; i++)
             {
-                byte []Encrypt = client.Keys.Encrypt(parts[i]);
+                byte[] Encrypt = client.Keys.Encrypt(parts[i]);
                 EN.Add(Encrypt);
             }
             for (int j = 0; j < EN.Count; j++)
@@ -119,8 +135,6 @@ namespace White_server
                     client.Socket.Send(packet);
                 }
             }
-            client.Socket.Send(client.Keys.Encrypt("\t8"));
-
         }
 
         private void clientWork(Clients client)
@@ -138,6 +152,11 @@ namespace White_server
                     {
                         Console.WriteLine($"Client disconnected: {client.Socket.RemoteEndPoint}");
                         disconect(client); break;
+                    }
+
+                    if (message.StartsWith("\t") && message[1] == 'A')
+                    {
+                        previous(client,message.Substring(2));
                     }
 
                     if (message.StartsWith("\t"))
@@ -198,7 +217,7 @@ namespace White_server
             {
                 string[] parts = message.Split('\0');
                 // записываем сообщение в базу данных
-                dataBase.new_message(client.Name, parts[0], "MainChat");
+                dataBase.new_message("MainChat", client.Name, parts[0]);
             }
             catch
             {

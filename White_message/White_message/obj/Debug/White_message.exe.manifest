@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="White_message.exe" size="677904">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="White_message.exe" size="678416">
       <assemblyIdentity name="White_message" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>r1wAlIt9/yf3Ip+rNw4EYSewT7WNbSl0fUojhrmwZUc=</dsig:DigestValue>
+        <dsig:DigestValue>JuBGqAVnGMyNikops9yaNs1T5a0lHns2H3WUYttc5jg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

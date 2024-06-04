@@ -10,6 +10,8 @@ namespace White_message
 {
     class Data
     {
+        // UserName = Sender +-
+        // Chat_name = Receiver +-
         private SqlConnection sqlConnection = null;
         public Data()
         {
@@ -26,33 +28,46 @@ namespace White_message
         }
         public void History(string history)
         {
-            string[] parts = history.Split('\t');int  m, r;
-            for (int i = 0; i < parts.Length-3; i +=3)
+            if (history == null) { return; }
+            string[] parts = history.Split('\t'); int m, t, r;
+            for (int i = 0; i < parts.Length - 4; i += 4)
             {
                 m = i + 1;
-                r = i + 2;
-                string query = $"INSERT INTO MessagesTab (UserName,Message,TimeSended,Chat_name) VALUES (N'{parts[i]}',N'{parts[m]}','{parts[r]}',N'MainChat')";
+                t = i + 2;
+                r = i + 3;
+                string query = $"INSERT INTO MessagesTab (UserName,Message,TimeSended,Chat_name) VALUES (N'{parts[i]}',N'{parts[m]}','{parts[t]}',N'{parts[r]}')";
                 SqlCommand com = new SqlCommand(query, sqlConnection);
                 com.ExecuteNonQuery();
             }
         }
 
-        public string Showhistory(string Chat_name)
+        public string Showhistory(string Chat_name,string Username)
         {
             string message = null;
-            string query = $"Select Message,UserName From MessagesTab where Chat_name=N'{Chat_name}' ORDER BY TimeSended";
+            string query = $"Select * From MessagesTab where Chat_name=N'{Chat_name}' or Chat_name=N'{Username}' ORDER BY TimeSended";
             SqlCommand com = new SqlCommand(query, sqlConnection);
             using (SqlDataReader reader = com.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    message += (reader["UserName"] != DBNull.Value ? reader["UserName"].ToString() : null);
+                    message += "from ";
+                    message += (reader["UserName"] != DBNull.Value ? reader["UserName"].ToString() : null);                  
+                    message += "To ";
+                    message += (reader["Chat_name"] != DBNull.Value ? reader["Chat_name"].ToString() : null);
+                    message += ": ";
                     message += (reader["Message"] != DBNull.Value ? reader["Message"].ToString() : null);
-                    message += "\n";
-                    
+                    message += "\n";                    
                 }
             }           
             return message;
+        }
+
+        public int anyMessagesFromUser(string User)
+        {
+            string query = $"SELECT COUNT(*) From MessagesTab Where UserName ='{User}'";
+            SqlCommand com = new SqlCommand(query, sqlConnection);
+            int a = (int)com.ExecuteScalar();
+            return a;
         }
 
         public string autoName()

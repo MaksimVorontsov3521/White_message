@@ -55,10 +55,9 @@
             <Label Content="Пароль" HorizontalAlignment="Left" Margin="359,247,0,0" VerticalAlignment="Top" FontSize="16" />
             <TextBox x:Name="Password" HorizontalAlignment="Left" Height="23" Margin="288,283,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="223" TextChanged="Password_TextChanged" Background="#FFFCAB7E"/>
             <Button x:Name="Connect" Style="{StaticResource  qwer}" Content="Вход" HorizontalAlignment="Left" Margin="251,327,0,0" VerticalAlignment="Top" Width="119" Click="Connect_Click" Height="46" Background="#FFFF8033"/>
-
+            <Label x:Name="SettingsMessage"  Content="" HorizontalAlignment="Left" Height="25" Margin="319,378,0,0" VerticalAlignment="Top" Width="159"/>
             <Label Content="Логин" HorizontalAlignment="Left" Margin="369,183,0,0" VerticalAlignment="Top" Width="55" FontSize="16"/>
             <Button x:Name="Registration" Style="{StaticResource  qwer}" Content="Регистрация"  HorizontalAlignment="Left" Height="46" Margin="427,327,0,0" VerticalAlignment="Top" Width="121" Click="Registration_Click" RenderTransformOrigin="0,0" Background="#FFFF8033"/>
-                    <Label x:Name="SettingsMessage" Visibility="Hidden" Content="" HorizontalAlignment="Left" Height="25" Margin="21,281,0,0" VerticalAlignment="Top" Width="159"/>
             <TextBox x:Name="Name" HorizontalAlignment="Left" Height="23" Margin="288,219,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="223" TextChanged="Name_TextChanged" Background="#FFFCAB7E"/>
             <Rectangle HorizontalAlignment="Left" Height="142" Margin="251,36,0,0"  VerticalAlignment="Top" Width="297">
                 <Rectangle.Fill>

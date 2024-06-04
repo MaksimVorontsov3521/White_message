@@ -44,7 +44,7 @@ namespace White_server
             var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             DateTime LastSave = Convert.ToDateTime(config.AppSettings.Settings["LastSave"].Value);
             Console.WriteLine(LastSave.AddDays(6));
-            if (LastSave.AddDays(6) > DateTime.Now)
+            if (LastSave.AddDays(6) < DateTime.Now)
             {
                 string relativePath = "Database1.mdf"; string relativePath2 = $"Database1Copy{DateTime.UtcNow.Day}_{DateTime.UtcNow.Month}_{DateTime.UtcNow.Year}.mdf";
                 string source = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
@@ -63,13 +63,13 @@ namespace White_server
                 Thread.Sleep(3600000);
             }
         }
-        public void new_message(string user, string message, string chat)
+        public void new_message(string Receiver,string Sender, string message)
         {
             using (SqlConnection sqlConnection = new SqlConnection(connectionString))
             {
                 sqlConnection.Open();
-                DateTime now = DateTime.UtcNow;
-                string query = $"INSERT INTO Message (Message,Receiver,Sender,ResivedTime) VALUES ('{message}','{chat}','{user}','{now}')";
+                DateTime now = DateTime.UtcNow;               
+                string query = $"INSERT INTO Message (Message,Receiver,Sender,ResivedTime) VALUES ('{message}','{Receiver}','{Sender}','{now}')";
                 SqlCommand com = new SqlCommand(query, sqlConnection);
                 com.ExecuteNonQuery();
                 sqlConnection.Close();
@@ -79,21 +79,6 @@ namespace White_server
         }
         public string previous(int p)
         {
-            //string message = null;
-            //string query = $"Select Top {p} * From Message where Receiver = '{chat}' ORDER BY ResivedTime";
-            //SqlCommand com = new SqlCommand(query, sqlConnection);
-            //using (SqlDataReader reader = com.ExecuteReader())
-            //{
-            //    while (reader.Read())
-            //    {
-            //        message +=(reader["Sender"]!= DBNull.Value ? reader["Sender"].ToString() : null);
-            //        message += "\t";
-            //        message +=(reader["Message"] != DBNull.Value ? reader["Message"].ToString() : null);
-            //        message += "\t";
-            //        message += (reader["ResivedTime"] != DBNull.Value ? reader["ResivedTime"].ToString() : null);
-            //        message += "\t";
-            //    }
-            //}
             using (SqlConnection sqlConnection = new SqlConnection(connectionString))
             {
                 sqlConnection.Open();
@@ -110,8 +95,53 @@ namespace White_server
                         message += "\t";
                         message += (reader["ResivedTime"] != DBNull.Value ? reader["ResivedTime"].ToString() : null);
                         message += "\t";
+                        message += (reader["Receiver"] != DBNull.Value ? reader["Receiver"].ToString() : null);
+                        message += "\t";
                     }
                 }
+                sqlConnection.Close();
+                return message;
+            }
+        }
+
+        public string previousUser(int p,string Sender,string Receiver)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                sqlConnection.Open();
+                string message = null;
+                string query = $"Select Top {p} * From Message where Receiver = '{Receiver}' And Sender = '{Sender}' ORDER BY ResivedTime";
+                SqlCommand com = new SqlCommand(query, sqlConnection);
+                using (SqlDataReader reader = com.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        message += (reader["Sender"] != DBNull.Value ? reader["Sender"].ToString() : null);
+                        message += "\t";
+                        message += (reader["Message"] != DBNull.Value ? reader["Message"].ToString() : null);
+                        message += "\t";
+                        message += (reader["ResivedTime"] != DBNull.Value ? reader["ResivedTime"].ToString() : null);
+                        message += "\t";
+                        message += (reader["Receiver"] != DBNull.Value ? reader["Receiver"].ToString() : null);
+                        message += "\t";
+                    }
+                }
+                query = $"Select Top {p} * From Message where Receiver = '{Sender}' And Sender = '{Receiver}' ORDER BY ResivedTime";
+                com = new SqlCommand(query, sqlConnection);
+                using (SqlDataReader reader = com.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        message += (reader["Sender"] != DBNull.Value ? reader["Sender"].ToString() : null);
+                        message += "\t";
+                        message += (reader["Message"] != DBNull.Value ? reader["Message"].ToString() : null);
+                        message += "\t";
+                        message += (reader["ResivedTime"] != DBNull.Value ? reader["ResivedTime"].ToString() : null);
+                        message += "\t";
+                        message += (reader["Receiver"] != DBNull.Value ? reader["Receiver"].ToString() : null);
+                        message += "\t";
+                    }
+                }                
                 sqlConnection.Close();
                 return message;
             }
