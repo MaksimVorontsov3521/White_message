@@ -109,13 +109,15 @@ namespace White_server
             using (SqlConnection sqlConnection = new SqlConnection(connectionString))
             {
                 sqlConnection.Open();
+
+                List<string> more = new List<string>();
                 string message = null;
                 string query = $"Select Top {p} * From Message where Receiver = '{Receiver}' And Sender = '{Sender}' ORDER BY ResivedTime";
                 SqlCommand com = new SqlCommand(query, sqlConnection);
                 using (SqlDataReader reader = com.ExecuteReader())
                 {
                     while (reader.Read())
-                    {
+                    {                     
                         message += (reader["Sender"] != DBNull.Value ? reader["Sender"].ToString() : null);
                         message += "\t";
                         message += (reader["Message"] != DBNull.Value ? reader["Message"].ToString() : null);
@@ -124,6 +126,8 @@ namespace White_server
                         message += "\t";
                         message += (reader["Receiver"] != DBNull.Value ? reader["Receiver"].ToString() : null);
                         message += "\t";
+                        more.Add(message);
+                        message = null;
                     }
                 }
                 query = $"Select Top {p} * From Message where Receiver = '{Sender}' And Sender = '{Receiver}' ORDER BY ResivedTime";
@@ -131,7 +135,7 @@ namespace White_server
                 using (SqlDataReader reader = com.ExecuteReader())
                 {
                     while (reader.Read())
-                    {
+                    {                   
                         message += (reader["Sender"] != DBNull.Value ? reader["Sender"].ToString() : null);
                         message += "\t";
                         message += (reader["Message"] != DBNull.Value ? reader["Message"].ToString() : null);
@@ -140,9 +144,16 @@ namespace White_server
                         message += "\t";
                         message += (reader["Receiver"] != DBNull.Value ? reader["Receiver"].ToString() : null);
                         message += "\t";
+                        more.Add(message);
+                        message = null;
                     }
-                }                
+                }               
                 sqlConnection.Close();
+                List<string> one = more.Distinct().ToList();
+                for (int i = 0; i < one.Count; i++)
+                {
+                    message += one[i];
+                }
                 return message;
             }
         }
