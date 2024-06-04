@@ -67,9 +67,7 @@ namespace White_server
                 keys.NPublicKey = Encoding.UTF8.GetString(buffer);
             }
             else { clientSocket.Close(); }
-
         }
-
         private void HandleClient(Socket clientSocket)
         {
             Keys keys = new Keys();
@@ -135,6 +133,7 @@ namespace White_server
                     client.Socket.Send(packet);
                 }
             }
+            return;
         }
 
         private void clientWork(Clients client)
@@ -157,6 +156,8 @@ namespace White_server
                     if (message.StartsWith("\t") && message[1] == 'A')
                     {
                         previous(client,message.Substring(2));
+
+                        continue;
                     }
 
                     if (message.StartsWith("\t"))

@@ -166,11 +166,7 @@ namespace White_message
                     {
                         clientSocket.Close();
                         Chat.Text += "\nCоединение разорванно\n";
-                    }
-                    if (bytesReceived == 0)
-                    {
                         return null;
-
                     }
                     string replyMessage = Keys.Decrypt(buffer);
                     if (replyMessage.StartsWith("\t"))
@@ -402,19 +398,19 @@ namespace White_message
             {
                 WhatChat.Content = OnLine.SelectedItem;
             }
-            if (data.anyMessagesFromUser(Convert.ToString(OnLine.SelectedItem)) > 0)
+            UserChat = "\t" + OnLine.SelectedItem + "\t" + UserName + "\t";
+            if (data.anyMessagesFromUser(Convert.ToString(OnLine.SelectedItem)) == 0)
             {
-                clientSocket.Send(Keys.Encrypt("\tA"+ Convert.ToString(OnLine.SelectedItem)));
+                clientSocket.Send(Keys.Encrypt("\tA" + Convert.ToString(OnLine.SelectedItem)));
             }
-            
-            UserChat = "\t" + OnLine.SelectedItem + "\t" + UserName+ "\t";           
+            Chat.Text = data.Showhistory(Name.Text, (Convert.ToString(OnLine.SelectedItem)));
 
         }
         private void BackMainChat_Click(object sender, RoutedEventArgs e)
-        {
+        {                    
+            UserChat = null;           
             OnLine.SelectedIndex = -1;
             WhatChat.Content = "MainChat";
-            UserChat = null;
             Chat.Text = data.Showhistory("MainChat", "MainChat");
         }
     }

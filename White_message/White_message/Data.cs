@@ -64,7 +64,8 @@ namespace White_message
 
         public int anyMessagesFromUser(string User)
         {
-            string query = $"SELECT COUNT(*) From MessagesTab Where UserName ='{User}'";
+            if (User == "") { return 10; }
+            string query = $"SELECT COUNT(*) From MessagesTab Where Chat_name ='{User}'";
             SqlCommand com = new SqlCommand(query, sqlConnection);
             int a = (int)com.ExecuteScalar();
             return a;
