@@ -54,7 +54,6 @@ namespace White_server
                     File.Copy(source, destination);
                     DateTime now = DateTime.UtcNow;
                     config.AppSettings.Settings["LastSave"].Value = Convert.ToString(now);
-                    Console.WriteLine("Успех?");
                 }
                 catch (IOException e)
                 {
@@ -112,7 +111,7 @@ namespace White_server
 
                 List<string> more = new List<string>();
                 string message = null;
-                string query = $"Select Top {p} * From Message where Receiver = '{Receiver}' And Sender = '{Sender}' ORDER BY ResivedTime";
+                string query = $"Select Top {p} * From Message where Receiver = '{Receiver}' And Sender = '{Sender}' ORDER BY ResivedTime Desc";
                 SqlCommand com = new SqlCommand(query, sqlConnection);
                 using (SqlDataReader reader = com.ExecuteReader())
                 {
@@ -130,7 +129,7 @@ namespace White_server
                         message = null;
                     }
                 }
-                query = $"Select Top {p} * From Message where Receiver = '{Sender}' And Sender = '{Receiver}' ORDER BY ResivedTime";
+                query = $"Select Top {p} * From Message where Receiver = '{Sender}' And Sender = '{Receiver}' ORDER BY ResivedTime  Desc";
                 com = new SqlCommand(query, sqlConnection);
                 using (SqlDataReader reader = com.ExecuteReader())
                 {
@@ -157,6 +156,8 @@ namespace White_server
                 return message;
             }
         }
+
+
         public int Entrance(string name,string password)
         {
             using (SqlConnection sqlConnection = new SqlConnection(connectionString))

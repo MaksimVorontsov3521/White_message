@@ -44,7 +44,8 @@ namespace White_message
         public string Showhistory(string Chat_name,string Username)
         {
             string message = null;
-            string query = $"Select * From MessagesTab where Chat_name=N'{Chat_name}' or Chat_name=N'{Username}' ORDER BY TimeSended";
+            string query = $"Select * From MessagesTab where (Chat_name=N'{Chat_name}' and UserName=N'{Username}') or" +
+                $" (Chat_name=N'{Username}' and UserName=N'{Chat_name}') ORDER BY TimeSended,Id";
             SqlCommand com = new SqlCommand(query, sqlConnection);
             using (SqlDataReader reader = com.ExecuteReader())
             {
@@ -80,6 +81,14 @@ namespace White_message
         {
             var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             return  config.AppSettings.Settings["Password"].Value;
+        }
+        public void newMessage(string message)
+        {
+            string[] parts = message.Split('\t');
+            DateTime now = DateTime.UtcNow;
+            string query = $"INSERT INTO MessagesTab (UserName,Message,TimeSended,Chat_name) VALUES (N'{parts[0]}',N'{parts[1]}',N'{now}',N'{parts[2]}')";
+            SqlCommand com = new SqlCommand(query, sqlConnection);
+            com.ExecuteNonQuery();
         }
 
     }

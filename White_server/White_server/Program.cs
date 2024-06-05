@@ -33,73 +33,12 @@ namespace White_server
             // начало работы
             server.work();
         }
-        private void work()
-        {
-            DataBase dataBase = new DataBase();
-            this.dataBase = dataBase;
-
-            // Настройки сервера
-            const int port = 8000; // Replace with your desired port
-            string ipAddress = "127.0.0.1"; // Replace with your IP address or "*" for all interfaces
-            Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
-            // Прослушка
-            serverSocket.Bind(new IPEndPoint(IPAddress.Parse(ipAddress), port));
-            serverSocket.Listen(10); // Backlog
-            Console.WriteLine($"Server listening on port {port}...");
-
-            // Подключить клиента
-            while (true)
-            {
-                Socket clientSocket = serverSocket.Accept();
-                Thread clientThread = new Thread(() => HandleClient(clientSocket));
-                clientThread.Start();
-            }
-        }
-
-        private void keyExchange(Socket clientSocket,Keys keys)
-        {
-            byte[] buffer = Encoding.UTF8.GetBytes(keys.myPublicKey);
-            clientSocket.Send(buffer);
-            int receivedBytes = clientSocket.Receive(buffer);
-            if (receivedBytes > 0)
-            {
-                keys.NPublicKey = Encoding.UTF8.GetString(buffer);
-            }
-            else { clientSocket.Close(); }
-        }
-        private void HandleClient(Socket clientSocket)
-        {
-            Keys keys = new Keys();
-            keyExchange(clientSocket, keys);
-
-            byte[] buffer = new byte[128];
-            int receivedBytes = clientSocket.Receive(buffer);
-            string message = keys.Decrypt(buffer);
-
-            // ищем клиента в базе
-            try { message = account(message, clientSocket); } catch { return; }
-            
-            if (message.StartsWith("\t"))
-            {               
-                clientSocket.Send(keys.Encrypt(message));
-                return;
-            }
-
-            // Добавляем клиента в list<>
-            Clients client = new Clients(clientSocket, message,keys);
-            Clients_list.Add(client);
-            // Говорим всем, что подключился клиент
-            update_OnLine($"connected: {message}");
-            Console.WriteLine($"Client connected: {clientSocket.RemoteEndPoint} - Name: {message}");
-            clientWork(client);
-
-        }
 
         private void previous(Clients client)
         {
             client.Socket.Send(client.Keys.Encrypt("\t7"));
             string message = dataBase.previous(10);
+            if (message == null) { client.Socket.Send(client.Keys.Encrypt("\t")); return; }
             string[] parts = message.Split('\t');
             sendLong(parts, client);
             client.Socket.Send(client.Keys.Encrypt("\t"));
@@ -109,31 +48,11 @@ namespace White_server
         {
             clients.Socket.Send(clients.Keys.Encrypt("\t9"));
             string message = dataBase.previousUser(10, clients.Name, User);
+            if (message == null) { clients.Socket.Send(clients.Keys.Encrypt("\t")); return; }
             string[] parts = message.Split('\t');
             sendLong(parts, clients);
             clients.Socket.Send(clients.Keys.Encrypt("\t"));
 
-        }
-
-        private void sendLong(string[] parts,Clients client)
-        {
-            List<byte[]> EN = new List<byte[]>();
-            for (int i = 0; i < parts.Length; i++)
-            {
-                byte[] Encrypt = client.Keys.Encrypt(parts[i]);
-                EN.Add(Encrypt);
-            }
-            for (int j = 0; j < EN.Count; j++)
-            {
-                byte[] Encrypt = EN[j];
-                for (int i = 0; i < Encrypt.Length; i += 128)
-                {
-                    byte[] packet = new byte[128];
-                    Array.Copy(Encrypt, i, packet, 0, 128);
-                    client.Socket.Send(packet);
-                }
-            }
-            return;
         }
 
         private void clientWork(Clients client)
@@ -179,15 +98,8 @@ namespace White_server
             }
         }
 
-
         // общение
-        private string listen(Clients client, ref int receivedBytes)
-        {
-            // Получаем данные от клиента в битах и переводим биты в строки
-            byte[] buffer = new byte[128];
-            receivedBytes = client.Socket.Receive(buffer);
-            return client.Keys.Decrypt(buffer);
-        }
+        
 
         private void privateChat(string message, Clients client)
         {
@@ -196,22 +108,28 @@ namespace White_server
             try
             {
                 // записываем сообщение в базу данных
-                dataBase.new_message(parts[2], parts[3], client.Name);
+                dataBase.new_message(client.Name,parts[2], parts[3]);
             }
             catch
             {
                 // disconect(client, e, OpenKey); break;
             }
-
+            answer = parts[2] + "\t" + parts[3] + "\t" + client.Name;
             for (int i = 0; i < Clients_list.Count; i++)
             {
                 if (Clients_list[i].Name == parts[1])
                 {
                     Clients_list[i].Socket.Send(client.Keys.Encrypt(answer));
+                    if (Clients_list[i]!=client)
+                    {
+                        client.Socket.Send(client.Keys.Encrypt(answer));
+                    }
                 }
+
+                
             }
         }
-
+        
         private void publicChat(string message, Clients client)
         {
             try
@@ -219,15 +137,42 @@ namespace White_server
                 string[] parts = message.Split('\0');
                 // записываем сообщение в базу данных
                 dataBase.new_message("MainChat", client.Name, parts[0]);
+                // Отправляем сообщение всем клиентам
+                string response = client.Name + "\t" + parts[0]+"\t"+"MainChat";
+                send(response);
             }
             catch
             {
-                //disconect(client, e, OpenKey); break;
-            }
-            // Отправляем сообщение всем клиентам
-            string response = $"{client.Name}: {message}";
-            send(response);
 
+            }
+            
+        }
+        private string listen(Clients client, ref int receivedBytes)
+        {
+            // Получаем данные от клиента в битах и переводим биты в строки
+            byte[] buffer = new byte[128];
+            receivedBytes = client.Socket.Receive(buffer);
+            return client.Keys.Decrypt(buffer);
+        }
+        private void sendLong(string[] parts, Clients client)
+        {
+            List<byte[]> EN = new List<byte[]>();
+            for (int i = 0; i < parts.Length; i++)
+            {
+                byte[] Encrypt = client.Keys.Encrypt(parts[i]);
+                EN.Add(Encrypt);
+            }
+            for (int j = 0; j < EN.Count; j++)
+            {
+                byte[] Encrypt = EN[j];
+                for (int i = 0; i < Encrypt.Length; i += 128)
+                {
+                    byte[] packet = new byte[128];
+                    Array.Copy(Encrypt, i, packet, 0, 128);
+                    client.Socket.Send(packet);
+                }
+            }
+            return;
         }
 
         // обновление списка online у клиентов
@@ -248,6 +193,56 @@ namespace White_server
         }
 
         // Соединение
+        private void HandleClient(Socket clientSocket)
+        {
+            Keys keys = new Keys();
+            keyExchange(clientSocket, keys);
+
+            byte[] buffer = new byte[128];
+            int receivedBytes = clientSocket.Receive(buffer);
+            string message = keys.Decrypt(buffer);
+
+            // ищем клиента в базе
+            try { message = account(message, clientSocket); } catch { return; }
+
+            if (message.StartsWith("\t"))
+            {
+                clientSocket.Send(keys.Encrypt(message));
+                return;
+            }
+
+            // Добавляем клиента в list<>
+            Clients client = new Clients(clientSocket, message, keys);
+            Clients_list.Add(client);
+            // Говорим всем, что подключился клиент
+            update_OnLine($"connected: {message}");
+            Console.WriteLine($"Client connected: {clientSocket.RemoteEndPoint} - Name: {message}");
+            clientWork(client);
+
+        }
+        private void work()
+        {
+            DataBase dataBase = new DataBase();
+            this.dataBase = dataBase;
+
+            // Настройки сервера
+            const int port = 8000; // Replace with your desired port
+            string ipAddress = "127.0.0.1"; // Replace with your IP address or "*" for all interfaces
+            Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+            // Прослушка
+            serverSocket.Bind(new IPEndPoint(IPAddress.Parse(ipAddress), port));
+            serverSocket.Listen(10); // Backlog
+            Console.WriteLine($"Server listening on port {port}...");
+
+            // Подключить клиента
+            while (true)
+            {
+                Socket clientSocket = serverSocket.Accept();
+                Thread clientThread = new Thread(() => HandleClient(clientSocket));
+                clientThread.Start();
+            }
+        }
         private string account(string message, Socket clientSocket)
         {
             // message = User1\n123\n10 - разбиваеться по \n
@@ -283,6 +278,17 @@ namespace White_server
             }
         }
 
+        private void keyExchange(Socket clientSocket, Keys keys)
+        {
+            byte[] buffer = Encoding.UTF8.GetBytes(keys.myPublicKey);
+            clientSocket.Send(buffer);
+            int receivedBytes = clientSocket.Receive(buffer);
+            if (receivedBytes > 0)
+            {
+                keys.NPublicKey = Encoding.UTF8.GetString(buffer);
+            }
+            else { clientSocket.Close(); }
+        }
 
         private void disconect(Clients client)
         {

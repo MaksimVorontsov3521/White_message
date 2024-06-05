@@ -131,7 +131,7 @@ namespace White_message
                             // Получение прошлых сообщений
                             case '7':
                                 data.History(listenHistory());
-                                Chat.Text += data.Showhistory("MainChat", "MainChat");
+                                Chat.Text += data.Showhistory("MainChat", Name.Text);
                                 break;
                             case '9':
                                 data.History(listenHistory());
@@ -144,7 +144,9 @@ namespace White_message
                     }
                     else
                     {
-                        Chat.Text += message + "\n";
+                        data.newMessage(message);
+                        ChatText();
+                        //Chat.Text += message + "\n";
                     }
                 }
                 else { message = "\t8"; }
@@ -406,12 +408,30 @@ namespace White_message
             Chat.Text = data.Showhistory(Name.Text, (Convert.ToString(OnLine.SelectedItem)));
 
         }
+        private void ChatText()
+        {
+            if (OnLine.SelectedItem == null)
+            {
+                BackMainchat();
+            }
+            else
+            {
+                Chat.Text = data.Showhistory(Name.Text, (Convert.ToString(OnLine.SelectedItem)));
+            }
+           
+        }
         private void BackMainChat_Click(object sender, RoutedEventArgs e)
-        {                    
-            UserChat = null;           
+        {
+            BackMainchat();
+        }
+        private void BackMainchat()
+        {          
             OnLine.SelectedIndex = -1;
             WhatChat.Content = "MainChat";
-            Chat.Text = data.Showhistory("MainChat", "MainChat");
+            Chat.Text = data.Showhistory("MainChat", Name.Text);
+            UserChat = null;
+            Chat.Text += "";
         }
+
     }
 }

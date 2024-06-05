@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="White_message.exe" size="678416">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="White_message.exe" size="679440">
       <assemblyIdentity name="White_message" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>IiVUU0yNdogowvBBvPQNYfBAt3P2w1a7Av6uaI8n4Ns=</dsig:DigestValue>
+        <dsig:DigestValue>WIMESJuhI6mipLN7r97W3BGEI30nObEIDgKmFMGbrYk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -69,7 +69,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>Tt4Hyytp1BjQCM2kOWyvmfJ/etVkx7Tq4i8g8j1r9g8=</dsig:DigestValue>
+      <dsig:DigestValue>KtG9jdAVZJ17DwJldJXIb8s/RhF1wF+uw664F8/UCK8=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>
