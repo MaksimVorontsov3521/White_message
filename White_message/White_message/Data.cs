@@ -18,12 +18,13 @@ namespace White_message
             // подключение к базе данных
             string relativePath = "Database1C.mdf";
             string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
-            string connectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={fullPath};Integrated Security=True";
+            string connectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={fullPath};Integrated Security=True;";
             sqlConnection = new SqlConnection(connectionString);
             sqlConnection.Open();
             string query = "Delete From MessagesTab";
             SqlCommand com = new SqlCommand(query, sqlConnection);
             com.ExecuteNonQuery();
+
 
         }
         public void History(string history)
@@ -53,7 +54,7 @@ namespace White_message
                 {
                     message += "from ";
                     message += (reader["UserName"] != DBNull.Value ? reader["UserName"].ToString() : null);                  
-                    message += "To ";
+                    message += " To ";
                     message += (reader["Chat_name"] != DBNull.Value ? reader["Chat_name"].ToString() : null);
                     message += ": ";
                     message += (reader["Message"] != DBNull.Value ? reader["Message"].ToString() : null);
@@ -66,7 +67,7 @@ namespace White_message
         public int anyMessagesFromUser(string User)
         {
             if (User == "") { return 10; }
-            string query = $"SELECT COUNT(*) From MessagesTab Where Chat_name ='{User}'";
+            string query = $"SELECT COUNT(*) From MessagesTab Where Chat_name =N'{User}'";
             SqlCommand com = new SqlCommand(query, sqlConnection);
             int a = (int)com.ExecuteScalar();
             return a;
@@ -86,7 +87,8 @@ namespace White_message
         {
             string[] parts = message.Split('\t');
             DateTime now = DateTime.UtcNow;
-            string query = $"INSERT INTO MessagesTab (UserName,Message,TimeSended,Chat_name) VALUES (N'{parts[0]}',N'{parts[1]}',N'{now}',N'{parts[2]}')";
+            string formnow = now.ToString("MM.dd.yyyy HH:mm:ss");
+            string query = $"INSERT INTO MessagesTab (UserName,Message,TimeSended,Chat_name) VALUES (N'{parts[0]}',N'{parts[1]}',N'{formnow}',N'{parts[2]}')";
             SqlCommand com = new SqlCommand(query, sqlConnection);
             com.ExecuteNonQuery();
         }

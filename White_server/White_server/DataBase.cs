@@ -68,7 +68,7 @@ namespace White_server
             {
                 sqlConnection.Open();
                 DateTime now = DateTime.UtcNow;               
-                string query = $"INSERT INTO Message (Message,Receiver,Sender,ResivedTime) VALUES ('{message}','{Receiver}','{Sender}','{now}')";
+                string query = $"INSERT INTO Message (Message,Receiver,Sender,ResivedTime) VALUES (N'{message}',N'{Receiver}',N'{Sender}',N'{now}')";
                 SqlCommand com = new SqlCommand(query, sqlConnection);
                 com.ExecuteNonQuery();
                 sqlConnection.Close();
@@ -82,7 +82,7 @@ namespace White_server
             {
                 sqlConnection.Open();
                 string message = null;
-                string query = $"Select Top {p} * From Message where Receiver = 'MainChat' ORDER BY ResivedTime";
+                string query = $"Select Top {p} * From Message where Receiver = 'MainChat' ORDER BY ResivedTime Desc";
                 SqlCommand com = new SqlCommand(query, sqlConnection);
                 using (SqlDataReader reader = com.ExecuteReader())
                 {
@@ -111,7 +111,7 @@ namespace White_server
 
                 List<string> more = new List<string>();
                 string message = null;
-                string query = $"Select Top {p} * From Message where Receiver = '{Receiver}' And Sender = '{Sender}' ORDER BY ResivedTime Desc";
+                string query = $"Select Top {p} * From Message where Receiver = N'{Receiver}' And Sender = N'{Sender}' ORDER BY ResivedTime Desc";
                 SqlCommand com = new SqlCommand(query, sqlConnection);
                 using (SqlDataReader reader = com.ExecuteReader())
                 {
@@ -129,7 +129,7 @@ namespace White_server
                         message = null;
                     }
                 }
-                query = $"Select Top {p} * From Message where Receiver = '{Sender}' And Sender = '{Receiver}' ORDER BY ResivedTime  Desc";
+                query = $"Select Top {p} * From Message where Receiver = N'{Sender}' And Sender = N'{Receiver}' ORDER BY ResivedTime  Desc";
                 com = new SqlCommand(query, sqlConnection);
                 using (SqlDataReader reader = com.ExecuteReader())
                 {
@@ -157,13 +157,12 @@ namespace White_server
             }
         }
 
-
         public int Entrance(string name,string password)
         {
             using (SqlConnection sqlConnection = new SqlConnection(connectionString))
             {
                 sqlConnection.Open();
-                string query = $"SELECT COUNT(*) From Accounts Where AccountName='{name}' AND AccountPassword='{password}'";
+                string query = $"SELECT COUNT(*) From Accounts Where AccountName=N'{name}' AND AccountPassword=N'{password}'";
                 SqlCommand com = new SqlCommand(query, sqlConnection);
                 int a = (int)com.ExecuteScalar();
                 sqlConnection.Close();
@@ -176,7 +175,7 @@ namespace White_server
             using (SqlConnection sqlConnection = new SqlConnection(connectionString))
             {
                 sqlConnection.Open();
-                string query = $"SELECT COUNT(*) From Accounts Where AccountName='{name}'";
+                string query = $"SELECT COUNT(*) From Accounts Where AccountName=N'{name}'";
                 SqlCommand com = new SqlCommand(query, sqlConnection);
                 int a = (int)com.ExecuteScalar();
                 if (a >= 1)
@@ -186,7 +185,7 @@ namespace White_server
                 }
                 else
                 {
-                    query = $"INSERT INTO Accounts (AccountName, AccountPassword) VALUES ('{name}', '{password}')";
+                    query = $"INSERT INTO Accounts (AccountName, AccountPassword) VALUES (N'{name}', N'{password}')";
                     com = new SqlCommand(query, sqlConnection);
                     com.ExecuteScalar();
                     sqlConnection.Close();
