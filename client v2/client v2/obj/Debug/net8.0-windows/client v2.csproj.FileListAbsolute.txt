@@ -1,0 +1,17 @@
+P:\VS\client v2\client v2\bin\Debug\net8.0-windows\client v2.exe
+P:\VS\client v2\client v2\bin\Debug\net8.0-windows\client v2.deps.json
+P:\VS\client v2\client v2\bin\Debug\net8.0-windows\client v2.runtimeconfig.json
+P:\VS\client v2\client v2\bin\Debug\net8.0-windows\client v2.dll
+P:\VS\client v2\client v2\bin\Debug\net8.0-windows\client v2.pdb
+P:\VS\client v2\client v2\obj\Debug\net8.0-windows\client_v2.log_in_account.resources
+P:\VS\client v2\client v2\obj\Debug\net8.0-windows\client_v2.messenger.resources
+P:\VS\client v2\client v2\obj\Debug\net8.0-windows\client v2.csproj.GenerateResource.cache
+P:\VS\client v2\client v2\obj\Debug\net8.0-windows\client v2.GeneratedMSBuildEditorConfig.editorconfig
+P:\VS\client v2\client v2\obj\Debug\net8.0-windows\client v2.AssemblyInfoInputs.cache
+P:\VS\client v2\client v2\obj\Debug\net8.0-windows\client v2.AssemblyInfo.cs
+P:\VS\client v2\client v2\obj\Debug\net8.0-windows\client v2.csproj.CoreCompileInputs.cache
+P:\VS\client v2\client v2\obj\Debug\net8.0-windows\client v2.dll
+P:\VS\client v2\client v2\obj\Debug\net8.0-windows\refint\client v2.dll
+P:\VS\client v2\client v2\obj\Debug\net8.0-windows\client v2.pdb
+P:\VS\client v2\client v2\obj\Debug\net8.0-windows\client v2.genruntimeconfig.cache
+P:\VS\client v2\client v2\obj\Debug\net8.0-windows\ref\client v2.dll

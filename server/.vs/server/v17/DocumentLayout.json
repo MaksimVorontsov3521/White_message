@@ -1,0 +1,70 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\VS\\server\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{3AB17387-24BB-4100-862F-783130E12365}|server\\server.csproj|c:\\vs\\server\\server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3AB17387-24BB-4100-862F-783130E12365}|server\\server.csproj|solutionrelative:server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3AB17387-24BB-4100-862F-783130E12365}|server\\server.csproj|c:\\vs\\server\\server\\clientinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3AB17387-24BB-4100-862F-783130E12365}|server\\server.csproj|solutionrelative:server\\clientinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3AB17387-24BB-4100-862F-783130E12365}|server\\server.csproj|c:\\vs\\server\\server\\api.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3AB17387-24BB-4100-862F-783130E12365}|server\\server.csproj|solutionrelative:server\\api.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "api.cs",
+              "DocumentMoniker": "C:\\VS\\server\\server\\api.cs",
+              "RelativeDocumentMoniker": "server\\api.cs",
+              "ToolTip": "C:\\VS\\server\\server\\api.cs",
+              "RelativeToolTip": "server\\api.cs",
+              "ViewState": "AQIAADQAAAAAAAAAAAAAAEoAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-04T14:18:11.971Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\VS\\server\\server\\Program.cs",
+              "RelativeDocumentMoniker": "server\\Program.cs",
+              "ToolTip": "C:\\VS\\server\\server\\Program.cs",
+              "RelativeToolTip": "server\\Program.cs",
+              "ViewState": "AQIAABQAAAAAAAAAAAAAAB0BAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-28T21:08:00.407Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ClientInfo.cs",
+              "DocumentMoniker": "C:\\VS\\server\\server\\ClientInfo.cs",
+              "RelativeDocumentMoniker": "server\\ClientInfo.cs",
+              "ToolTip": "C:\\VS\\server\\server\\ClientInfo.cs",
+              "RelativeToolTip": "server\\ClientInfo.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-25T09:16:59.71Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
