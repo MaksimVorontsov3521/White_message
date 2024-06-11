@@ -1,0 +1,14 @@
+P:\VS\apiSettings\apiSettings\apiSettings\bin\Debug\net8.0\apiSettings.exe
+P:\VS\apiSettings\apiSettings\apiSettings\bin\Debug\net8.0\apiSettings.deps.json
+P:\VS\apiSettings\apiSettings\apiSettings\bin\Debug\net8.0\apiSettings.runtimeconfig.json
+P:\VS\apiSettings\apiSettings\apiSettings\bin\Debug\net8.0\apiSettings.dll
+P:\VS\apiSettings\apiSettings\apiSettings\bin\Debug\net8.0\apiSettings.pdb
+P:\VS\apiSettings\apiSettings\apiSettings\obj\Debug\net8.0\apiSettings.GeneratedMSBuildEditorConfig.editorconfig
+P:\VS\apiSettings\apiSettings\apiSettings\obj\Debug\net8.0\apiSettings.AssemblyInfoInputs.cache
+P:\VS\apiSettings\apiSettings\apiSettings\obj\Debug\net8.0\apiSettings.AssemblyInfo.cs
+P:\VS\apiSettings\apiSettings\apiSettings\obj\Debug\net8.0\apiSettings.csproj.CoreCompileInputs.cache
+P:\VS\apiSettings\apiSettings\apiSettings\obj\Debug\net8.0\apiSettings.dll
+P:\VS\apiSettings\apiSettings\apiSettings\obj\Debug\net8.0\refint\apiSettings.dll
+P:\VS\apiSettings\apiSettings\apiSettings\obj\Debug\net8.0\apiSettings.pdb
+P:\VS\apiSettings\apiSettings\apiSettings\obj\Debug\net8.0\apiSettings.genruntimeconfig.cache
+P:\VS\apiSettings\apiSettings\apiSettings\obj\Debug\net8.0\ref\apiSettings.dll
