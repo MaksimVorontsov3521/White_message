@@ -14,10 +14,12 @@ namespace server
         {
             public class User
             {
-                public int Id { get; set; }
-                public string nickname { get; set; }
+                public int id { get; set; }
+                public string fio { get; set; }
                 public string login { get; set; }
                 public string password { get; set; }
+                public string post { get; set; }
+                public string usernick { get; set; }
             }
             public class Message
             {
@@ -60,7 +62,7 @@ namespace server
             {
                 try
                 {
-                    return await client.GetFromJsonAsync<User>($"https://localhost:7777/api/users/get-user-by-nickname/{nickname}");
+                    return await client.GetFromJsonAsync<User>($"https://localhost:7777/api/user/get-user-by-nickname/{nickname}");
                 }
                 catch (HttpRequestException e)
                 {
@@ -72,6 +74,54 @@ namespace server
                     Console.WriteLine($"Unexpected error: {e.Message}");
                     return null;
                 }
+            }
+            public async Task<User> GetUserById(int id)
+            {
+                var response = await client.GetAsync($"https://localhost:7777/api/user/get-user-by-id/{id}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var user = await response.Content.ReadFromJsonAsync<User>();
+                    return user;
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    return null; // Или выбросить исключение, если пользователь не найден
+                }
+                else
+                {
+                    throw new Exception($"Error fetching user by ID: {response.ReasonPhrase}");
+                }
+            }
+            public async Task<int> GetUserIdByNick(string usernick)
+            {
+                var response = await client.GetAsync($"https://localhost:7777/api/user/get-userid-by-usernick/{usernick}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var userId = await response.Content.ReadFromJsonAsync<int>();
+                    return userId;
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    return 0;
+                }
+                else
+                {
+                    throw new Exception("Error fetching user ID");
+                }
+            }
+
+            public async Task SetUserOnline(int userId)
+            {
+                var response = await client.PostAsync($"https://localhost:7777/api/user/set-online/{userId}", null);
+                response.EnsureSuccessStatusCode();
+            }
+
+            public async Task SetUserOffline(int userId)
+            {
+                var response = await client.PostAsync($"https://localhost:7777/api/user/set-offline/{userId}", null);
+                response.EnsureSuccessStatusCode();
             }
         }
     }

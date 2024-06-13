@@ -28,12 +28,6 @@ class Server
         TcpListener serverSocket = new TcpListener(IPAddress.Any, 6666);
         serverSocket.Start();
         Console.WriteLine("Сервер запущен. Ожидание подключения...\n");
-
-        Thread writeThread = new Thread(() =>
-        {
-            writemessage();
-        });
-        writeThread.Start();
         while (true)
         {
             TcpClient clientSocket = serverSocket.AcceptTcpClient();
@@ -49,11 +43,10 @@ class Server
             loginThread.Start();
         }
     }
-    static async void readmessage_after_login(TcpClient clientSocket, NetworkStream stream, StreamReader reader, StreamWriter writer, string nickname, MessengerClient messengerClient)
+    static async void readmessage_after_login(TcpClient clientSocket, NetworkStream stream, StreamReader reader, StreamWriter writer, string usernick, MessengerClient messengerClient)
     {
         refreshOnline();
-        var user = await messengerClient.GetUserByNick(nickname);
-        int client_id = user.Id;
+        int client_id = await messengerClient.GetUserIdByNick(usernick);
         ClientInfo client = Clients.FirstOrDefault(c => c.id == client_id);
         try
         {
@@ -63,7 +56,8 @@ class Server
                 if (message == null)
                 {
                     // Клиент отключился
-                    Console.WriteLine(client.Nickname + " отключился");
+                    await messengerClient.SetUserOffline(client_id);
+                    Console.WriteLine(client.usernick + " отключился");                   
                     disconnect(writer, reader, clientSocket, client, stream);
                     return;
                 }
@@ -85,22 +79,24 @@ class Server
         }
         finally //DISCONNECT
         {
+            await messengerClient.SetUserOffline(client_id);            
             Clients.Remove(client);
+            refreshOnline();
         }
     }
     static void sendprivatemessage(ClientInfo c, StreamWriter writer, string receivernick, string content)
     {
         foreach (var client in Clients)
         {
-            if (client.Nickname == receivernick)
+            if (client.usernick == receivernick)
             {
                 client.Writer.WriteLine("privatemessagetoyou");
-                client.Writer.WriteLine(c.Nickname + ": " + content);
+                client.Writer.WriteLine(c.usernick + ": " + content);
             }
-            else if (client.Nickname == c.Nickname)
+            else if (client.usernick == c.usernick)
             {
                 client.Writer.WriteLine("privatemessagetoyou");
-                client.Writer.WriteLine(c.Nickname + " (Вы): " + content);
+                client.Writer.WriteLine(c.usernick + " (Вы): " + content);
             }
 
         }
@@ -121,20 +117,21 @@ class Server
     //        }
     //        else return false;
     //    }
-    static async void client_log_in(TcpClient clientSocket, StreamReader reader, StreamWriter writer, NetworkStream stream, string nickname)
+    static async void client_log_in(TcpClient clientSocket, StreamReader reader, StreamWriter writer, NetworkStream stream, string usernick)
     {
         var messengerClient = new api.MessengerClient();
-        var user = await messengerClient.GetUserByNick(nickname);
-        Console.WriteLine($"ID: {user.Id}, nickname: {user.nickname}, login: {user.login}, password: {user.password}");
+        int id = await messengerClient.GetUserIdByNick(usernick);
+        var user = await messengerClient.GetUserById(id);
+        await messengerClient.SetUserOnline(id);
+        Console.WriteLine($"ID: {user.id}, nickname: {user.usernick}, login: {user.login}, password: {user.password}, fio: {user.fio}, post: {user.post}");
         if (user != null)
         {
-
-            ClientInfo client = new ClientInfo(user.Id, writer, user.nickname, user.login, user.password);
+            ClientInfo client = new ClientInfo(user.id, writer, user.usernick, user.login, user.password, user.fio, user.post);
             Clients.Add(client);
             client.connect(Clients);
             Thread readThread = new Thread(() =>
             {
-                readmessage_after_login(clientSocket, stream, reader, writer, user.nickname, messengerClient);
+                readmessage_after_login(clientSocket, stream, reader, writer, user.usernick, messengerClient);
             });
             readThread.Start();
         }
@@ -169,11 +166,11 @@ class Server
                     //    }
                     //    break;
                     case "addaccountonclients":
-                        string nickname = readmessage(reader);
-                        if (checkmultyacc(nickname))
+                        string usernick = readmessage(reader);
+                        if (checkmultyacc(usernick))
                         {
                             writesystemmessage("Вы успешно вошли в аккаунт", writer);
-                            client_log_in(clientSocket, reader, writer, stream, nickname);
+                            client_log_in(clientSocket, reader, writer, stream, usernick);
                             stopentermessage = false;
                         }
                         else writesystemmessage("Этот аккаунт уже используется", writer);
@@ -194,7 +191,7 @@ class Server
     {
         foreach (var client in Clients)
         {
-            if (client.Nickname == nick) return false;
+            if (client.usernick == nick) return false;
         }
         return true;
     }
@@ -214,7 +211,7 @@ class Server
     {
         foreach (var client in Clients)
         {
-            if (client.id != c.id) client.Writer.WriteLine(c.Nickname + " - отключился ");
+            if (client.id != c.id) client.Writer.WriteLine(c.usernick + " - отключился ");
             else client.Writer.WriteLine("Вы отключились");
         }
     }
@@ -222,8 +219,8 @@ class Server
     {
         foreach (var client in Clients)
         {
-            if (client.id == c.id) client.Writer.WriteLine(c.Nickname + " (Вы): " + message);
-            else client.Writer.WriteLine(c.Nickname + ": " + message);
+            if (client.id == c.id) client.Writer.WriteLine(c.usernick + " (Вы): " + message);
+            else client.Writer.WriteLine(c.usernick + ": " + message);
         }
     }
     static void ServerWrite(string message)
@@ -248,23 +245,23 @@ class Server
             Console.WriteLine("----------------------------------------------");
             // Очищаем список клиентов перед обновлением
             client.Writer.WriteLine("RefreshOnline");
-            client.Writer.WriteLine(Clients.Count);
-            Console.WriteLine("Для клиента - '" + client.Nickname + "' - было отправлено:");
-            Console.WriteLine("Количество клиентов на сервере: " + Clients.Count);
-            foreach (var c in Clients)
-            {
-                if (c.id == client.id)
-                {
-                    client.Writer.WriteLine(c.Nickname + " (Вы)");
-                    Console.WriteLine(c.Nickname + " (Вы)" + "    for " + client.Nickname);
-                }
-                else
-                {
-                    client.Writer.WriteLine(c.Nickname);
-                    Console.WriteLine(c.Nickname + "    for " + client.Nickname);
-                }
-            }
-            Console.WriteLine("----------------------------------------------");
+            //client.Writer.WriteLine(Clients.Count);
+            //Console.WriteLine("Для клиента - '" + client.usernick + "' - было отправлено:");
+            //Console.WriteLine("Количество клиентов на сервере: " + Clients.Count);
+            //foreach (var c in Clients)
+            //{
+            //    if (c.id == client.id)
+            //    {
+            //        client.Writer.WriteLine(c.usernick + " (Вы)");
+            //        Console.WriteLine(c.usernick + " (Вы)" + "    for " + client.usernick);
+            //    }
+            //    else
+            //    {
+            //        client.Writer.WriteLine(c.usernick);
+            //        Console.WriteLine(c.usernick + "    for " + client.usernick);
+            //    }
+            //}
+            //Console.WriteLine("----------------------------------------------");
         }
     }
     static string getIP(TcpClient clientSocket)
