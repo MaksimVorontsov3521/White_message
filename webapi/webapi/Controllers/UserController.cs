@@ -251,7 +251,7 @@ namespace webapi.Controllers
                 return Ok(false); // или return Ok("Invalid username or password.");
             }
 
-            return Ok(user.usernick); // или return Ok("Login successful.");
+            return Ok(true); // или return Ok("Login successful.");
         }
 
         [HttpPost("add-contact/{myId}-{contactId}")]

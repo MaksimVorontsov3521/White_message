@@ -26,12 +26,12 @@ namespace client_v2
         {
             if (enter_login.Text != "" && enter_password.Text != "")
             {
-                mess.myId = await messengerclient.GetUserIdByLogin(enter_login.Text);
-                if(mess.myId == 0)
+                if (!await messengerclient.cheacaccounttologin(enter_login.Text, enter_password.Text))
                 {
-                    MessageBox.Show("иди нахуй");
+                    MessageBox.Show("Неправильный логин или пароль");
                     return;
                 }
+                mess.myId = await messengerclient.GetUserIdByLogin(enter_login.Text);
                 string usernick = await messengerclient.GetUsernickById(mess.myId);
                 if (usernick == "Invalid username or password.")
                 {

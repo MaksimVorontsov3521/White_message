@@ -74,8 +74,7 @@
               "RelativeToolTip": "webapi\\Data\\ApplicationDbContext.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-12T05:42:38.716Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-12T05:42:38.716Z"
             },
             {
               "$type": "Document",
@@ -85,7 +84,7 @@
               "RelativeDocumentMoniker": "webapi\\Controllers\\UserController.cs",
               "ToolTip": "P:\\VS\\messenger\\webapi\\webapi\\Controllers\\UserController.cs",
               "RelativeToolTip": "webapi\\Controllers\\UserController.cs",
-              "ViewState": "AQIAAGAAAAAAAAAAAAAuwGQAAAAqAAAA",
+              "ViewState": "AQIAAOAAAAAAAAAAAAAAAO4AAABPAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-06T12:45:29.08Z",
               "EditorCaption": ""
@@ -100,8 +99,7 @@
               "RelativeToolTip": "webapi\\Controllers\\MessageController.cs",
               "ViewState": "AQIAAD4AAAAAAAAAAAAAAE8AAAAxAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-31T17:50:31.945Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-31T17:50:31.945Z"
             },
             {
               "$type": "Document",
@@ -113,8 +111,7 @@
               "RelativeToolTip": "webapi\\Models\\User.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-01T14:27:14.339Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-01T14:27:14.339Z"
             },
             {
               "$type": "Document",

@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace client_v2
@@ -320,6 +321,26 @@ namespace client_v2
                 response.EnsureSuccessStatusCode();
                 var contacts = await response.Content.ReadFromJsonAsync<string[]>();
                 return contacts;
+            }
+            public async Task<bool> cheacaccounttologin(string login, string password)
+            {
+                var request = new LoginRequest
+                {
+                    login = login,
+                    Password = password
+                };
+
+                var json = JsonSerializer.Serialize(request);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await client.PostAsync("https://localhost:7777/api/user/log-in", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    return JsonSerializer.Deserialize<bool>(responseContent);
+                }
+
+                return false;
             }
         }
     }
