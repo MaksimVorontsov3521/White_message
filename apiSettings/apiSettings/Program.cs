@@ -101,7 +101,7 @@ namespace server
             {
                 try
                 {
-                    var response = await client.PostAsync("https://localhost:7777/api/user/reset-autoincrement-users", null);
+                    var response = await client.PostAsync("https://localhost:7777/api/user/reset-autoincrement-user", null);
                     response.EnsureSuccessStatusCode();
                     Console.WriteLine("Автоинкремент users сброшен");
                 }
@@ -118,7 +118,7 @@ namespace server
             {
                 try
                 {
-                    var response = await client.PostAsync("https://localhost:7777/api/Messages/reset-autoincrement-messages", null);
+                    var response = await client.PostAsync("https://localhost:7777/api/Messages/reset-autoincrement-message", null);
                     response.EnsureSuccessStatusCode();
                     Console.WriteLine("Автоинкремент messages сброшен");
                 }
@@ -446,6 +446,46 @@ namespace server
                     return null;
                 }
             }
+            public async Task<List<User>> GetAllUsers()
+            {
+                using (var client = new HttpClient())
+                {
+                    var response = await client.GetAsync($"https://localhost:7777/api/user/get-all-users");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var jsonString = await response.Content.ReadAsStringAsync();
+                        var users = JsonSerializer.Deserialize<List<User>>(jsonString, new JsonSerializerOptions
+                        {
+                            PropertyNameCaseInsensitive = true
+                        });
+                        return users;
+                    }
+                    else
+                    {
+                        throw new Exception("Failed to load users.");
+                    }
+                }
+            }
+            public async Task<List<Message>> GetAllMessages()
+            {
+                using (var client = new HttpClient())
+                {
+                    var response = await client.GetAsync($"https://localhost:7777/api/message/get");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var jsonString = await response.Content.ReadAsStringAsync();
+                        var messages = JsonSerializer.Deserialize<List<Message>>(jsonString, new JsonSerializerOptions
+                        {
+                            PropertyNameCaseInsensitive = true
+                        });
+                        return messages;
+                    }
+                    else
+                    {
+                        throw new Exception("Failed to load messages.");
+                    }
+                }
+            }
         }
 
 
@@ -456,11 +496,10 @@ namespace server
             {
                 int userid;
                 var messengerClient = new MessengerClient();
-                List<ContactsOnline> contacts;
-                contacts = await messengerClient.GetContacts(5);
-                foreach (var contact in contacts)
+                var messages = await messengerClient.GetAllMessages();
+                foreach (var message in messages)
                 {
-                    Console.WriteLine($"conctacnick: {contact.UserNick}, isonline: {contact.IsOnline}");
+                    Console.WriteLine($"messageid - {message.MessageId} senderid - {message.SenderId} content - {message.Content} usernick - {message.Sendernick}");
                 }
                 //await messengerClient.SetUserOffline(5);
                 //bool q = await messengerClient.GetUserStatus(5);

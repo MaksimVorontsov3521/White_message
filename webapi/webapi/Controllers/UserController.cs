@@ -50,6 +50,7 @@ namespace webapi.Controllers
         {
             return await _context.User.ToListAsync();
         }
+
         [HttpGet("get-userid-by-usernick/{usernick}")]
         public async Task<int> GetUserIdByNickAsync(string usernick)
         {
@@ -227,7 +228,8 @@ namespace webapi.Controllers
         {
             try
             {
-                await _context.Database.ExecuteSqlRawAsync("DBCC CHECKIDENT ('Users', RESEED, 0);");
+                await _context.Database.ExecuteSqlRawAsync("DBCC CHECKIDENT ('User', RESEED, 0);");
+                Console.WriteLine("автоинкеремент users сброшен");
                 return Ok("Автоинкремент users сброшен");
             }
             catch (Exception ex)

@@ -33,7 +33,6 @@ namespace webapi.Controllers
         {
             return await _context.Message.ToListAsync();
         }
-
         // Метод для получения сообщения по его ID
         [HttpGet("{id}")]
         public async Task<ActionResult<Message>> GetMessage(int id)
@@ -92,7 +91,8 @@ namespace webapi.Controllers
         {
             try
             {
-                await _context.Database.ExecuteSqlRawAsync("DBCC CHECKIDENT ('Messages', RESEED, 0);");
+                await _context.Database.ExecuteSqlRawAsync("DBCC CHECKIDENT ('Message', RESEED, 0);");
+                Console.WriteLine("Автоинкемент message сброшен");
                 return Ok("Автоинкремент messages сброшен");
             }
             catch (Exception ex)

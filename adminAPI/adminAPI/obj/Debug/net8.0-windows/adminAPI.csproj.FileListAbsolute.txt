@@ -1,0 +1,16 @@
+P:\VS\messenger\adminAPI\adminAPI\bin\Debug\net8.0-windows\adminAPI.exe
+P:\VS\messenger\adminAPI\adminAPI\bin\Debug\net8.0-windows\adminAPI.deps.json
+P:\VS\messenger\adminAPI\adminAPI\bin\Debug\net8.0-windows\adminAPI.runtimeconfig.json
+P:\VS\messenger\adminAPI\adminAPI\bin\Debug\net8.0-windows\adminAPI.dll
+P:\VS\messenger\adminAPI\adminAPI\bin\Debug\net8.0-windows\adminAPI.pdb
+P:\VS\messenger\adminAPI\adminAPI\obj\Debug\net8.0-windows\adminAPI.adminwindow.resources
+P:\VS\messenger\adminAPI\adminAPI\obj\Debug\net8.0-windows\adminAPI.csproj.GenerateResource.cache
+P:\VS\messenger\adminAPI\adminAPI\obj\Debug\net8.0-windows\adminAPI.GeneratedMSBuildEditorConfig.editorconfig
+P:\VS\messenger\adminAPI\adminAPI\obj\Debug\net8.0-windows\adminAPI.AssemblyInfoInputs.cache
+P:\VS\messenger\adminAPI\adminAPI\obj\Debug\net8.0-windows\adminAPI.AssemblyInfo.cs
+P:\VS\messenger\adminAPI\adminAPI\obj\Debug\net8.0-windows\adminAPI.csproj.CoreCompileInputs.cache
+P:\VS\messenger\adminAPI\adminAPI\obj\Debug\net8.0-windows\adminAPI.dll
+P:\VS\messenger\adminAPI\adminAPI\obj\Debug\net8.0-windows\refint\adminAPI.dll
+P:\VS\messenger\adminAPI\adminAPI\obj\Debug\net8.0-windows\adminAPI.pdb
+P:\VS\messenger\adminAPI\adminAPI\obj\Debug\net8.0-windows\adminAPI.genruntimeconfig.cache
+P:\VS\messenger\adminAPI\adminAPI\obj\Debug\net8.0-windows\ref\adminAPI.dll
