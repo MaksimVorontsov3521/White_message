@@ -35,7 +35,7 @@ namespace client_v2
             online.DrawMode = DrawMode.OwnerDrawFixed;
             online.SelectionMode = SelectionMode.One;
             online.DrawItem += new DrawItemEventHandler(online_DrawItem);
-            yourcontacts.SelectedIndexChanged += new EventHandler(yourcontacts_SelectedIndexChanged);
+           
             yourcontacts.DrawMode = DrawMode.OwnerDrawFixed;
             yourcontacts.SelectionMode = SelectionMode.One;
             yourcontacts.DrawItem += new DrawItemEventHandler(yourcontacts_DrawItem);
