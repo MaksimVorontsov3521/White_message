@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(messenger));
             clientmenu = new ContextMenuStrip(components);
             ls = new ToolStripMenuItem();
             tabControl1 = new TabControl();
@@ -42,6 +43,7 @@
             label2 = new Label();
             chat = new TextBox();
             personmessages = new TabPage();
+            pictureBox2 = new PictureBox();
             contact = new Label();
             yournickpers = new Label();
             IsYouOnlinePers = new Label();
@@ -54,6 +56,7 @@
             tabControl1.SuspendLayout();
             groupchat.SuspendLayout();
             personmessages.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
             // 
             // clientmenu
@@ -84,6 +87,7 @@
             // 
             // groupchat
             // 
+            groupchat.BackgroundImage = (Image)resources.GetObject("groupchat.BackgroundImage");
             groupchat.Controls.Add(yournick);
             groupchat.Controls.Add(IsYouOnline);
             groupchat.Controls.Add(reconnect);
@@ -135,6 +139,7 @@
             // 
             // send
             // 
+            send.ForeColor = Color.Black;
             send.Location = new Point(750, 450);
             send.Margin = new Padding(4, 3, 4, 3);
             send.Name = "send";
@@ -146,7 +151,8 @@
             // 
             // mess
             // 
-            mess.Location = new Point(359, 450);
+            mess.BackColor = Color.DimGray;
+            mess.Location = new Point(347, 451);
             mess.Margin = new Padding(4, 3, 4, 3);
             mess.Multiline = true;
             mess.Name = "mess";
@@ -155,7 +161,9 @@
             // 
             // online
             // 
+            online.BackColor = Color.DimGray;
             online.ContextMenuStrip = clientmenu;
+            online.ForeColor = Color.Transparent;
             online.FormattingEnabled = true;
             online.ItemHeight = 15;
             online.Location = new Point(9, 22);
@@ -176,6 +184,8 @@
             // 
             // chat
             // 
+            chat.BackColor = Color.DimGray;
+            chat.ForeColor = SystemColors.Window;
             chat.Location = new Point(359, 21);
             chat.Margin = new Padding(4, 3, 4, 3);
             chat.Multiline = true;
@@ -186,6 +196,8 @@
             // 
             // personmessages
             // 
+            personmessages.BackgroundImage = (Image)resources.GetObject("personmessages.BackgroundImage");
+            personmessages.Controls.Add(pictureBox2);
             personmessages.Controls.Add(contact);
             personmessages.Controls.Add(yournickpers);
             personmessages.Controls.Add(IsYouOnlinePers);
@@ -202,6 +214,16 @@
             personmessages.TabIndex = 1;
             personmessages.Text = "Личные сообщения";
             personmessages.UseVisualStyleBackColor = true;
+            // 
+            // pictureBox2
+            // 
+            pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
+            pictureBox2.Location = new Point(284, 437);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(70, 50);
+            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox2.TabIndex = 24;
+            pictureBox2.TabStop = false;
             // 
             // contact
             // 
@@ -243,6 +265,8 @@
             // 
             // personalmess
             // 
+            personalmess.BackColor = Color.DimGray;
+            personalmess.ForeColor = SystemColors.Window;
             personalmess.Location = new Point(361, 437);
             personalmess.Margin = new Padding(4, 3, 4, 3);
             personalmess.Multiline = true;
@@ -252,6 +276,8 @@
             // 
             // personalchat
             // 
+            personalchat.BackColor = Color.DimGray;
+            personalchat.ForeColor = SystemColors.Window;
             personalchat.Location = new Point(361, 22);
             personalchat.Margin = new Padding(4, 3, 4, 3);
             personalchat.Multiline = true;
@@ -272,7 +298,9 @@
             // 
             // yourcontacts
             // 
+            yourcontacts.BackColor = Color.DimGray;
             yourcontacts.ContextMenuStrip = clientmenu;
+            yourcontacts.ForeColor = SystemColors.Window;
             yourcontacts.FormattingEnabled = true;
             yourcontacts.ItemHeight = 15;
             yourcontacts.Location = new Point(9, 22);
@@ -291,12 +319,14 @@
             Margin = new Padding(4, 3, 4, 3);
             Name = "messenger";
             Text = " Ты кто";
+            Load += messenger_Load;
             clientmenu.ResumeLayout(false);
             tabControl1.ResumeLayout(false);
             groupchat.ResumeLayout(false);
             groupchat.PerformLayout();
             personmessages.ResumeLayout(false);
             personmessages.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ResumeLayout(false);
         }
 
@@ -322,6 +352,7 @@
         private Label yournickpers;
         private Label IsYouOnlinePers;
         private Label contact;
+        private PictureBox pictureBox2;
     }
 }
 
