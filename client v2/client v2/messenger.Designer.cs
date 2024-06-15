@@ -33,6 +33,7 @@
             ls = new ToolStripMenuItem();
             tabControl1 = new TabControl();
             groupchat = new TabPage();
+            filebutton = new Button();
             yournick = new Label();
             IsYouOnline = new Label();
             reconnect = new Button();
@@ -50,6 +51,7 @@
             personalchat = new TextBox();
             label1 = new Label();
             yourcontacts = new ListBox();
+            help = new Button();
             clientmenu.SuspendLayout();
             tabControl1.SuspendLayout();
             groupchat.SuspendLayout();
@@ -84,6 +86,8 @@
             // 
             // groupchat
             // 
+            groupchat.Controls.Add(help);
+            groupchat.Controls.Add(filebutton);
             groupchat.Controls.Add(yournick);
             groupchat.Controls.Add(IsYouOnline);
             groupchat.Controls.Add(reconnect);
@@ -100,6 +104,16 @@
             groupchat.TabIndex = 0;
             groupchat.Text = "Групповой чат";
             groupchat.UseVisualStyleBackColor = true;
+            // 
+            // filebutton
+            // 
+            filebutton.Location = new Point(851, 450);
+            filebutton.Name = "filebutton";
+            filebutton.Size = new Size(100, 43);
+            filebutton.TabIndex = 21;
+            filebutton.Text = "Отправить файл";
+            filebutton.UseVisualStyleBackColor = true;
+            filebutton.Click += filebutton_Click;
             // 
             // yournick
             // 
@@ -124,7 +138,7 @@
             // 
             // reconnect
             // 
-            reconnect.Location = new Point(852, 449);
+            reconnect.Location = new Point(7, 450);
             reconnect.Margin = new Padding(4, 3, 4, 3);
             reconnect.Name = "reconnect";
             reconnect.Size = new Size(102, 44);
@@ -282,6 +296,16 @@
             yourcontacts.TabIndex = 16;
             yourcontacts.SelectedIndexChanged += yourcontacts_SelectedIndexChanged;
             // 
+            // help
+            // 
+            help.Location = new Point(846, 383);
+            help.Name = "help";
+            help.Size = new Size(101, 53);
+            help.TabIndex = 22;
+            help.Text = "button1";
+            help.UseVisualStyleBackColor = true;
+            help.Click += help_Click;
+            // 
             // messenger
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -322,6 +346,8 @@
         private Label yournickpers;
         private Label IsYouOnlinePers;
         private Label contact;
+        private Button filebutton;
+        private Button help;
     }
 }
 

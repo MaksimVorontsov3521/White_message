@@ -30,6 +30,16 @@
         {
             tabControl1 = new TabControl();
             account = new TabPage();
+            change_button = new Button();
+            change_post = new TextBox();
+            change_fio = new TextBox();
+            change_password = new TextBox();
+            change_login = new TextBox();
+            label12 = new Label();
+            label13 = new Label();
+            label14 = new Label();
+            label15 = new Label();
+            label11 = new Label();
             users_grid = new DataGridView();
             reload_users = new Button();
             addcontact = new Button();
@@ -78,6 +88,16 @@
             // 
             // account
             // 
+            account.Controls.Add(change_button);
+            account.Controls.Add(change_post);
+            account.Controls.Add(change_fio);
+            account.Controls.Add(change_password);
+            account.Controls.Add(change_login);
+            account.Controls.Add(label12);
+            account.Controls.Add(label13);
+            account.Controls.Add(label14);
+            account.Controls.Add(label15);
+            account.Controls.Add(label11);
             account.Controls.Add(users_grid);
             account.Controls.Add(reload_users);
             account.Controls.Add(addcontact);
@@ -110,6 +130,88 @@
             account.Text = "account";
             account.UseVisualStyleBackColor = true;
             // 
+            // change_button
+            // 
+            change_button.Location = new Point(1097, 51);
+            change_button.Name = "change_button";
+            change_button.Size = new Size(153, 24);
+            change_button.TabIndex = 35;
+            change_button.Text = "Изменить пользователя";
+            change_button.UseVisualStyleBackColor = true;
+            // 
+            // change_post
+            // 
+            change_post.Location = new Point(992, 53);
+            change_post.Name = "change_post";
+            change_post.Size = new Size(99, 23);
+            change_post.TabIndex = 34;
+            // 
+            // change_fio
+            // 
+            change_fio.Location = new Point(884, 53);
+            change_fio.Name = "change_fio";
+            change_fio.Size = new Size(102, 23);
+            change_fio.TabIndex = 33;
+            // 
+            // change_password
+            // 
+            change_password.Location = new Point(771, 53);
+            change_password.Name = "change_password";
+            change_password.Size = new Size(107, 23);
+            change_password.TabIndex = 32;
+            // 
+            // change_login
+            // 
+            change_login.Location = new Point(664, 53);
+            change_login.Name = "change_login";
+            change_login.Size = new Size(101, 23);
+            change_login.TabIndex = 31;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(992, 35);
+            label12.Name = "label12";
+            label12.Size = new Size(30, 15);
+            label12.TabIndex = 30;
+            label12.Text = "post";
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new Point(884, 35);
+            label13.Name = "label13";
+            label13.Size = new Size(21, 15);
+            label13.TabIndex = 29;
+            label13.Text = "fio";
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(771, 35);
+            label14.Name = "label14";
+            label14.Size = new Size(57, 15);
+            label14.TabIndex = 28;
+            label14.Text = "password";
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Location = new Point(661, 35);
+            label15.Name = "label15";
+            label15.Size = new Size(34, 15);
+            label15.TabIndex = 27;
+            label15.Text = "login";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(664, 3);
+            label11.Name = "label11";
+            label11.Size = new Size(277, 15);
+            label11.TabIndex = 26;
+            label11.Text = "Выберите аккаунт в таблице чтобы его изменить";
+            // 
             // users_grid
             // 
             users_grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -118,6 +220,8 @@
             users_grid.Name = "users_grid";
             users_grid.Size = new Size(1253, 174);
             users_grid.TabIndex = 25;
+            users_grid.CellEndEdit += users_grid_CellEndEdit;
+            users_grid.SelectionChanged += users_grid_SelectionChanged;
             // 
             // reload_users
             // 
@@ -184,7 +288,7 @@
             // 
             reset_autoincrement_users.Location = new Point(508, 105);
             reset_autoincrement_users.Name = "reset_autoincrement_users";
-            reset_autoincrement_users.Size = new Size(175, 23);
+            reset_autoincrement_users.Size = new Size(160, 23);
             reset_autoincrement_users.TabIndex = 16;
             reset_autoincrement_users.Text = "Сбросить автоинкремент";
             reset_autoincrement_users.UseVisualStyleBackColor = true;
@@ -237,9 +341,9 @@
             // 
             // add
             // 
-            add.Location = new Point(618, 48);
+            add.Location = new Point(439, 48);
             add.Name = "add";
-            add.Size = new Size(143, 24);
+            add.Size = new Size(147, 24);
             add.TabIndex = 9;
             add.Text = "Добавить пользователя";
             add.UseVisualStyleBackColor = true;
@@ -247,36 +351,36 @@
             // 
             // post
             // 
-            post.Location = new Point(472, 50);
+            post.Location = new Point(334, 50);
             post.Name = "post";
-            post.Size = new Size(140, 23);
+            post.Size = new Size(99, 23);
             post.TabIndex = 8;
             // 
             // fio
             // 
-            fio.Location = new Point(316, 50);
+            fio.Location = new Point(226, 50);
             fio.Name = "fio";
-            fio.Size = new Size(140, 23);
+            fio.Size = new Size(102, 23);
             fio.TabIndex = 7;
             // 
             // password
             // 
-            password.Location = new Point(163, 50);
+            password.Location = new Point(113, 50);
             password.Name = "password";
-            password.Size = new Size(140, 23);
+            password.Size = new Size(107, 23);
             password.TabIndex = 6;
             // 
             // login
             // 
             login.Location = new Point(6, 50);
             login.Name = "login";
-            login.Size = new Size(140, 23);
+            login.Size = new Size(101, 23);
             login.TabIndex = 5;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(472, 32);
+            label5.Location = new Point(334, 32);
             label5.Name = "label5";
             label5.Size = new Size(30, 15);
             label5.TabIndex = 4;
@@ -285,7 +389,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(316, 32);
+            label4.Location = new Point(226, 32);
             label4.Name = "label4";
             label4.Size = new Size(21, 15);
             label4.TabIndex = 3;
@@ -294,7 +398,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(163, 32);
+            label3.Location = new Point(113, 32);
             label3.Name = "label3";
             label3.Size = new Size(57, 15);
             label3.TabIndex = 2;
@@ -327,7 +431,7 @@
             messages.Location = new Point(4, 24);
             messages.Name = "messages";
             messages.Padding = new Padding(3);
-            messages.Size = new Size(1266, 543);
+            messages.Size = new Size(1266, 486);
             messages.TabIndex = 1;
             messages.Text = "messages";
             messages.UseVisualStyleBackColor = true;
@@ -420,5 +524,15 @@
         private Button reload_messages;
         private DataGridView messages_grid;
         private DataGridView users_grid;
+        private Label label11;
+        private Button change_button;
+        private TextBox change_post;
+        private TextBox change_fio;
+        private TextBox change_password;
+        private TextBox change_login;
+        private Label label12;
+        private Label label13;
+        private Label label14;
+        private Label label15;
     }
 }

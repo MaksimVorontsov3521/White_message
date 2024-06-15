@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using System.Reflection;
+using System;
 
 
 namespace webapi.Controllers
@@ -15,10 +16,12 @@ namespace webapi.Controllers
     public class MessageController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _environment;
 
-        public MessageController(ApplicationDbContext context)
+        public MessageController(ApplicationDbContext context, IWebHostEnvironment environment)
         {
             _context = context;
+            _environment = environment;
         }
         public class PrivateMessageRequest
         {
@@ -26,7 +29,7 @@ namespace webapi.Controllers
             public int ReceiverId { get; set; }
             public string Content { get; set; }
         }
-
+        
         // Метод для получения всех сообщений
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Message>>> GetMessages()
@@ -35,7 +38,7 @@ namespace webapi.Controllers
         }
         // Метод для получения сообщения по его ID
         [HttpGet("{id}")]
-        public async Task<ActionResult<Message>> GetMessage(int id)
+        public async Task<ActionResult<Message>> GetMessageById(int id)
         {
             var message = await _context.Message.FindAsync(id);
 
@@ -131,7 +134,7 @@ namespace webapi.Controllers
                 // Если сообщение не групповое, получаем объект получателя из базы данных              
                 _context.Message.Add(message);               
                 await _context.SaveChangesAsync();
-                return Ok(message);
+                return Ok(message.MessageId);
             }
             catch (Exception ex)
             {
@@ -162,9 +165,8 @@ namespace webapi.Controllers
             };
             _context.Message.Add(message);
             await _context.SaveChangesAsync();
-            return Ok(message);
+            return Ok(message.MessageId);
         }
-
         [HttpDelete("delete-all-data-message")]
         public async Task<IActionResult> DeleteAllData_messages()
         {

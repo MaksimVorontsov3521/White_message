@@ -1,0 +1,46 @@
+namespace WinFormsApp1
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+            GetAllFiles();
+        }
+        // Список всех файлов с рабочего стола 
+        private void GetAllFiles()
+        {
+            string Folder = @"X:\Desktop";
+            DirectoryInfo direcotory = new DirectoryInfo(Folder);
+            foreach (FileInfo file in direcotory.GetFiles())
+            {
+                listBox1.Items.Add(file.FullName);
+            }
+        }
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            clone(listBox1.SelectedItem.ToString());
+        }
+        private void clone(string file)
+        {
+            byte[] mass = FileByte(file);
+            ByteFile(mass);
+        }
+        // из файлов в биты
+        public byte[] FileByte(string file)
+        {
+            byte[] mass = File.ReadAllBytes(file);
+            return mass;
+        }
+        // из битов в файлы
+        public void ByteFile(byte[] mass)
+        {
+            string name = AppDomain.CurrentDomain.BaseDirectory+mass[3];
+            using (FileStream stream = new FileStream(name, FileMode.Create))
+            {
+                stream.Write(mass, 0, mass.Length);
+            }
+        }
+
+    }
+}

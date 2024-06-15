@@ -57,14 +57,7 @@ namespace client_v2
                     {
                         break;
                     }
-                case "Аккаунт успешно создан":
-                    {
-                        this.Invoke((MethodInvoker)delegate
-                        {
-                            this.tabControl1.SelectedTab = log_in_page;
-                        });
-                        break;
-                    }
+
                 case "Вы успешно вошли в аккаунт":
                     {
                         return true;

@@ -13,6 +13,9 @@ namespace webapi.Models
         public bool IsGroupMessage { get; set; }
         public string? Sendernick { get; set; } // Для удобства
         public string? Receivernick { get; set; } // Никнейм получателя
+        public string? FileName { get; set; }
+        public string? FilePath { get; set; }
+        public string? FileType { get; set; }
 
         [JsonIgnore]
         public User? Sender { get; set; }

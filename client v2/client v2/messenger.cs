@@ -21,7 +21,7 @@ namespace client_v2
         private StreamReader reader;
         bool closeform = true;
         private readonly MessengerClient messengerclient;
-        bool stopreading=true;
+        bool stopreading = true;
         public int myId;
         private List<UserOnline> users;
         private List<ContactsOnline> contacts;
@@ -31,11 +31,11 @@ namespace client_v2
             InitializeComponent();
             messengerclient = new MessengerClient();
             clientmenu.Opening += ContextMenuStrip_Opening;
-            online.SelectedIndexChanged += new EventHandler(online_SelectedIndexChanged);            
+            online.SelectedIndexChanged += new EventHandler(online_SelectedIndexChanged);
             online.DrawMode = DrawMode.OwnerDrawFixed;
             online.SelectionMode = SelectionMode.One;
             online.DrawItem += new DrawItemEventHandler(online_DrawItem);
-           
+
             yourcontacts.DrawMode = DrawMode.OwnerDrawFixed;
             yourcontacts.SelectionMode = SelectionMode.One;
             yourcontacts.DrawItem += new DrawItemEventHandler(yourcontacts_DrawItem);
@@ -73,7 +73,7 @@ namespace client_v2
             writer = new StreamWriter(stream);
             reader = new StreamReader(stream);
 
-           
+
 
         }
         private async void SetGroupMessages()
@@ -169,14 +169,14 @@ namespace client_v2
             //online.Invalidate();
         }
         private void UpdateListBox()
-        {         
+        {
             foreach (var user in users)
             {
                 online.Invoke((MethodInvoker)delegate
                 {
-                    if (user.UserNick==yournick.Text) online.Items.Add(user.UserNick);
+                    if (user.UserNick == yournick.Text) online.Items.Add(user.UserNick);
                     else online.Items.Add(user.UserNick);
-                });                
+                });
             }
         }
         private async void online_DrawItem(object sender, DrawItemEventArgs e)
@@ -341,7 +341,7 @@ namespace client_v2
                     {
                         yourcontacts.Items.Add(selectedUser);
                         tabControl1.SelectedTab = personmessages;
-                        int contactid=await messengerclient.GetUserIdByNick(selectedUser);
+                        int contactid = await messengerclient.GetUserIdByNick(selectedUser);
                         await messengerclient.AddContact(myId, contactid);
                     }
                     else MessageBox.Show("Вы не можете добавить себя в список контактов", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -352,7 +352,7 @@ namespace client_v2
                     yourcontacts.SelectedItem = selectedUser;
                     update_contacts();
                 }
-                else if ( yourcontacts.Items.Contains(selectedUser))
+                else if (yourcontacts.Items.Contains(selectedUser))
                 {
                     tabControl1.SelectedTab = personmessages;
                     yourcontacts.SelectedItem = selectedUser;
@@ -387,7 +387,7 @@ namespace client_v2
         private void yourcontacts_SelectedIndexChanged(object sender, EventArgs e)
         {
             yourcontacts.Refresh();
-            personalchat.Clear();           
+            personalchat.Clear();
             update_contacts();
             contact.Text = yourcontacts.SelectedItem.ToString();
 
@@ -494,6 +494,28 @@ namespace client_v2
             stopreading = false;
             // Подключаемся заново
             main();
+        }
+
+        private async void filebutton_Click(object sender, EventArgs e)
+        {
+            int messid = await messengerclient.SendGroupMessage("", myId);
+            using (var openFileDialog = new OpenFileDialog())
+            {
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    var filePath = openFileDialog.FileName;
+                    // Предположим, что у вас есть способ получить текущий messageId
+                    int messageId = await messengerclient.SendGroupMessage("file", myId);
+                    await messengerclient.UploadFileAsync(filePath, messageId);
+                }
+            }
+        }
+
+        private async void help_Click(object sender, EventArgs e)
+        {
+            var fileBytes = await messengerclient.DownloadFileFromDatabaseAsync(76);
+            string fileContent = Encoding.UTF8.GetString(fileBytes);
+            AddMessageToGroupTextBox(fileContent);
         }
     }
 }

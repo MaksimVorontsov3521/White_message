@@ -222,6 +222,19 @@ namespace webapi.Controllers
             Console.WriteLine("чел был добавлен");
             return CreatedAtAction(nameof(GetUsers), new { id = user.Id }, user);
         }
+        [HttpPost("update-user")]
+        public async Task<ActionResult<User>> UpdateUser(User user)
+        {
+            // Добавление пользователя в контекст            
+            _context.User.Update(user);
+            // Сохранение изменений в базе данных
+            await _context.SaveChangesAsync();
+
+            // Возвращение ответа с данными добавленного пользователя
+            Console.WriteLine("чел был добавлен");
+            return CreatedAtAction(nameof(GetUsers), new { id = user.Id }, user);
+        }
+
 
         [HttpPost("reset-autoincrement-user")]
         public async Task<IActionResult> ResetAutoIncrement_users()

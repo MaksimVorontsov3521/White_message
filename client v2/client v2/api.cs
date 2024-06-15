@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
@@ -29,15 +31,16 @@ namespace client_v2
             public class Message
             {
                 public int? MessageId { get; set; }
-                public int SenderId { get; set; }
+                public int? SenderId { get; set; }
                 public int? ReceiverId { get; set; }
                 public string Content { get; set; }
                 public DateTime? Timestamp { get; set; }
                 public bool IsGroupMessage { get; set; }
                 public string? Sendernick { get; set; } // Для удобства
                 public string? Receivernick { get; set; } // Никнейм получателя
-                public User? Sender { get; set; }
-                public User? Receiver { get; set; }
+                public string? FileName { get; set; }
+                public string? FilePath { get; set; }
+                public string? FileType { get; set; }
             }
 
             public class PrivateMessageRequest
@@ -78,7 +81,7 @@ namespace client_v2
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             }
-            public async Task SendGroupMessage(string messagecontent, int senderid)
+            public async Task<int> SendGroupMessage(string messagecontent, int senderid)
             {
                 var message = new Message
                 {
@@ -95,7 +98,7 @@ namespace client_v2
                     response.EnsureSuccessStatusCode();
 
                     var responseBody = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine("Response: " + responseBody);
+                    return int.Parse(responseBody);
                 }
                 catch (HttpRequestException e)
                 {
@@ -105,6 +108,7 @@ namespace client_v2
                 {
                     Console.WriteLine($"Unexpected error: {e.Message}");
                 }
+                return 0;
             }
             public async Task<List<Message>> GetGroupMessages()
             {
@@ -342,6 +346,76 @@ namespace client_v2
 
                 return false;
             }
+            public async Task UploadFileAsync(string filePath, int messageId)
+            {
+                using (var client = new HttpClient())
+                {
+                    using (var content = new MultipartFormDataContent())
+                    {
+                        var fileContent = new ByteArrayContent(await File.ReadAllBytesAsync(filePath));
+                        fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                        content.Add(fileContent, "file", Path.GetFileName(filePath));
+                        content.Add(new StringContent(messageId.ToString()), "messageId");
+
+                        var response = await client.PostAsync("https://localhost:7777/api/files/upload", content);
+                        response.EnsureSuccessStatusCode();
+                    }
+                }
+            }
+            public async Task<Message> GetMessageById(int messageId)
+            {
+                using (var client = new HttpClient())
+                {
+                    var response = await client.GetAsync($"https://localhost:7777/api/message/{messageId}");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var options = new JsonSerializerOptions
+                        {
+                            PropertyNameCaseInsensitive = true // Необязательно, если имена свойств в JSON и классе совпадают
+                        };
+
+                        using (var responseStream = await response.Content.ReadAsStreamAsync())
+                        {
+                            return await JsonSerializer.DeserializeAsync<Message>(responseStream, options);
+                        }
+                    }
+                    else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    {
+                        throw new Exception($"Message with ID {messageId} not found.");
+                    }
+                    else
+                    {
+                        throw new Exception($"Failed to retrieve message. Status code: {response.StatusCode}");
+                    }
+                }
+            }
+            public async Task<byte[]> DownloadFileFromDatabaseAsync(int messageId)
+            {
+                // Предполагаем, что у вас есть метод для получения файла из базы данных
+                var message = await GetMessageById(messageId);
+                if (message == null || string.IsNullOrEmpty(message.FilePath))
+                {
+                    throw new FileNotFoundException("File not found in the database.");
+                }
+
+                // Чтение содержимого файла в байтовый массив
+                return await File.ReadAllBytesAsync(message.FilePath);
+            }
+
+            public async Task DownloadFileAsync(int messageId)
+            {
+                using (var client = new HttpClient())
+                {
+                    var response = await client.GetAsync($"https://localhost:7777/api/files/download/{messageId}");
+                    response.EnsureSuccessStatusCode();
+
+                    var fileName = response.Content.Headers.ContentDisposition.FileNameStar ?? "downloadedFile";
+                    var fileBytes = await response.Content.ReadAsByteArrayAsync();
+                    await File.WriteAllBytesAsync(Path.Combine("downloads", fileName), fileBytes);
+                }
+            }
+
         }
     }
 }

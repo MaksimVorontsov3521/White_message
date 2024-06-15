@@ -7,6 +7,8 @@ namespace adminAPI
     public partial class adminwindow : Form
     {
         private readonly MessengerClient messengerclient;
+        public BindingList<MessengerClient.User> users;
+        private MessengerClient.User selectedUser;
         public adminwindow()
         {
             InitializeComponent();
@@ -63,7 +65,7 @@ namespace adminAPI
             catch { }
             finally
             {
-                
+
             }
         }
 
@@ -77,7 +79,7 @@ namespace adminAPI
             catch { }
             finally
             {
-               
+
             }
         }
 
@@ -93,8 +95,9 @@ namespace adminAPI
         {
             try
             {
-                var users = await messengerclient.GetAllUsers();
-                users_grid.DataSource = new BindingList<API.MessengerClient.User>(users);
+                var userList = await messengerclient.GetAllUsers();
+                users = new BindingList<API.MessengerClient.User>(userList);
+                users_grid.DataSource = users;
             }
             catch (Exception ex)
             {
@@ -105,8 +108,8 @@ namespace adminAPI
         {
             try
             {
-                var messages = await messengerclient.GetAllMessages();
-                messages_grid.DataSource = new BindingList<API.MessengerClient.Message>(messages);
+                var messageList = await messengerclient.GetAllMessages();
+                messages_grid.DataSource = new BindingList<API.MessengerClient.Message>(messageList);
             }
             catch (Exception ex)
             {
@@ -122,6 +125,33 @@ namespace adminAPI
         private void reload_messages_Click(object sender, EventArgs e)
         {
             LoadMessages();
+        }
+
+        private void users_grid_SelectionChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private async void users_grid_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                var editedUser = users_grid.Rows[e.RowIndex].DataBoundItem as MessengerClient.User;
+                if (editedUser != null)
+                {
+                    // Здесь вы можете сохранить изменения в объекте User
+                    // Например, вызвать метод для обновления данных на сервере
+                    try
+                    {
+                        await messengerclient.UpdateUser(editedUser);
+                        MessageBox.Show("Изменения сохранены.");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error saving user: " + ex.Message);
+                    }
+                }
+            }
         }
     }
 }

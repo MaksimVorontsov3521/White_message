@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace adminAPI
 {
-    internal class API
+    public class API
     {
         public class MessengerClient
         {
@@ -62,6 +62,11 @@ namespace adminAPI
                     isOnline = false
                 };
                 var response = await client.PostAsJsonAsync("https://localhost:7777/api/user/add-user", newUser);
+                response.EnsureSuccessStatusCode();
+            }
+            public async Task UpdateUser (User user)
+            {
+                var response = await client.PostAsJsonAsync("https://localhost:7777/api/user/update-user", user);
                 response.EnsureSuccessStatusCode();
             }
 
