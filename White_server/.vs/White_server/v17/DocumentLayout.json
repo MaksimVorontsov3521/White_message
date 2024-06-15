@@ -1,0 +1,71 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "X:\\program\\white\\White_message\\White_server\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{7AC9B81C-3EDB-4148-B5F4-62EF7E50C92F}|White_server\\White_server.csproj|x:\\program\\white\\white_message\\white_server\\white_server\\database.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7AC9B81C-3EDB-4148-B5F4-62EF7E50C92F}|White_server\\White_server.csproj|solutionrelative:white_server\\database.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7AC9B81C-3EDB-4148-B5F4-62EF7E50C92F}|White_server\\White_server.csproj|X:\\program\\white\\White_message\\White_server\\white_server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7AC9B81C-3EDB-4148-B5F4-62EF7E50C92F}|White_server\\White_server.csproj|solutionrelative:white_server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7AC9B81C-3EDB-4148-B5F4-62EF7E50C92F}|White_server\\White_server.csproj|x:\\program\\white\\white_message\\white_server\\white_server\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7AC9B81C-3EDB-4148-B5F4-62EF7E50C92F}|White_server\\White_server.csproj|solutionrelative:white_server\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Admin.cs",
+              "DocumentMoniker": "X:\\program\\white\\White_message\\White_server\\White_server\\Admin.cs",
+              "RelativeDocumentMoniker": "White_server\\Admin.cs",
+              "ToolTip": "X:\\program\\white\\White_message\\White_server\\White_server\\Admin.cs",
+              "RelativeToolTip": "White_server\\Admin.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAACkAAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-15T07:43:46.602Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "X:\\program\\white\\White_message\\White_server\\White_server\\Program.cs",
+              "RelativeDocumentMoniker": "White_server\\Program.cs",
+              "ToolTip": "X:\\program\\white\\White_message\\White_server\\White_server\\Program.cs",
+              "RelativeToolTip": "White_server\\Program.cs",
+              "ViewState": "AQIAANQAAAAAAAAAAAAqwOsAAAAOAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-14T18:25:10.8Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DataBase.cs",
+              "DocumentMoniker": "X:\\program\\white\\White_message\\White_server\\White_server\\DataBase.cs",
+              "RelativeDocumentMoniker": "White_server\\DataBase.cs",
+              "ToolTip": "X:\\program\\white\\White_message\\White_server\\White_server\\DataBase.cs",
+              "RelativeToolTip": "White_server\\DataBase.cs",
+              "ViewState": "AQIAAMkAAAAAAAAAAAAqwOAAAACGAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-14T18:08:52.661Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

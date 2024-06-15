@@ -44,6 +44,11 @@ namespace White_message
 
         public string Showhistory(string Chat_name,string Username)
         {
+            if (Chat_name.Equals("MainChat"))
+            {
+                return ShowhistoryMainchat(Chat_name);
+            }
+
             string message = null;
             string query = $"Select * From MessagesTab where (Chat_name=N'{Chat_name}' and UserName=N'{Username}') or" +
                 $" (Chat_name=N'{Username}' and UserName=N'{Chat_name}') ORDER BY TimeSended,Id";
@@ -52,15 +57,34 @@ namespace White_message
             {
                 while (reader.Read())
                 {
-                    message += "from ";
                     message += (reader["UserName"] != DBNull.Value ? reader["UserName"].ToString() : null);                  
-                    message += " To ";
-                    message += (reader["Chat_name"] != DBNull.Value ? reader["Chat_name"].ToString() : null);
+                    //message += " To ";
+                    //message += (reader["Chat_name"] != DBNull.Value ? reader["Chat_name"].ToString() : null);
                     message += ": ";
                     message += (reader["Message"] != DBNull.Value ? reader["Message"].ToString() : null);
                     message += "\n";                    
                 }
             }           
+            return message;
+        }
+
+        public string ShowhistoryMainchat(string Chat_name)
+        {
+            string message = null;
+            string query = $"Select * From MessagesTab where Chat_name=N'{Chat_name}' ORDER BY TimeSended,Id";
+            SqlCommand com = new SqlCommand(query, sqlConnection);
+            using (SqlDataReader reader = com.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    message += (reader["UserName"] != DBNull.Value ? reader["UserName"].ToString() : null);
+                    //message += " To ";
+                    //message += (reader["Chat_name"] != DBNull.Value ? reader["Chat_name"].ToString() : null);
+                    message += ": ";
+                    message += (reader["Message"] != DBNull.Value ? reader["Message"].ToString() : null);
+                    message += "\n";
+                }
+            }
             return message;
         }
 
@@ -87,7 +111,7 @@ namespace White_message
         {
             string[] parts = message.Split('\t');
             DateTime now = DateTime.UtcNow;
-            string formnow = now.ToString("MM.dd.yyyy HH:mm:ss");
+            string formnow = now.ToString("yyyy.MM.dd hh:mm:ss");
             string query = $"INSERT INTO MessagesTab (UserName,Message,TimeSended,Chat_name) VALUES (N'{parts[0]}',N'{parts[1]}',N'{formnow}',N'{parts[2]}')";
             SqlCommand com = new SqlCommand(query, sqlConnection);
             com.ExecuteNonQuery();

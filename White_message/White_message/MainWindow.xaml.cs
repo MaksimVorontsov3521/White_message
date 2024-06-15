@@ -65,7 +65,7 @@ namespace White_message
             catch
             {
                 //Сервер не доступен
-                Chat.Text += "Сервер не доступен\n";
+                //Chat.Text += "Сервер не доступен\n";
                 SettingsMessage.Content = "Сервер не доступен";
                 clientSocket.Close();
             }
@@ -326,7 +326,7 @@ namespace White_message
             }
             catch
             {
-                Chat.Text += "Сервер не доступен\n";
+                //Chat.Text += "Сервер не доступен\n";
             }
         }
         
@@ -394,7 +394,7 @@ namespace White_message
         {
             if (Convert.ToString(OnLine.SelectedItem) == UserName)
             {
-                WhatChat.Content = "It is you";
+                WhatChat.Content = "Это вы";
             }
             else
             {

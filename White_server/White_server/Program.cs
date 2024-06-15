@@ -233,7 +233,11 @@ namespace White_server
             // Прослушка
             serverSocket.Bind(new IPEndPoint(IPAddress.Parse(ipAddress), port));
             serverSocket.Listen(10); // Backlog
-            Console.WriteLine($"Server listening on port {port}...");
+            //Console.WriteLine($"Server listening on port {port}...");
+
+            Admin admin = new Admin();
+            Thread adminwork = new Thread(admin.Adminwork);
+            adminwork.Start();
 
             // Подключить клиента
             while (true)
@@ -259,12 +263,12 @@ namespace White_server
 
             // Регистрация
 
-            if (message.StartsWith("\t"))
-            {
-                // 4- Создан новый аккаунт / 5- Такой login уже существует
-                name = name.Substring(1);
-                return (dataBase.new_user(name, password)) ? "\t4" : "\t5";
-            }
+            //if (message.StartsWith("\t"))
+            //{
+            //    // 4- Создан новый аккаунт / 5- Такой login уже существует
+            //    name = name.Substring(1);
+            //    return (dataBase.new_user(name, password)) ? "\t4" : "\t5";
+            //}
 
             // отправка прошлых сообщений
             if (1 == dataBase.Entrance(name, password))
