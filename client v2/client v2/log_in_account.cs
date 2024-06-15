@@ -69,5 +69,10 @@ namespace client_v2
             }
             return false;
         }
+
+        private void log_in_page_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
