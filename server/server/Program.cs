@@ -24,7 +24,6 @@ class Server
 
     static void Main(string[] args)//начало 
     {
-        //bd.deleteclients(bd.getcs());
         TcpListener serverSocket = new TcpListener(IPAddress.Any, 6666);
         serverSocket.Start();
         Console.WriteLine("Сервер запущен. Ожидание подключения...\n");
@@ -34,7 +33,6 @@ class Server
             NetworkStream stream = clientSocket.GetStream();
             StreamReader reader = new StreamReader(stream);
             StreamWriter writer = new StreamWriter(stream) { AutoFlush = true };
-
             Console.WriteLine("Клиент подключён");
             Thread loginThread = new Thread(() =>
             {
@@ -101,22 +99,6 @@ class Server
 
         }
     }
-    //static bool client_reg_in(TcpClient clientSocket,StreamReader reader)
-    //    {
-    //        string[] client_data = new string[3];       
-    //        Array.Clear(client_data, 0, client_data.Length);
-
-    //            for (int i = 0; i < client_data.Length; i++)
-    //            {               
-    //                client_data[i] = readmessage(reader);
-    //            }
-    //        if (/*bd.checkipforreg(bd.getcs(),getIP(clientSocket))==true &&*/ bd.checkclientsreg(bd.getcs(), client_data[2], client_data[0])==true)
-    //        {
-    //            bd.insertclient(bd.getcs(), bd.getlastclient_id(bd.getcs()), client_data[2], client_data[0], client_data[1],getIP(clientSocket));            
-    //            return true;
-    //        }
-    //        else return false;
-    //    }
     static async void client_log_in(TcpClient clientSocket, StreamReader reader, StreamWriter writer, NetworkStream stream, string usernick)
     {
         var messengerClient = new api.MessengerClient();
@@ -137,7 +119,6 @@ class Server
         }
         else
         {
-            // Обработка случая, когда пользователь не найден
             writesystemmessage("Пользователь не найден.", writer);
         }
     }
@@ -153,18 +134,6 @@ class Server
                 if (message == null) break;
                 switch (message)
                 {
-                    //case "checkaccountreg":
-                    //    if (client_reg_in(clientSocket,reader))
-                    //    {
-                    //        Console.WriteLine("Аккаунт успешно создан");
-                    //        writesystemmessage("Аккаунт успешно создан", writer);
-                    //    }
-                    //    else
-                    //    {
-                    //        Console.WriteLine("Такой аккаунт уже существует");
-                    //        writesystemmessage("Такой аккаунт уже существует", writer);
-                    //    }
-                    //    break;
                     case "addaccountonclients":
                         string usernick = readmessage(reader);
                         if (checkmultyacc(usernick))
@@ -182,7 +151,7 @@ class Server
         {
             Console.WriteLine("Ошибка чтения данных от клиента: " + ex.Message);
         }
-        finally //DISCONNECT
+        finally
         {
 
         }
@@ -243,25 +212,7 @@ class Server
         foreach (var client in Clients)
         {
             Console.WriteLine("----------------------------------------------");
-            // Очищаем список клиентов перед обновлением
             client.Writer.WriteLine("RefreshOnline");
-            //client.Writer.WriteLine(Clients.Count);
-            //Console.WriteLine("Для клиента - '" + client.usernick + "' - было отправлено:");
-            //Console.WriteLine("Количество клиентов на сервере: " + Clients.Count);
-            //foreach (var c in Clients)
-            //{
-            //    if (c.id == client.id)
-            //    {
-            //        client.Writer.WriteLine(c.usernick + " (Вы)");
-            //        Console.WriteLine(c.usernick + " (Вы)" + "    for " + client.usernick);
-            //    }
-            //    else
-            //    {
-            //        client.Writer.WriteLine(c.usernick);
-            //        Console.WriteLine(c.usernick + "    for " + client.usernick);
-            //    }
-            //}
-            //Console.WriteLine("----------------------------------------------");
         }
     }
     static string getIP(TcpClient clientSocket)

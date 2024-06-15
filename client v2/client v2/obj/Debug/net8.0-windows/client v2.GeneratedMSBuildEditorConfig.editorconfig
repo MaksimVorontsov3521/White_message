@@ -14,6 +14,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = client_v2
-build_property.ProjectDir = X:\program\Новая папка (2)\Новая папка\White_message\client v2\client v2\
+build_property.ProjectDir = P:\VS\messenger\client v2\client v2\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

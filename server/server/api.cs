@@ -29,7 +29,7 @@ namespace server
                 public string Content { get; set; }
                 public DateTime? Timestamp { get; set; }
                 public bool IsGroupMessage { get; set; }
-                public string? Sendernick { get; set; } // Для удобства
+                public string? Sendernick { get; set; }
                 public string? Receivernick { get; set; }
                 public User? Sender { get; set; }
                 public User? Receiver { get; set; }
@@ -53,8 +53,8 @@ namespace server
             public MessengerClient()
             {
 
-                HttpClient client = new HttpClient(); // Создаем новый экземпляр HttpClient
-                client.BaseAddress = new Uri("https://localhost:7777/"); // Устанавливаем BaseAddress
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri("https://localhost:7777/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             }                 
@@ -86,7 +86,7 @@ namespace server
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                 {
-                    return null; // Или выбросить исключение, если пользователь не найден
+                    return null;
                 }
                 else
                 {

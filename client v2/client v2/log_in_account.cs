@@ -47,32 +47,6 @@ namespace client_v2
                 }
             }
             else MessageBox.Show("Заполните логин и пароль");
-        }
-        public bool getanswer(string message)
-        {
-            MessageBox.Show(message);
-            switch (message)
-            {
-                case "Такой аккаунт уже существует":
-                    {
-                        break;
-                    }
-
-                case "Вы успешно вошли в аккаунт":
-                    {
-                        return true;
-                    }
-                case "Такой аккаунт не был найден":
-                    {
-                        break;
-                    }
-            }
-            return false;
-        }
-
-        private void log_in_page_Click(object sender, EventArgs e)
-        {
-
-        }
+        }    
     }
 }

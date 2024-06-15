@@ -27,7 +27,6 @@ namespace client_v2
                 public string? contacts { get; set; }
                 public string? usernick { get; set; }
             }
-
             public class Message
             {
                 public int? MessageId { get; set; }
@@ -36,8 +35,8 @@ namespace client_v2
                 public string Content { get; set; }
                 public DateTime? Timestamp { get; set; }
                 public bool IsGroupMessage { get; set; }
-                public string? Sendernick { get; set; } // Для удобства
-                public string? Receivernick { get; set; } // Никнейм получателя
+                public string? Sendernick { get; set; }
+                public string? Receivernick { get; set; }
                 public string? FileName { get; set; }
                 public string? FilePath { get; set; }
                 public string? FileType { get; set; }
@@ -76,8 +75,8 @@ namespace client_v2
             public MessengerClient()
             {
 
-                HttpClient client = new HttpClient(); // Создаем новый экземпляр HttpClient
-                client.BaseAddress = new Uri("https://localhost:7777/"); // Устанавливаем BaseAddress
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri("https://localhost:7777/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             }
@@ -301,20 +300,14 @@ namespace client_v2
             {
                 try
                 {
-                    // Отправляем GET-запрос на сервер для получения списка контактов с их статусом онлайн
                     HttpResponseMessage response = await client.GetAsync($"https://localhost:7777/api/user/get-contacts-with-status-by-id/{userId}");
-
-                    // Проверяем, успешно ли выполнен запрос
                     response.EnsureSuccessStatusCode();
-
-                    // Читаем ответ сервера и десериализуем его в список контактов с их статусом онлайн
                     List<ContactsOnline> contactsOnline = await response.Content.ReadFromJsonAsync<List<ContactsOnline>>();
 
                     return contactsOnline;
                 }
                 catch (HttpRequestException ex)
                 {
-                    // Обрабатываем ошибку, если запрос не удалось выполнить
                     Console.WriteLine($"Error getting contacts: {ex.Message}");
                     return null;
                 }
@@ -372,9 +365,8 @@ namespace client_v2
                     {
                         var options = new JsonSerializerOptions
                         {
-                            PropertyNameCaseInsensitive = true // Необязательно, если имена свойств в JSON и классе совпадают
+                            PropertyNameCaseInsensitive = true 
                         };
-
                         using (var responseStream = await response.Content.ReadAsStreamAsync())
                         {
                             return await JsonSerializer.DeserializeAsync<Message>(responseStream, options);
@@ -392,14 +384,11 @@ namespace client_v2
             }
             public async Task<byte[]> DownloadFileFromDatabaseAsync(int messageId)
             {
-                // Предполагаем, что у вас есть метод для получения файла из базы данных
                 var message = await GetMessageById(messageId);
                 if (message == null || string.IsNullOrEmpty(message.FilePath))
                 {
                     throw new FileNotFoundException("File not found in the database.");
                 }
-
-                // Чтение содержимого файла в байтовый массив
                 return await File.ReadAllBytesAsync(message.FilePath);
             }
 

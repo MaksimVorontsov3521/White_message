@@ -51,7 +51,6 @@
             personalchat = new TextBox();
             label1 = new Label();
             yourcontacts = new ListBox();
-            help = new Button();
             clientmenu.SuspendLayout();
             tabControl1.SuspendLayout();
             groupchat.SuspendLayout();
@@ -86,7 +85,6 @@
             // 
             // groupchat
             // 
-            groupchat.Controls.Add(help);
             groupchat.Controls.Add(filebutton);
             groupchat.Controls.Add(yournick);
             groupchat.Controls.Add(IsYouOnline);
@@ -296,16 +294,6 @@
             yourcontacts.TabIndex = 16;
             yourcontacts.SelectedIndexChanged += yourcontacts_SelectedIndexChanged;
             // 
-            // help
-            // 
-            help.Location = new Point(846, 383);
-            help.Name = "help";
-            help.Size = new Size(101, 53);
-            help.TabIndex = 22;
-            help.Text = "button1";
-            help.UseVisualStyleBackColor = true;
-            help.Click += help_Click;
-            // 
             // messenger
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -347,7 +335,6 @@
         private Label IsYouOnlinePers;
         private Label contact;
         private Button filebutton;
-        private Button help;
     }
 }
 

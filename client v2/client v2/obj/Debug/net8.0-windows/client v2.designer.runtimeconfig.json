@@ -12,8 +12,8 @@
       }
     ],
     "additionalProbingPaths": [
-      "C:\\Users\\Maks\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\Maks\\.nuget\\packages"
+      "C:\\Users\\gloom\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\gloom\\.nuget\\packages"
     ],
     "configProperties": {
       "System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization": true,

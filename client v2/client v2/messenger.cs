@@ -40,15 +40,12 @@ namespace client_v2
             yourcontacts.SelectionMode = SelectionMode.One;
             yourcontacts.DrawItem += new DrawItemEventHandler(yourcontacts_DrawItem);
 
-
             buttonpress();
-            // Привязываем контекстное меню только к tabPage1
             main();
-
         }
         private void messenger_Shown(object sender, EventArgs e)
         {
-            this.Hide(); // Скрыть основную форму при загрузке
+            this.Hide();
         }
         private void buttonpress()
         {
@@ -65,16 +62,11 @@ namespace client_v2
             loginForm.FormClosing += log_in_account_FormClosing;
             this.Shown += new EventHandler(messenger_Shown);
             loginForm.Show();
-
-
             client = new TcpClient();
             client.Connect(serverIP, serverPort);
             stream = client.GetStream();
             writer = new StreamWriter(stream);
             reader = new StreamReader(stream);
-
-
-
         }
         private async void SetGroupMessages()
         {
@@ -166,7 +158,6 @@ namespace client_v2
             users = await messengerclient.GetAllUsersOnline();
             contacts = await messengerclient.GetContactsStatus(myId);
             UpdateListBox();
-            //online.Invalidate();
         }
         private void UpdateListBox()
         {
@@ -183,10 +174,8 @@ namespace client_v2
         {
             ListBox listBox = sender as ListBox;
             if (listBox == null) return;
-
             string userNick = listBox.Items[e.Index].ToString();
             UserOnline user = users.FirstOrDefault(u => u.UserNick == userNick);
-            // Определение цвета кружка в зависимости от онлайн-статуса пользователя
             Color circleColor = GetUserOnlineStatusColor(user.IsOnline);
 
             int circleSize = 8;
@@ -194,20 +183,12 @@ namespace client_v2
             int circleX = e.Bounds.Left + circleOffset;
             int circleY = e.Bounds.Top + circleOffset;
 
-            // Проверка, является ли текущий пользователь владельцем данного элемента
             if (user.UserNick == yournick.Text)
             {
-                // Если пользователь является владельцем, то кружок будет другого цвета
-                circleColor = Color.Black; // Например, оранжевый цвет для выделения
+                circleColor = Color.Black;
             }
-
-            // Рисование кружка для статуса онлайн
             e.Graphics.FillEllipse(new SolidBrush(circleColor), circleX, circleY, circleSize, circleSize);
-
-            // Рисование текста с ником пользователя
             e.Graphics.DrawString(userNick, e.Font, Brushes.Black, new PointF(circleX + circleSize + 2, e.Bounds.Top));
-
-            // Выделение текущего элемента списка
             e.DrawFocusRectangle();
         }
 
@@ -222,16 +203,13 @@ namespace client_v2
             {
                 online.Items.Clear();
             });
-
         }
         public void checkaccountreg(string[] regmassive)
         {
             try
             {
-                // Отправка команды "checkaccountreg"
                 byte[] responseBuffer = Encoding.UTF8.GetBytes("checkaccountreg\n");
                 stream.Write(responseBuffer, 0, responseBuffer.Length);
-                // Отправка данных регистрации
                 for (int i = 0; i < regmassive.Length; i++)
                 {
                     responseBuffer = Encoding.UTF8.GetBytes(regmassive[i] + "\n");
@@ -243,7 +221,6 @@ namespace client_v2
                 Console.WriteLine("Ошибка при отправке данных: " + ex.Message);
             }
         }
-
         private void send_Click(object sender, EventArgs e)
         {
             if (writer != null)
@@ -335,9 +312,9 @@ namespace client_v2
             if (online.SelectedItem != null)
             {
                 string selectedUser = online.SelectedItem.ToString();
-                if (!yourcontacts.Items.Contains(selectedUser)) // Проверяем, не содержится ли уже выбранный пользователь в списке
+                if (!yourcontacts.Items.Contains(selectedUser))
                 {
-                    if (selectedUser != (yournick.Text)) // Проверяем, не содержится ли уже ваше имя в спискевьш
+                    if (selectedUser != (yournick.Text))
                     {
                         yourcontacts.Items.Add(selectedUser);
                         tabControl1.SelectedTab = personmessages;
@@ -360,7 +337,6 @@ namespace client_v2
                 }
             }
         }
-
         private async void personalsend_Click(object sender, EventArgs e)
         {
             if (yourcontacts.Items.Count > 0)
@@ -379,18 +355,15 @@ namespace client_v2
                 int receiverid = await messengerclient.GetUserIdByNick(selectedUser);
                 await messengerclient.SendPrivateMessage(myId, receiverid, personalmess.Text);
                 personalmess.Clear();
-
             }
             else MessageBox.Show("Выберите пользователя, которому хотите отправить сообщение");
         }
-
         private void yourcontacts_SelectedIndexChanged(object sender, EventArgs e)
         {
             yourcontacts.Refresh();
             personalchat.Clear();
             update_contacts();
             contact.Text = yourcontacts.SelectedItem.ToString();
-
         }
         private async void update_contacts()
         {
@@ -412,34 +385,24 @@ namespace client_v2
         {
             ListBox listBox = sender as ListBox;
             if (listBox == null || e.Index < 0) return;
-
-            // Получаем контакт из списка контактов
             string usernick = yourcontacts.Items[e.Index].ToString();
             ContactsOnline contact = contacts.FirstOrDefault(c => c.UserNick == usernick);
             if (contact == null) return;
 
             Color circleColor = contact.IsOnline ? Color.Green : Color.Red;
-
-            // Определяем размер и положение кружка
             int circleSize = 10;
             int circleOffset = 2;
             int circleX = e.Bounds.Left + circleOffset;
             int circleY = e.Bounds.Top + circleOffset + (e.Bounds.Height - circleSize) / 2;
-
-            // Отрисовываем кружок
             using (Brush circleBrush = new SolidBrush(circleColor))
             {
                 e.Graphics.FillEllipse(circleBrush, circleX, circleY, circleSize, circleSize);
             }
-
-            // Отрисовываем текст элемента списка (ник пользователя)
             string userNick = contact.UserNick;
             using (Font font = new Font(FontFamily.GenericSansSerif, 10))
             {
                 e.Graphics.DrawString(userNick, font, Brushes.Black, new PointF(circleX + circleSize + 5, e.Bounds.Top));
             }
-
-            // Выделяем текущий элемент списка
             e.DrawFocusRectangle();
         }
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
@@ -475,27 +438,20 @@ namespace client_v2
 
         private void ContextMenuStrip_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            // Проверяем, если активная вкладка не tabPage1
             if (tabControl1.SelectedTab != groupchat)
             {
-                // Отменяем отображение контекстного меню
                 e.Cancel = true;
             }
         }
-
         private void reconnect_Click(object sender, EventArgs e)
         {
-            // Отключаем текущее соединение
             Disconnect();
             ClearOnline();
-            // Скрываем текущее окно и показываем форму логина
             this.Hide();
             closeform = true;
             stopreading = false;
-            // Подключаемся заново
             main();
         }
-
         private async void filebutton_Click(object sender, EventArgs e)
         {
             int messid = await messengerclient.SendGroupMessage("", myId);
@@ -509,13 +465,6 @@ namespace client_v2
                     await messengerclient.UploadFileAsync(filePath, messageId);
                 }
             }
-        }
-
-        private async void help_Click(object sender, EventArgs e)
-        {
-            var fileBytes = await messengerclient.DownloadFileFromDatabaseAsync(76);
-            string fileContent = Encoding.UTF8.GetString(fileBytes);
-            AddMessageToGroupTextBox(fileContent);
         }
     }
 }

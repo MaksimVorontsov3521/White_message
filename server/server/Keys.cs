@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace client_v2
+namespace server
 {
-    internal class Class1
+    internal class Class
     {
     }
 }
