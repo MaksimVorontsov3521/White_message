@@ -3,16 +3,19 @@
   "WorkspaceRootPath": "X:\\program\\white\\White_message\\White_server\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7AC9B81C-3EDB-4148-B5F4-62EF7E50C92F}|White_server\\White_server.csproj|x:\\program\\white\\white_message\\white_server\\white_server\\database.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7AC9B81C-3EDB-4148-B5F4-62EF7E50C92F}|White_server\\White_server.csproj|solutionrelative:white_server\\database.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7AC9B81C-3EDB-4148-B5F4-62EF7E50C92F}|White_server\\White_server.csproj|X:\\program\\white\\White_message\\White_server\\white_server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{7AC9B81C-3EDB-4148-B5F4-62EF7E50C92F}|White_server\\White_server.csproj|x:\\program\\white\\white_message\\white_server\\white_server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7AC9B81C-3EDB-4148-B5F4-62EF7E50C92F}|White_server\\White_server.csproj|solutionrelative:white_server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7AC9B81C-3EDB-4148-B5F4-62EF7E50C92F}|White_server\\White_server.csproj|x:\\program\\white\\white_message\\white_server\\white_server\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{7AC9B81C-3EDB-4148-B5F4-62EF7E50C92F}|White_server\\White_server.csproj|X:\\program\\white\\White_message\\White_server\\white_server\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7AC9B81C-3EDB-4148-B5F4-62EF7E50C92F}|White_server\\White_server.csproj|solutionrelative:white_server\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_LocalDB__MSSQLLocalDB/X__PROGRAM_WHITE_WHITE_MESSAGE_WHITE_SERVER_WHITE_SERVER_BIN_DEBUG_DATABASE1.MDF/True/SqlTable/dbo.Message.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7AC9B81C-3EDB-4148-B5F4-62EF7E50C92F}|White_server\\White_server.csproj|X:\\program\\white\\White_message\\White_server\\white_server\\database.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7AC9B81C-3EDB-4148-B5F4-62EF7E50C92F}|White_server\\White_server.csproj|solutionrelative:white_server\\database.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -27,6 +30,16 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "dbo.Message [\u0414\u0430\u043D\u043D\u044B\u0435]",
+              "DocumentMoniker": "ViewDataWindow_MSSQL__/_LocalDB__MSSQLLocalDB/X__PROGRAM_WHITE_WHITE_MESSAGE_WHITE_SERVER_WHITE_SERVER_BIN_DEBUG_DATABASE1.MDF/True/SqlTable/dbo.Message.sql",
+              "ToolTip": "dbo.Message [\u0414\u0430\u043D\u043D\u044B\u0435]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2024-06-15T10:35:06.459Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Admin.cs",
               "DocumentMoniker": "X:\\program\\white\\White_message\\White_server\\White_server\\Admin.cs",
               "RelativeDocumentMoniker": "White_server\\Admin.cs",
@@ -39,26 +52,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "X:\\program\\white\\White_message\\White_server\\White_server\\Program.cs",
               "RelativeDocumentMoniker": "White_server\\Program.cs",
               "ToolTip": "X:\\program\\white\\White_message\\White_server\\White_server\\Program.cs",
               "RelativeToolTip": "White_server\\Program.cs",
-              "ViewState": "AQIAANQAAAAAAAAAAAAqwOsAAAAOAAAA",
+              "ViewState": "AQIAACoAAAAAAAAAAAAmwJwAAAA9AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-14T18:25:10.8Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "DataBase.cs",
               "DocumentMoniker": "X:\\program\\white\\White_message\\White_server\\White_server\\DataBase.cs",
               "RelativeDocumentMoniker": "White_server\\DataBase.cs",
               "ToolTip": "X:\\program\\white\\White_message\\White_server\\White_server\\DataBase.cs",
               "RelativeToolTip": "White_server\\DataBase.cs",
-              "ViewState": "AQIAAMkAAAAAAAAAAAAqwOAAAACGAAAA",
+              "ViewState": "AQIAAHQAAAAAAAAAAAAewHAAAAAQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-14T18:08:52.661Z",
               "EditorCaption": ""

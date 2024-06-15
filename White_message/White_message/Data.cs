@@ -48,6 +48,11 @@ namespace White_message
             {
                 return ShowhistoryMainchat(Chat_name);
             }
+            if (Chat_name.StartsWith("\0"))
+            {
+                Chat_name = Chat_name.Substring(1);
+                return ShowhistoryMainchat(Chat_name);
+            }
 
             string message = null;
             string query = $"Select * From MessagesTab where (Chat_name=N'{Chat_name}' and UserName=N'{Username}') or" +

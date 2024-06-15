@@ -231,6 +231,24 @@ namespace White_server
                 }
             }
         }
+        public string Chats(string name)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                string chats = null;
+                sqlConnection.Open();
+                string query = $"Select * From Chat Where UserName=N'{name}'";
+                SqlCommand com = new SqlCommand(query, sqlConnection);
+                using (SqlDataReader reader = com.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        chats+=(reader["ChatName"] != DBNull.Value ? reader["ChatName"].ToString() : null)+"\n";
+                    }
+                }
+                return chats;
+            }
+        }
 
     }
 }

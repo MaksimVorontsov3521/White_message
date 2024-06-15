@@ -108,7 +108,7 @@ namespace White_server
             try
             {
                 // записываем сообщение в базу данных
-                dataBase.new_message(client.Name,parts[2], parts[3]);
+                dataBase.new_message(parts[1],parts[2], parts[3]);
             }
             catch
             {
@@ -178,17 +178,10 @@ namespace White_server
         // обновление списка online у клиентов
         private void update_OnLine(string message)
         {
-            if (Clients_list.Count == 1)
-            {
-                message += "\n" + message.Remove(0, 11);
-            }
-            else
-            {
                 for (int i = 0; i < Clients_list.Count; i++)
                 {
                     message += "\n" + Clients_list[i].Name;
                 }
-            }
             send($"\t1{message}");
         }
 
@@ -216,6 +209,8 @@ namespace White_server
             Clients_list.Add(client);
             // Говорим всем, что подключился клиент
             update_OnLine($"connected: {message}");
+            clientSocket.Send(keys.Encrypt($"\ta" + dataBase.Chats(client.Name)));
+            Console.WriteLine($"\ta" + dataBase.Chats(client.Name)) ;
             Console.WriteLine($"Client connected: {clientSocket.RemoteEndPoint} - Name: {message}");
             clientWork(client);
 

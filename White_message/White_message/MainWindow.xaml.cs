@@ -74,6 +74,7 @@ namespace White_message
         // подключения
         Socket clientSocket = null;
         string UserName = null;
+        List<string> avalibalChats = new List<string>();
         // обработка сообщений
         async void work()
         {
@@ -98,10 +99,13 @@ namespace White_message
                             case '1':
                                 OnLine.Items.Clear();
                                 string[] messages = message.Split('\n');
-                                Chat.Text += messages[0].Remove(0, 2) + "\n";
                                 for (int i = 1; i < messages.Length; i++)
                                 {
                                     OnLine.Items.Add(messages[i]);
+                                }
+                                for (int i = 0; i < avalibalChats.Count; i++)
+                                { 
+                                OnLine.Items.Add(avalibalChats[i]);
                                 }
                                 break;
                             case '2':
@@ -124,7 +128,7 @@ namespace White_message
                                 regtangle.Visibility = Visibility.Visible;
                                 break;
                             case '6':
-                                Chat.Text += "Этот пользователь уже в сети\n";
+                                //Chat.Text += "Этот пользователь уже в сети\n";
                                 SettingsMessage.Content = "Этот пользователь уже в сети";
                                 regtangle.Visibility = Visibility.Visible;
                                 break;
@@ -139,6 +143,15 @@ namespace White_message
                                 break;
                             case '8':
                                 continue;
+                                break;
+                                case'a':
+                                message=message.Substring(2);
+                                string[] cahts = message.Split('\n');
+                                for (int i = 0; i < cahts.Length-1; i++)
+                                {
+                                    OnLine.Items.Add("\0"+cahts[i]);
+                                    avalibalChats.Add("\0" + cahts[i]);
+                                }                              
                                 break;
                         }
                     }

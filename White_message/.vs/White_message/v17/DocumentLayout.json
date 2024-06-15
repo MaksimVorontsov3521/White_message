@@ -3,12 +3,15 @@
   "WorkspaceRootPath": "X:\\program\\white\\White_message\\White_message\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{D698034B-51FB-42E4-AB8B-D367B11D9FE4}|White_message\\White_message.csproj|X:\\program\\white\\White_message\\White_message\\white_message\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D698034B-51FB-42E4-AB8B-D367B11D9FE4}|White_message\\White_message.csproj|solutionrelative:white_message\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D698034B-51FB-42E4-AB8B-D367B11D9FE4}|White_message\\White_message.csproj|x:\\program\\white\\white_message\\white_message\\white_message\\data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D698034B-51FB-42E4-AB8B-D367B11D9FE4}|White_message\\White_message.csproj|solutionrelative:white_message\\data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D698034B-51FB-42E4-AB8B-D367B11D9FE4}|White_message\\White_message.csproj|X:\\program\\white\\White_message\\White_message\\white_message\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D698034B-51FB-42E4-AB8B-D367B11D9FE4}|White_message\\White_message.csproj|solutionrelative:white_message\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_LocalDB__MSSQLLocalDB/X__PROGRAM_WHITE_WHITE_MESSAGE_WHITE_MESSAGE_WHITE_MESSAGE_BIN_DEBUG_DATABASE1C.MDF/True/SqlTable/dbo.MessagesTab.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D698034B-51FB-42E4-AB8B-D367B11D9FE4}|White_message\\White_message.csproj|X:\\program\\white\\White_message\\White_message\\white_message\\keys.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -26,33 +29,43 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
+              "Title": "dbo.MessagesTab [\u0414\u0430\u043D\u043D\u044B\u0435]",
+              "DocumentMoniker": "ViewDataWindow_MSSQL__/_LocalDB__MSSQLLocalDB/X__PROGRAM_WHITE_WHITE_MESSAGE_WHITE_MESSAGE_WHITE_MESSAGE_BIN_DEBUG_DATABASE1C.MDF/True/SqlTable/dbo.MessagesTab.sql",
+              "ToolTip": "dbo.MessagesTab [\u0414\u0430\u043D\u043D\u044B\u0435]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2024-06-15T11:30:06.221Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "MainWindow.xaml.cs",
               "DocumentMoniker": "X:\\program\\white\\White_message\\White_message\\White_message\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "White_message\\MainWindow.xaml.cs",
               "ToolTip": "X:\\program\\white\\White_message\\White_message\\White_message\\MainWindow.xaml.cs",
               "RelativeToolTip": "White_message\\MainWindow.xaml.cs",
-              "ViewState": "AQIAAG0AAAAAAAAAAAAkwJMAAAAYAAAA",
+              "ViewState": "AQIAAFcAAAAAAAAAAAAlwGsAAABDAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-14T18:47:32.845Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Data.cs",
               "DocumentMoniker": "X:\\program\\white\\White_message\\White_message\\White_message\\Data.cs",
               "RelativeDocumentMoniker": "White_message\\Data.cs",
               "ToolTip": "X:\\program\\white\\White_message\\White_message\\White_message\\Data.cs",
               "RelativeToolTip": "White_message\\Data.cs",
-              "ViewState": "AQIAACgAAAAAAAAAAAAkwE4AAAARAAAA",
+              "ViewState": "AQIAACEAAAAAAAAAAAAowDUAAAAQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-14T18:25:52.866Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Keys.cs",
               "DocumentMoniker": "X:\\program\\white\\White_message\\White_message\\White_message\\Keys.cs",
               "RelativeDocumentMoniker": "White_message\\Keys.cs",
@@ -60,7 +73,8 @@
               "RelativeToolTip": "White_message\\Keys.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-29T18:04:41.365Z"
+              "WhenOpened": "2024-05-29T18:04:41.365Z",
+              "EditorCaption": ""
             }
           ]
         }
