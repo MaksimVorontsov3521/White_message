@@ -16,8 +16,9 @@ namespace server
         public string password { get; set; }
         public string post { get; set; }
         public string usernick { get; set; }
+        public Keys Keys { get; set; }
 
-        public ClientInfo(int id, StreamWriter writer, string usernick, string login, string password,string fio, string post)
+        public ClientInfo(int id, StreamWriter writer, string usernick, string login, string password,string fio, string post, Keys keys)
         {
             Writer = writer;
             this.id = id;
@@ -26,6 +27,7 @@ namespace server
             this.password = password;           
             this.post = post;
             this.usernick = usernick;
+            this.Keys = keys;
         }
         public void connect(List<ClientInfo> clients)
         {

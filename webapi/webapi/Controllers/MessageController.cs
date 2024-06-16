@@ -104,7 +104,18 @@ namespace webapi.Controllers
             }
         }
 
+        [HttpPost("update-message")]
+        public async Task<ActionResult<Message>> UpdateMessage(Message message)
+        {
+            // Добавление пользователя в контекст            
+            _context.Message.Update(message);
+            // Сохранение изменений в базе данных
+            await _context.SaveChangesAsync();
 
+            // Возвращение ответа с данными добавленного пользователя
+            Console.WriteLine("чел был добавлен");
+            return CreatedAtAction(nameof(GetMessages), new { id = message.MessageId }, message);
+        }
         [HttpPost("send-group-message")]
         public async Task<IActionResult> SendGroupMessage([FromBody] Message message)
         {

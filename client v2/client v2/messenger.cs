@@ -25,6 +25,7 @@ namespace client_v2
         public int myId;
         private List<UserOnline> users;
         private List<ContactsOnline> contacts;
+        private Keys keys;
 
         public messenger()
         {
@@ -67,6 +68,8 @@ namespace client_v2
             stream = client.GetStream();
             writer = new StreamWriter(stream);
             reader = new StreamReader(stream);
+            keys = new Keys();
+            keyExchange();
         }
         private async void SetGroupMessages()
         {
@@ -98,18 +101,18 @@ namespace client_v2
             {
                 while (stopreading)
                 {
-                    string message = reader.ReadLine();
-                    if (message != null)
+                    string encryptedMessage = reader.ReadLine();
+                    if (encryptedMessage != null)
                     {
+                        string message = keys.Decrypt(Convert.FromBase64String(encryptedMessage));
                         if (message == "RefreshOnline")
                         {
                             ClearOnline();
                             refreshonline();
-                            online.Refresh();
                         }
                         else if (message == "privatemessagetoyou")
                         {
-                            message = reader.ReadLine();
+                            message = keys.Decrypt(Convert.FromBase64String(reader.ReadLine()));
                             AddMessageToPersonalTextBox(message);
                         }
                         else
@@ -121,6 +124,7 @@ namespace client_v2
             }
             catch { }
         }
+
         private async void AddMessegeoToApi(string message)
         {
             await messengerclient.SendGroupMessage(message, myId);
@@ -226,8 +230,7 @@ namespace client_v2
             if (writer != null)
             {
                 if (mess.Text == null) mess.Text = "";
-                byte[] responseBuffer = Encoding.UTF8.GetBytes(mess.Text + "\n");
-                stream.Write(responseBuffer, 0, responseBuffer.Length);
+                sendmessage(mess.Text);
                 AddMessegeoToApi(mess.Text);
                 mess.Clear();
             }
@@ -244,16 +247,18 @@ namespace client_v2
                 });
             }
         }
+        public void sendmessage(string message)
+        {
+            byte[] responseBuffer = Encoding.UTF8.GetBytes(Convert.ToBase64String(keys.Encrypt(message)) + "\n");
+            stream.Write(responseBuffer, 0, responseBuffer.Length);
+        }
         public async void log_in_successfully(string usernick)
         {
-            StreamReader reader = new StreamReader(stream);
             try
             {
-                byte[] responseBuffer = Encoding.UTF8.GetBytes("addaccountonclients\n");
-                stream.Write(responseBuffer, 0, responseBuffer.Length);
-                responseBuffer = Encoding.UTF8.GetBytes(usernick + "\n");
-                stream.Write(responseBuffer, 0, responseBuffer.Length);
-                string answer = reader.ReadLine();
+                sendmessage("addaccountonclients");
+                sendmessage(usernick);
+                string answer = keys.Decrypt(Convert.FromBase64String(reader.ReadLine()));
                 if (answer == "Этот аккаунт уже используется")
                 {
                     MessageBox.Show(answer);
@@ -342,16 +347,10 @@ namespace client_v2
             if (yourcontacts.Items.Count > 0)
             {
                 if (mess.Text == null) mess.Text = "";
+                sendmessage("privatemessage");
                 string selectedUser = yourcontacts.SelectedItem.ToString();
-                byte[] responseBuffer = Encoding.UTF8.GetBytes("privatemessage" + "\n");
-                stream.Write(responseBuffer, 0, responseBuffer.Length);
-
-                responseBuffer = Encoding.UTF8.GetBytes(selectedUser + "\n");
-                stream.Write(responseBuffer, 0, responseBuffer.Length);
-
-                responseBuffer = Encoding.UTF8.GetBytes(personalmess.Text + "\n");
-                stream.Write(responseBuffer, 0, responseBuffer.Length);
-
+                sendmessage(selectedUser);
+                sendmessage(personalmess.Text);
                 int receiverid = await messengerclient.GetUserIdByNick(selectedUser);
                 await messengerclient.SendPrivateMessage(myId, receiverid, personalmess.Text);
                 personalmess.Clear();
@@ -465,6 +464,22 @@ namespace client_v2
                     await messengerclient.UploadFileAsync(filePath, messageId);
                 }
             }
+        }
+        private void keyExchange()
+        {
+            byte[] buffer = new byte[1024];
+            int receivedBytes = stream.Read(buffer, 0, buffer.Length);
+            if (receivedBytes > 0)
+            {
+                
+                keys.NPublicKey = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
+            }
+            else
+            {
+                client.Close();
+            }
+            buffer = Encoding.UTF8.GetBytes(keys.myPublicKey);
+            stream.Write(buffer, 0, buffer.Length);
         }
     }
 }
