@@ -8,7 +8,7 @@ namespace adminAPI
     {
         private readonly MessengerClient messengerclient;
         public BindingList<MessengerClient.User> users;
-        private MessengerClient.User selectedUser;
+        public BindingList<MessengerClient.Message> mess;
         public adminwindow()
         {
             InitializeComponent();
@@ -109,7 +109,8 @@ namespace adminAPI
             try
             {
                 var messageList = await messengerclient.GetAllMessages();
-                messages_grid.DataSource = new BindingList<API.MessengerClient.Message>(messageList);
+                mess = new BindingList<API.MessengerClient.Message>(messageList);
+                messages_grid.DataSource = mess;
             }
             catch (Exception ex)
             {
@@ -144,6 +145,28 @@ namespace adminAPI
                     try
                     {
                         await messengerclient.UpdateUser(editedUser);
+                        MessageBox.Show("Изменения сохранены.");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error saving user: " + ex.Message);
+                    }
+                }
+            }
+        }
+
+        private async void messages_grid_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                var editedMessage = messages_grid.Rows[e.RowIndex].DataBoundItem as MessengerClient.Message;
+                if (editedMessage != null)
+                {
+                    // Здесь вы можете сохранить изменения в объекте User
+                    // Например, вызвать метод для обновления данных на сервере
+                    try
+                    {
+                        await messengerclient.UpdateMessage(editedMessage);
                         MessageBox.Show("Изменения сохранены.");
                     }
                     catch (Exception ex)

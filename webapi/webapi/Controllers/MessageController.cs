@@ -113,7 +113,6 @@ namespace webapi.Controllers
             await _context.SaveChangesAsync();
 
             // Возвращение ответа с данными добавленного пользователя
-            Console.WriteLine("чел был добавлен");
             return CreatedAtAction(nameof(GetMessages), new { id = message.MessageId }, message);
         }
         [HttpPost("send-group-message")]

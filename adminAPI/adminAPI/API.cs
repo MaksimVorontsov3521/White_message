@@ -69,8 +69,11 @@ namespace adminAPI
                 var response = await client.PostAsJsonAsync("https://localhost:7777/api/user/update-user", user);
                 response.EnsureSuccessStatusCode();
             }
-
-
+            public async Task UpdateMessage(Message message)
+            {
+                var response = await client.PostAsJsonAsync("https://localhost:7777/api/message/update-message", message);
+                response.EnsureSuccessStatusCode();
+            }
             public async Task Delete_user_by_id(int id)
             {
                 var response = await client.DeleteAsync($"https://localhost:7777/api/user/delete-user-by-id/{id}");

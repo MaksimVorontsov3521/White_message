@@ -231,7 +231,6 @@ namespace webapi.Controllers
             await _context.SaveChangesAsync();
 
             // Возвращение ответа с данными добавленного пользователя
-            Console.WriteLine("чел был добавлен");
             return CreatedAtAction(nameof(GetUsers), new { id = user.Id }, user);
         }
 
