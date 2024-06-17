@@ -10,6 +10,8 @@ using System.Configuration;
 using System.Threading;
 using System.IO;
 using System.Timers;
+using System.Xml.Linq;
+using System.Web;
 
 namespace White_server
 {
@@ -249,6 +251,90 @@ namespace White_server
                 return chats;
             }
         }
+        public void Allchats()
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                List<string> chats = new List<string>();
+                sqlConnection.Open();
+                string query = $"Select DISTINCT ChatName From Chat";
+                SqlCommand com = new SqlCommand(query, sqlConnection);
+                using (SqlDataReader reader = com.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                       chats.Add((reader["ChatName"] != DBNull.Value ? reader["ChatName"].ToString() : null));
+                    }
+                }
+                for (int i = 0; i < chats.Count; i++)
+                {
+                    Console.Write("Чат - " + chats[i] + " Пользователи - ");
+                    query = $"Select UserName From Chat Where ChatName=N'{chats[i]}'";
+                    com = new SqlCommand(query, sqlConnection);
+                    using (SqlDataReader reader = com.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Console.Write((reader["UserName"] != DBNull.Value ? reader["UserName"].ToString() : null)+", ");
+                        }
+                        Console.WriteLine("...");
+                    }
+                }
+            }
+        }
+        public void ChangeChat()
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                Console.WriteLine("UserName(login)");
+                string name = Console.ReadLine();
+                Console.WriteLine("Название чата");
+                string chat = Console.ReadLine();
+                sqlConnection.Open();
+                string query = $"Select * From Chat Where UserName=N'{name}' AND ChatName=N'{chat}'";                
+                SqlCommand com = new SqlCommand(query, sqlConnection);
+                if (Convert.ToInt32(com.ExecuteScalar()) >= 1)
+                {
+                    query = $"Delete From Chat Where ChatName='{chat}' And UserName='{name}'";
+                    com = new SqlCommand(query, sqlConnection);
+                    com.ExecuteNonQuery();
+                    Console.WriteLine($"Пользователь {name} удалён из чата {chat}");
+                }
+                else
+                {
+                    query = $"INSERT INTO Chat (UserName,ChatName) VALUES (N'{name}',N'{chat}')";
+                    com = new SqlCommand(query, sqlConnection);
+                    com.ExecuteNonQuery();
+                    Console.WriteLine($"Пользователь {name} добавлен в чат {chat}");
+                }
 
+            }
+        }
+        public string allInfo(string Username)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                string message = "\t4";
+                sqlConnection.Open();
+                string query = $"Select * From Accounts Where AccountName =N'{Username}'";
+                SqlCommand com = new SqlCommand(query, sqlConnection);
+                if (Convert.ToInt32(com.ExecuteScalar()) >= 1)
+                {
+                    message = "\t2";
+                    using (SqlDataReader reader = com.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            message += (reader["FirstName"] != DBNull.Value ? reader["FirstName"].ToString() : null) + "\n";
+                            message += (reader["SecondName"] != DBNull.Value ? reader["SecondName"].ToString() : null) + "\n";
+                            message += (reader["ThirdName"] != DBNull.Value ? reader["ThirdName"].ToString() : null) + "\n";
+                            message += (reader["Post"] != DBNull.Value ? reader["Post"].ToString() : null);
+                        }
+                    }
+                    return message;
+                }
+                else { return message; }
+            }
+        }
     }
 }

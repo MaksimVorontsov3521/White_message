@@ -44,6 +44,14 @@ namespace White_server
                     case "3":
                         dataBase.allUsers();
                         break;
+                    case "4":
+                        dataBase.Allchats();
+                        break;
+                    case "5":
+                        dataBase.ChangeChat();
+                        break;
+                    case "6":                       
+                        break;
                     default:
                         Console.WriteLine("Неверная команда");
                         break;
@@ -56,7 +64,9 @@ namespace White_server
             Console.WriteLine("0 - очистить консоль\n" +
                 "1 - добавить пользователя\n" +
                 "2 - удалить пользователя\n" +
-                "3 - все пользователи");
+                "3 - все пользователи\n" +
+                "4 - Просмотр чатов\n" +
+                "5 - Изменить чаты\n");
         }
     }
 }

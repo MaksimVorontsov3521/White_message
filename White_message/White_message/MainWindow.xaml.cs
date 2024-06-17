@@ -108,28 +108,23 @@ namespace White_message
                                 OnLine.Items.Add(avalibalChats[i]);
                                 }
                                 break;
+                            // Аккаунты
                             case '2':
-                                // пусто
-                                break;
-                            // регистрация и аккаунты
+                                message = message.Substring(2);
+                                string[] infoparts = message.Split('\n');
+                                infoUser(infoparts);
+                                break;                           
                             case '3':
-                                Chat.Text += "Неверное имя или пароль\n";
-                                SettingsMessage.Content = "Неверное имя или пароль";
                                 regtangle.Visibility = Visibility.Visible;
                                 break;
                             case '4':
-                                Chat.Text += $"Создан новый аккаунт {Name.Text}\n";
-                                SettingsMessage.Content = $"Создан новый аккаунт {Name.Text}";
-                                regtangle.Visibility = Visibility.Visible;
+                                // ошибка с info
+                                Info.Visibility = Visibility.Hidden;
                                 break;
                             case '5':
-                                Chat.Text += "Такой login уже существует\n";
-                                SettingsMessage.Content = "Такой login уже существует";
-                                regtangle.Visibility = Visibility.Visible;
+                                // пусто
                                 break;
                             case '6':
-                                //Chat.Text += "Этот пользователь уже в сети\n";
-                                SettingsMessage.Content = "Этот пользователь уже в сети";
                                 regtangle.Visibility = Visibility.Visible;
                                 break;
                             // Получение прошлых сообщений
@@ -446,5 +441,23 @@ namespace White_message
             Chat.Text += "";
         }
 
+        private void OnLine_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Info.Visibility = Visibility.Visible;
+            InfoLogin.Content = OnLine.SelectedItem;
+            clientSocket.Send(Keys.Encrypt("\tB"+ OnLine.SelectedItem));
+        }
+        private void infoUser(string[] parts)
+        {
+            FirstName.Content = parts[0];
+            SecondName.Content = parts[1];
+            ThirdName.Content = parts[2];
+            Post.Content = parts[3];
+        }
+
+        private void BackTo_Click(object sender, RoutedEventArgs e)
+        {
+            Info.Visibility = Visibility.Hidden;
+        }
     }
 }

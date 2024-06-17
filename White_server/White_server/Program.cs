@@ -75,7 +75,13 @@ namespace White_server
                     if (message.StartsWith("\t") && message[1] == 'A')
                     {
                         previous(client,message.Substring(2));
-
+                        continue;
+                    }
+                    if (message.StartsWith("\t") && message[1] == 'B')
+                    {
+                        message = message.Substring(2);
+                        message=dataBase.allInfo(message);
+                        client.Socket.Send(client.Keys.Encrypt(message));
                         continue;
                     }
 
@@ -308,5 +314,6 @@ namespace White_server
                 Clients_list[i].Socket.Send(Clients_list[i].Keys.Encrypt(message));
             }
         }
+
     }
 }
