@@ -33,7 +33,6 @@
             ls = new ToolStripMenuItem();
             tabControl1 = new TabControl();
             groupchat = new TabPage();
-            filebutton = new Button();
             yournick = new Label();
             IsYouOnline = new Label();
             reconnect = new Button();
@@ -85,7 +84,6 @@
             // 
             // groupchat
             // 
-            groupchat.Controls.Add(filebutton);
             groupchat.Controls.Add(yournick);
             groupchat.Controls.Add(IsYouOnline);
             groupchat.Controls.Add(reconnect);
@@ -102,16 +100,6 @@
             groupchat.TabIndex = 0;
             groupchat.Text = "Групповой чат";
             groupchat.UseVisualStyleBackColor = true;
-            // 
-            // filebutton
-            // 
-            filebutton.Location = new Point(851, 450);
-            filebutton.Name = "filebutton";
-            filebutton.Size = new Size(100, 43);
-            filebutton.TabIndex = 21;
-            filebutton.Text = "Отправить файл";
-            filebutton.UseVisualStyleBackColor = true;
-            filebutton.Click += filebutton_Click;
             // 
             // yournick
             // 
@@ -334,7 +322,6 @@
         private Label yournickpers;
         private Label IsYouOnlinePers;
         private Label contact;
-        private Button filebutton;
     }
 }
 

@@ -22,7 +22,6 @@ class Server
     static List<ClientInfo> Clients = new List<ClientInfo>();
     public readonly MessengerClient messengerclient;
 
-
     static void Main(string[] args)//начало 
     {
         TcpListener serverSocket = new TcpListener(IPAddress.Any, 6666);
@@ -177,11 +176,8 @@ class Server
     static string readmessage(StreamReader reader, Keys keys)
     {
         string encryptedMessage = reader.ReadLine();
-        Console.WriteLine("Клиент написал (зашифровано): " + encryptedMessage + "\n");
-
         byte[] encryptedBytes = Convert.FromBase64String(encryptedMessage);
         string decryptedMessage = keys.Decrypt(encryptedBytes);
-
         Console.WriteLine("Клиент написал (расшифровано): " + decryptedMessage + "\n");
         return decryptedMessage;
     }
@@ -211,7 +207,7 @@ class Server
             else encryptedMessage = keys.Encrypt(c.usernick + ": " + message);
             string base64Message = Convert.ToBase64String(encryptedMessage);
             client.Writer.WriteLine(base64Message);
-            Console.WriteLine("Клиенту отправлено с ником - " + client.usernick+" отправлено: "+base64Message);
+            Console.WriteLine("Клиенту с ником - " + client.usernick+" отправлено: "+base64Message);
         }
     }
     static void refreshOnline(Keys keys)
@@ -222,7 +218,6 @@ class Server
             byte[] encryptedMessage = keys.Encrypt("RefreshOnline");
             string base64Message = Convert.ToBase64String(encryptedMessage);
             client.Writer.WriteLine(base64Message);
-            Console.WriteLine(base64Message);
         }
     }
     static void disconnect(StreamWriter writer, StreamReader reader, TcpClient clientSocket, ClientInfo client, NetworkStream stream, Keys keys)

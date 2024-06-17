@@ -3,24 +3,16 @@
   "WorkspaceRootPath": "P:\\VS\\messenger\\webapi\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4B132ED0-2657-4704-838E-B61CE766E9D1}|webapi\\webapi.csproj|p:\\vs\\messenger\\webapi\\webapi\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4B132ED0-2657-4704-838E-B61CE766E9D1}|webapi\\webapi.csproj|solutionrelative:webapi\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4B132ED0-2657-4704-838E-B61CE766E9D1}|webapi\\webapi.csproj|p:\\vs\\messenger\\webapi\\webapi\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B132ED0-2657-4704-838E-B61CE766E9D1}|webapi\\webapi.csproj|solutionrelative:webapi\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4B132ED0-2657-4704-838E-B61CE766E9D1}|webapi\\webapi.csproj|p:\\vs\\messenger\\webapi\\webapi\\controllers\\messagecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4B132ED0-2657-4704-838E-B61CE766E9D1}|webapi\\webapi.csproj|solutionrelative:webapi\\controllers\\messagecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4B132ED0-2657-4704-838E-B61CE766E9D1}|webapi\\webapi.csproj|p:\\vs\\messenger\\webapi\\webapi\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4B132ED0-2657-4704-838E-B61CE766E9D1}|webapi\\webapi.csproj|solutionrelative:webapi\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4B132ED0-2657-4704-838E-B61CE766E9D1}|webapi\\webapi.csproj|p:\\vs\\messenger\\webapi\\webapi\\controllers\\filescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4B132ED0-2657-4704-838E-B61CE766E9D1}|webapi\\webapi.csproj|solutionrelative:webapi\\controllers\\filescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4B132ED0-2657-4704-838E-B61CE766E9D1}|webapi\\webapi.csproj|p:\\vs\\messenger\\webapi\\webapi\\migrations\\20240613164753_addfiles1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4B132ED0-2657-4704-838E-B61CE766E9D1}|webapi\\webapi.csproj|solutionrelative:webapi\\migrations\\20240613164753_addfiles1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4B132ED0-2657-4704-838E-B61CE766E9D1}|webapi\\webapi.csproj|p:\\vs\\messenger\\webapi\\webapi\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B132ED0-2657-4704-838E-B61CE766E9D1}|webapi\\webapi.csproj|solutionrelative:webapi\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4B132ED0-2657-4704-838E-B61CE766E9D1}|webapi\\webapi.csproj|p:\\vs\\messenger\\webapi\\webapi\\models\\message.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -29,6 +21,14 @@
     {
       "AbsoluteMoniker": "D:0:0:{4B132ED0-2657-4704-838E-B61CE766E9D1}|webapi\\webapi.csproj|p:\\vs\\messenger\\webapi\\webapi\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4B132ED0-2657-4704-838E-B61CE766E9D1}|webapi\\webapi.csproj|solutionrelative:webapi\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B132ED0-2657-4704-838E-B61CE766E9D1}|webapi\\webapi.csproj|p:\\vs\\messenger\\webapi\\webapi\\controllers\\filescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B132ED0-2657-4704-838E-B61CE766E9D1}|webapi\\webapi.csproj|solutionrelative:webapi\\controllers\\filescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B132ED0-2657-4704-838E-B61CE766E9D1}|webapi\\webapi.csproj|p:\\vs\\messenger\\webapi\\webapi\\migrations\\20240613164753_addfiles1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B132ED0-2657-4704-838E-B61CE766E9D1}|webapi\\webapi.csproj|solutionrelative:webapi\\migrations\\20240613164753_addfiles1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,11 +38,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "20240613164753_addfiles1.cs",
               "DocumentMoniker": "P:\\VS\\messenger\\webapi\\webapi\\Migrations\\20240613164753_addfiles1.cs",
               "RelativeDocumentMoniker": "webapi\\Migrations\\20240613164753_addfiles1.cs",
@@ -54,7 +54,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "FilesController.cs",
               "DocumentMoniker": "P:\\VS\\messenger\\webapi\\webapi\\Controllers\\FilesController.cs",
               "RelativeDocumentMoniker": "webapi\\Controllers\\FilesController.cs",
@@ -66,25 +66,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "P:\\VS\\messenger\\webapi\\webapi\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "webapi\\Data\\ApplicationDbContext.cs",
               "ToolTip": "P:\\VS\\messenger\\webapi\\webapi\\Data\\ApplicationDbContext.cs",
               "RelativeToolTip": "webapi\\Data\\ApplicationDbContext.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-12T05:42:38.716Z"
+              "WhenOpened": "2024-06-12T05:42:38.716Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "UserController.cs",
               "DocumentMoniker": "P:\\VS\\messenger\\webapi\\webapi\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "webapi\\Controllers\\UserController.cs",
               "ToolTip": "P:\\VS\\messenger\\webapi\\webapi\\Controllers\\UserController.cs",
               "RelativeToolTip": "webapi\\Controllers\\UserController.cs",
-              "ViewState": "AQIAAM0AAAAAAAAAAAAAAOEAAABDAAAA",
+              "ViewState": "AQIAAOAAAAAAAAAAAAAgwPcAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-06T12:45:29.08Z",
               "EditorCaption": ""
@@ -97,33 +98,36 @@
               "RelativeDocumentMoniker": "webapi\\Controllers\\MessageController.cs",
               "ToolTip": "P:\\VS\\messenger\\webapi\\webapi\\Controllers\\MessageController.cs",
               "RelativeToolTip": "webapi\\Controllers\\MessageController.cs",
-              "ViewState": "AQIAAFoAAAAAAAAAAAAAAHIAAABFAAAA",
+              "ViewState": "AQIAAIQAAAAAAAAAAAAAAJ8AAABlAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-31T17:50:31.945Z"
+              "WhenOpened": "2024-05-31T17:50:31.945Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 4,
               "Title": "User.cs",
               "DocumentMoniker": "P:\\VS\\messenger\\webapi\\webapi\\Models\\User.cs",
               "RelativeDocumentMoniker": "webapi\\Models\\User.cs",
               "ToolTip": "P:\\VS\\messenger\\webapi\\webapi\\Models\\User.cs",
               "RelativeToolTip": "webapi\\Models\\User.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAADAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-01T14:27:14.339Z"
+              "WhenOpened": "2024-06-01T14:27:14.339Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 3,
               "Title": "Message.cs",
               "DocumentMoniker": "P:\\VS\\messenger\\webapi\\webapi\\Models\\Message.cs",
               "RelativeDocumentMoniker": "webapi\\Models\\Message.cs",
               "ToolTip": "P:\\VS\\messenger\\webapi\\webapi\\Models\\Message.cs",
               "RelativeToolTip": "webapi\\Models\\Message.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAwAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAwAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-01T14:22:49.944Z"
+              "WhenOpened": "2024-06-01T14:22:49.944Z",
+              "EditorCaption": ""
             }
           ]
         }

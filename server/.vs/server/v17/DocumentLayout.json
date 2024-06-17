@@ -39,8 +39,7 @@
               "ViewState": "AQIAACMAAAAAAAAAAAAAAC0AAAAlAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-04T14:18:11.971Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -52,8 +51,7 @@
               "RelativeToolTip": "server\\Keys.cs",
               "ViewState": "AQIAAAQAAAAAAAAAAAAAAAwAAAAuAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-14T02:05:41.353Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-14T02:05:41.353Z"
             },
             {
               "$type": "Document",
@@ -63,7 +61,7 @@
               "RelativeDocumentMoniker": "server\\Program.cs",
               "ToolTip": "C:\\VS\\server\\server\\Program.cs",
               "RelativeToolTip": "server\\Program.cs",
-              "ViewState": "AQIAAKMAAAAAAAAAAAAAALUAAAAIAAAA",
+              "ViewState": "AQIAAMkAAAAAAAAAAAAowPEAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-28T21:08:00.407Z",
               "EditorCaption": ""
@@ -78,8 +76,7 @@
               "RelativeToolTip": "server\\ClientInfo.cs",
               "ViewState": "AQIAAAkAAAAAAAAAAAA6wB0AAAAdAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-25T09:16:59.71Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-25T09:16:59.71Z"
             }
           ]
         }

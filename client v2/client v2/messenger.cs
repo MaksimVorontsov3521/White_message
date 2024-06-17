@@ -105,6 +105,7 @@ namespace client_v2
                     if (encryptedMessage != null)
                     {
                         string message = keys.Decrypt(Convert.FromBase64String(encryptedMessage));
+                        MessageBox.Show("message:" +  message);
                         if (message == "RefreshOnline")
                         {
                             ClearOnline();
@@ -162,6 +163,10 @@ namespace client_v2
             users = await messengerclient.GetAllUsersOnline();
             contacts = await messengerclient.GetContactsStatus(myId);
             UpdateListBox();
+            online.Invoke((MethodInvoker)delegate
+            {
+                online.Refresh();
+            });           
         }
         private void UpdateListBox()
         {
@@ -450,20 +455,6 @@ namespace client_v2
             closeform = true;
             stopreading = false;
             main();
-        }
-        private async void filebutton_Click(object sender, EventArgs e)
-        {
-            int messid = await messengerclient.SendGroupMessage("", myId);
-            using (var openFileDialog = new OpenFileDialog())
-            {
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    var filePath = openFileDialog.FileName;
-                    // Предположим, что у вас есть способ получить текущий messageId
-                    int messageId = await messengerclient.SendGroupMessage("file", myId);
-                    await messengerclient.UploadFileAsync(filePath, messageId);
-                }
-            }
         }
         private void keyExchange()
         {

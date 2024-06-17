@@ -42,8 +42,7 @@
               "RelativeToolTip": "adminAPI\\Program.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-15T10:36:08.375Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-15T10:36:08.375Z"
             },
             {
               "$type": "Document",
@@ -55,20 +54,19 @@
               "RelativeToolTip": "adminAPI\\adminwindow.Designer.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-15T10:36:06.402Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-15T10:36:06.402Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "adminwindow.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435]",
+              "Title": "adminwindow.cs [Design]",
               "DocumentMoniker": "P:\\VS\\messenger\\adminAPI\\adminAPI\\adminwindow.cs",
               "RelativeDocumentMoniker": "adminAPI\\adminwindow.cs",
-              "ToolTip": "P:\\VS\\messenger\\adminAPI\\adminAPI\\adminwindow.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435]",
-              "RelativeToolTip": "adminAPI\\adminwindow.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435]",
+              "ToolTip": "P:\\VS\\messenger\\adminAPI\\adminAPI\\adminwindow.cs [Design]",
+              "RelativeToolTip": "adminAPI\\adminwindow.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-13T10:56:35.703Z",
-              "EditorCaption": " [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435]"
+              "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
@@ -93,8 +91,7 @@
               "RelativeToolTip": "adminAPI\\API.cs",
               "ViewState": "AQIAADYAAAAAAAAAAAAAAEsAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-13T10:50:52.703Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-13T10:50:52.703Z"
             }
           ]
         }
