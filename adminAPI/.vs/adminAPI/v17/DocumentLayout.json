@@ -1,26 +1,26 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "P:\\VS\\messenger\\adminAPI\\",
+  "WorkspaceRootPath": "X:\\program\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\White_message\\adminAPI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{AD3EC6FD-E8B6-467F-9A4D-69E3411D9B3C}|adminAPI\\adminAPI.csproj|p:\\vs\\messenger\\adminapi\\adminapi\\adminwindow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{AD3EC6FD-E8B6-467F-9A4D-69E3411D9B3C}|adminAPI\\adminAPI.csproj|X:\\program\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\White_message\\adminAPI\\adminapi\\adminwindow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{AD3EC6FD-E8B6-467F-9A4D-69E3411D9B3C}|adminAPI\\adminAPI.csproj|solutionrelative:adminapi\\adminwindow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD3EC6FD-E8B6-467F-9A4D-69E3411D9B3C}|adminAPI\\adminAPI.csproj|x:\\program\\\u043D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\\u043D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\white_message\\adminapi\\adminapi\\adminwindow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AD3EC6FD-E8B6-467F-9A4D-69E3411D9B3C}|adminAPI\\adminAPI.csproj|solutionrelative:adminapi\\adminwindow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AD3EC6FD-E8B6-467F-9A4D-69E3411D9B3C}|adminAPI\\adminAPI.csproj|p:\\vs\\messenger\\adminapi\\adminapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{AD3EC6FD-E8B6-467F-9A4D-69E3411D9B3C}|adminAPI\\adminAPI.csproj|x:\\program\\\u043D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\\u043D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\white_message\\adminapi\\adminapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AD3EC6FD-E8B6-467F-9A4D-69E3411D9B3C}|adminAPI\\adminAPI.csproj|solutionrelative:adminapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AD3EC6FD-E8B6-467F-9A4D-69E3411D9B3C}|adminAPI\\adminAPI.csproj|p:\\vs\\messenger\\adminapi\\adminapi\\adminwindow.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{AD3EC6FD-E8B6-467F-9A4D-69E3411D9B3C}|adminAPI\\adminAPI.csproj|x:\\program\\\u043D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\\u043D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\white_message\\adminapi\\adminapi\\adminwindow.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AD3EC6FD-E8B6-467F-9A4D-69E3411D9B3C}|adminAPI\\adminAPI.csproj|solutionrelative:adminapi\\adminwindow.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AD3EC6FD-E8B6-467F-9A4D-69E3411D9B3C}|adminAPI\\adminAPI.csproj|p:\\vs\\messenger\\adminapi\\adminapi\\api.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{AD3EC6FD-E8B6-467F-9A4D-69E3411D9B3C}|adminAPI\\adminAPI.csproj|x:\\program\\\u043D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\\u043D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\white_message\\adminapi\\adminapi\\api.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AD3EC6FD-E8B6-467F-9A4D-69E3411D9B3C}|adminAPI\\adminAPI.csproj|solutionrelative:adminapi\\api.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{AD3EC6FD-E8B6-467F-9A4D-69E3411D9B3C}|adminAPI\\adminAPI.csproj|P:\\VS\\messenger\\adminAPI\\adminapi\\adminwindow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{AD3EC6FD-E8B6-467F-9A4D-69E3411D9B3C}|adminAPI\\adminAPI.csproj|solutionrelative:adminapi\\adminwindow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,15 +30,15 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
-              "DocumentMoniker": "P:\\VS\\messenger\\adminAPI\\adminAPI\\Program.cs",
+              "DocumentMoniker": "X:\\program\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\White_message\\adminAPI\\adminAPI\\Program.cs",
               "RelativeDocumentMoniker": "adminAPI\\Program.cs",
-              "ToolTip": "P:\\VS\\messenger\\adminAPI\\adminAPI\\Program.cs",
+              "ToolTip": "X:\\program\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\White_message\\adminAPI\\adminAPI\\Program.cs",
               "RelativeToolTip": "adminAPI\\Program.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -46,48 +46,49 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "adminwindow.Designer.cs",
-              "DocumentMoniker": "P:\\VS\\messenger\\adminAPI\\adminAPI\\adminwindow.Designer.cs",
+              "DocumentMoniker": "X:\\program\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\White_message\\adminAPI\\adminAPI\\adminwindow.Designer.cs",
               "RelativeDocumentMoniker": "adminAPI\\adminwindow.Designer.cs",
-              "ToolTip": "P:\\VS\\messenger\\adminAPI\\adminAPI\\adminwindow.Designer.cs",
+              "ToolTip": "X:\\program\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\White_message\\adminAPI\\adminAPI\\adminwindow.Designer.cs",
               "RelativeToolTip": "adminAPI\\adminwindow.Designer.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-15T10:36:06.402Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "adminwindow.cs [Design]",
-              "DocumentMoniker": "P:\\VS\\messenger\\adminAPI\\adminAPI\\adminwindow.cs",
-              "RelativeDocumentMoniker": "adminAPI\\adminwindow.cs",
-              "ToolTip": "P:\\VS\\messenger\\adminAPI\\adminAPI\\adminwindow.cs [Design]",
-              "RelativeToolTip": "adminAPI\\adminwindow.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-13T10:56:35.703Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2024-06-15T10:36:06.402Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "adminwindow.cs",
-              "DocumentMoniker": "P:\\VS\\messenger\\adminAPI\\adminAPI\\adminwindow.cs",
+              "Title": "adminwindow.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435]",
+              "DocumentMoniker": "X:\\program\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\White_message\\adminAPI\\adminAPI\\adminwindow.cs",
               "RelativeDocumentMoniker": "adminAPI\\adminwindow.cs",
-              "ToolTip": "P:\\VS\\messenger\\adminAPI\\adminAPI\\adminwindow.cs",
+              "ToolTip": "X:\\program\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\White_message\\adminAPI\\adminAPI\\adminwindow.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435]",
+              "RelativeToolTip": "adminAPI\\adminwindow.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-13T10:56:35.703Z",
+              "EditorCaption": " [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "adminwindow.cs",
+              "DocumentMoniker": "X:\\program\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\White_message\\adminAPI\\adminAPI\\adminwindow.cs",
+              "RelativeDocumentMoniker": "adminAPI\\adminwindow.cs",
+              "ToolTip": "X:\\program\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\White_message\\adminAPI\\adminAPI\\adminwindow.cs",
               "RelativeToolTip": "adminAPI\\adminwindow.cs",
-              "ViewState": "AQIAAIcAAAAAAAAAAAAAAJcAAABMAAAA",
+              "ViewState": "AQIAAKQAAAAAAAAAAAD4v7UAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-13T10:54:54.329Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "API.cs",
-              "DocumentMoniker": "P:\\VS\\messenger\\adminAPI\\adminAPI\\API.cs",
+              "DocumentMoniker": "X:\\program\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\White_message\\adminAPI\\adminAPI\\API.cs",
               "RelativeDocumentMoniker": "adminAPI\\API.cs",
-              "ToolTip": "P:\\VS\\messenger\\adminAPI\\adminAPI\\API.cs",
+              "ToolTip": "X:\\program\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\White_message\\adminAPI\\adminAPI\\API.cs",
               "RelativeToolTip": "adminAPI\\API.cs",
               "ViewState": "AQIAADYAAAAAAAAAAAAAAEsAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",

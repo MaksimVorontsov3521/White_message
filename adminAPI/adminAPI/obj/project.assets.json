@@ -8,19 +8,19 @@
     "net8.0-windows7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\gloom\\.nuget\\packages\\": {}
+    "C:\\Users\\Maks\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "P:\\VS\\messenger\\adminAPI\\adminAPI\\adminAPI.csproj",
+      "projectUniqueName": "X:\\program\\Новая папка (2)\\Новая папка (2)\\White_message\\adminAPI\\adminAPI\\adminAPI.csproj",
       "projectName": "adminAPI",
-      "projectPath": "P:\\VS\\messenger\\adminAPI\\adminAPI\\adminAPI.csproj",
-      "packagesPath": "C:\\Users\\gloom\\.nuget\\packages\\",
-      "outputPath": "P:\\VS\\messenger\\adminAPI\\adminAPI\\obj\\",
+      "projectPath": "X:\\program\\Новая папка (2)\\Новая папка (2)\\White_message\\adminAPI\\adminAPI\\adminAPI.csproj",
+      "packagesPath": "C:\\Users\\Maks\\.nuget\\packages\\",
+      "outputPath": "X:\\program\\Новая папка (2)\\Новая папка (2)\\White_message\\adminAPI\\adminAPI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\gloom\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Maks\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -70,7 +70,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.301/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
