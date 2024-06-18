@@ -30,6 +30,8 @@ namespace client_v2
         public messenger()
         {
             InitializeComponent();
+
+
             messengerclient = new MessengerClient();
             clientmenu.Opening += ContextMenuStrip_Opening;
             online.SelectedIndexChanged += new EventHandler(online_SelectedIndexChanged);
@@ -41,18 +43,18 @@ namespace client_v2
             yourcontacts.SelectionMode = SelectionMode.One;
             yourcontacts.DrawItem += new DrawItemEventHandler(yourcontacts_DrawItem);
 
-            buttonpress();
+            //buttonpress();
             main();
         }
         private void messenger_Shown(object sender, EventArgs e)
         {
             this.Hide();
         }
-        private void buttonpress()
-        {
-            if (tabControl1.SelectedTab == groupchat) this.AcceptButton = this.send;
-            else if (tabControl1.SelectedTab == personmessages) this.AcceptButton = this.personalsend;
-        }
+        //private void buttonpress()
+        //{
+        //    if (tabControl1.SelectedTab == groupchat) this.AcceptButton = this.send;
+        //    else if (tabControl1.SelectedTab == personmessages) this.AcceptButton = this.personalsend;
+        //}
         private void online_SelectedIndexChanged(object sender, EventArgs e)
         {
             online.Refresh();
@@ -105,7 +107,6 @@ namespace client_v2
                     if (encryptedMessage != null)
                     {
                         string message = keys.Decrypt(Convert.FromBase64String(encryptedMessage));
-                        MessageBox.Show("message:" +  message);
                         if (message == "RefreshOnline")
                         {
                             ClearOnline();
@@ -166,7 +167,7 @@ namespace client_v2
             online.Invoke((MethodInvoker)delegate
             {
                 online.Refresh();
-            });           
+            });
         }
         private void UpdateListBox()
         {
@@ -232,13 +233,7 @@ namespace client_v2
         }
         private void send_Click(object sender, EventArgs e)
         {
-            if (writer != null)
-            {
-                if (mess.Text == null) mess.Text = "";
-                sendmessage(mess.Text);
-                AddMessegeoToApi(mess.Text);
-                mess.Clear();
-            }
+
         }
         private void log_in_account_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -411,7 +406,7 @@ namespace client_v2
         }
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            buttonpress();
+            //buttonpress();
             if (tabControl1.SelectedTab == personmessages && yourcontacts.Items.Count > 0)
             {
                 update_contacts();
@@ -462,7 +457,7 @@ namespace client_v2
             int receivedBytes = stream.Read(buffer, 0, buffer.Length);
             if (receivedBytes > 0)
             {
-                
+
                 keys.NPublicKey = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
             }
             else
@@ -471,6 +466,16 @@ namespace client_v2
             }
             buffer = Encoding.UTF8.GetBytes(keys.myPublicKey);
             stream.Write(buffer, 0, buffer.Length);
+        }
+        private void send_group_Click(object sender, EventArgs e)
+        {
+            if (writer != null)
+            {
+                if (mess.Text == null) mess.Text = "";
+                sendmessage(mess.Text);
+                AddMessegeoToApi(mess.Text);
+                mess.Clear();
+            }
         }
     }
 }

@@ -33,10 +33,10 @@
             ls = new ToolStripMenuItem();
             tabControl1 = new TabControl();
             groupchat = new TabPage();
+            send_group = new RoundedButton();
             yournick = new Label();
             IsYouOnline = new Label();
-            reconnect = new Button();
-            send = new Button();
+            reconnect = new RoundedButton();
             mess = new TextBox();
             online = new ListBox();
             label2 = new Label();
@@ -45,7 +45,7 @@
             contact = new Label();
             yournickpers = new Label();
             IsYouOnlinePers = new Label();
-            personalsend = new Button();
+            personalsend = new RoundedButton();
             personalmess = new TextBox();
             personalchat = new TextBox();
             label1 = new Label();
@@ -84,10 +84,10 @@
             // 
             // groupchat
             // 
+            groupchat.Controls.Add(send_group);
             groupchat.Controls.Add(yournick);
             groupchat.Controls.Add(IsYouOnline);
             groupchat.Controls.Add(reconnect);
-            groupchat.Controls.Add(send);
             groupchat.Controls.Add(mess);
             groupchat.Controls.Add(online);
             groupchat.Controls.Add(label2);
@@ -100,6 +100,23 @@
             groupchat.TabIndex = 0;
             groupchat.Text = "Групповой чат";
             groupchat.UseVisualStyleBackColor = true;
+            // 
+            // send_group
+            // 
+            send_group.BackColor = Color.Transparent;
+            send_group.BorderColor = Color.Black;
+            send_group.BorderThickness = 1;
+            send_group.CornerRadius = 20;
+            send_group.FlatAppearance.BorderSize = 0;
+            send_group.FlatStyle = FlatStyle.Flat;
+            send_group.HoverBackColor = Color.LightGray;
+            send_group.Location = new Point(750, 447);
+            send_group.Name = "send_group";
+            send_group.Size = new Size(107, 46);
+            send_group.TabIndex = 23;
+            send_group.Text = "Отправить";
+            send_group.UseVisualStyleBackColor = false;
+            send_group.Click += send_group_Click;
             // 
             // yournick
             // 
@@ -124,25 +141,20 @@
             // 
             // reconnect
             // 
-            reconnect.Location = new Point(7, 450);
+            reconnect.BackColor = Color.Transparent;
+            reconnect.BorderColor = Color.Black;
+            reconnect.BorderThickness = 2;
+            reconnect.CornerRadius = 20;
+            reconnect.FlatStyle = FlatStyle.Flat;
+            reconnect.HoverBackColor = Color.LightGray;
+            reconnect.Location = new Point(9, 437);
             reconnect.Margin = new Padding(4, 3, 4, 3);
             reconnect.Name = "reconnect";
-            reconnect.Size = new Size(102, 44);
+            reconnect.Size = new Size(154, 63);
             reconnect.TabIndex = 18;
             reconnect.Text = "Войти в другой аккаунт";
-            reconnect.UseVisualStyleBackColor = true;
+            reconnect.UseVisualStyleBackColor = false;
             reconnect.Click += reconnect_Click;
-            // 
-            // send
-            // 
-            send.Location = new Point(750, 450);
-            send.Margin = new Padding(4, 3, 4, 3);
-            send.Name = "send";
-            send.Size = new Size(94, 44);
-            send.TabIndex = 17;
-            send.Text = "Отправить";
-            send.UseVisualStyleBackColor = true;
-            send.Click += send_Click;
             // 
             // mess
             // 
@@ -232,13 +244,19 @@
             // 
             // personalsend
             // 
+            personalsend.BackColor = Color.Transparent;
+            personalsend.BorderColor = Color.Black;
+            personalsend.BorderThickness = 2;
+            personalsend.CornerRadius = 20;
+            personalsend.FlatStyle = FlatStyle.Flat;
+            personalsend.HoverBackColor = Color.LightGray;
             personalsend.Location = new Point(670, 437);
             personalsend.Margin = new Padding(4, 3, 4, 3);
             personalsend.Name = "personalsend";
-            personalsend.Size = new Size(94, 44);
+            personalsend.Size = new Size(115, 54);
             personalsend.TabIndex = 20;
             personalsend.Text = "Отправить";
-            personalsend.UseVisualStyleBackColor = true;
+            personalsend.UseVisualStyleBackColor = false;
             personalsend.Click += personalsend_Click;
             // 
             // personalmess
@@ -308,8 +326,6 @@
         private System.Windows.Forms.TabPage personmessages;
         private System.Windows.Forms.Label yournick;
         private System.Windows.Forms.Label IsYouOnline;
-        private System.Windows.Forms.Button reconnect;
-        private System.Windows.Forms.Button send;
         private System.Windows.Forms.TextBox mess;
         private System.Windows.Forms.ListBox online;
         private System.Windows.Forms.Label label2;
@@ -317,11 +333,13 @@
         private System.Windows.Forms.TextBox personalchat;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListBox yourcontacts;
-        private System.Windows.Forms.Button personalsend;
         private System.Windows.Forms.TextBox personalmess;
         private Label yournickpers;
         private Label IsYouOnlinePers;
         private Label contact;
+        private RoundedButton reconnect;
+        private RoundedButton personalsend;
+        private RoundedButton send_group;
     }
 }
 

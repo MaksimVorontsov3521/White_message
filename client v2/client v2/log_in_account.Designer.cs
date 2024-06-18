@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            log_in_button = new Button();
+            log_in_button = new RoundedButton();
             enter_password = new TextBox();
             enter_login = new TextBox();
             label5 = new Label();
@@ -43,7 +43,7 @@
             log_in_button.Size = new Size(155, 51);
             log_in_button.TabIndex = 18;
             log_in_button.Text = "Войти";
-            log_in_button.UseVisualStyleBackColor = true;
+            log_in_button.UseVisualStyleBackColor = false;
             log_in_button.Click += log_in_button_Click;
             // 
             // enter_password
@@ -101,7 +101,7 @@
 
         #endregion
 
-        private Button log_in_button;
+        private RoundedButton log_in_button;
         private TextBox enter_password;
         private TextBox enter_login;
         private Label label5;

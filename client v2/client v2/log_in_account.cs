@@ -21,6 +21,8 @@ namespace client_v2
 
             this.mess = messangerForm;
             messengerclient = new MessengerClient();
+            
+
         }
         private async void log_in_button_Click(object sender, EventArgs e)
         {
