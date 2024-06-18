@@ -14,6 +14,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = adminAPI
-build_property.ProjectDir = X:\program\Новая папка (2)\Новая папка (2)\White_message\adminAPI\adminAPI\
+build_property.ProjectDir = C:\Users\gloom\OneDrive\Рабочий стол\adminAPI\adminAPI\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

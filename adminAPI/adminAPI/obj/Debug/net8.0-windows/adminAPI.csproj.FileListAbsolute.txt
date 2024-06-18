@@ -14,3 +14,20 @@ P:\VS\messenger\adminAPI\adminAPI\obj\Debug\net8.0-windows\refint\adminAPI.dll
 P:\VS\messenger\adminAPI\adminAPI\obj\Debug\net8.0-windows\adminAPI.pdb
 P:\VS\messenger\adminAPI\adminAPI\obj\Debug\net8.0-windows\adminAPI.genruntimeconfig.cache
 P:\VS\messenger\adminAPI\adminAPI\obj\Debug\net8.0-windows\ref\adminAPI.dll
+C:\Users\gloom\OneDrive\Рабочий стол\adminAPI\adminAPI\bin\Debug\net8.0-windows\adminAPI.exe
+C:\Users\gloom\OneDrive\Рабочий стол\adminAPI\adminAPI\bin\Debug\net8.0-windows\adminAPI.deps.json
+C:\Users\gloom\OneDrive\Рабочий стол\adminAPI\adminAPI\bin\Debug\net8.0-windows\adminAPI.runtimeconfig.json
+C:\Users\gloom\OneDrive\Рабочий стол\adminAPI\adminAPI\bin\Debug\net8.0-windows\adminAPI.dll
+C:\Users\gloom\OneDrive\Рабочий стол\adminAPI\adminAPI\bin\Debug\net8.0-windows\adminAPI.pdb
+C:\Users\gloom\OneDrive\Рабочий стол\adminAPI\adminAPI\obj\Debug\net8.0-windows\adminAPI.adminwindow.resources
+C:\Users\gloom\OneDrive\Рабочий стол\adminAPI\adminAPI\obj\Debug\net8.0-windows\adminAPI.Properties.Resources.resources
+C:\Users\gloom\OneDrive\Рабочий стол\adminAPI\adminAPI\obj\Debug\net8.0-windows\adminAPI.csproj.GenerateResource.cache
+C:\Users\gloom\OneDrive\Рабочий стол\adminAPI\adminAPI\obj\Debug\net8.0-windows\adminAPI.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\gloom\OneDrive\Рабочий стол\adminAPI\adminAPI\obj\Debug\net8.0-windows\adminAPI.AssemblyInfoInputs.cache
+C:\Users\gloom\OneDrive\Рабочий стол\adminAPI\adminAPI\obj\Debug\net8.0-windows\adminAPI.AssemblyInfo.cs
+C:\Users\gloom\OneDrive\Рабочий стол\adminAPI\adminAPI\obj\Debug\net8.0-windows\adminAPI.csproj.CoreCompileInputs.cache
+C:\Users\gloom\OneDrive\Рабочий стол\adminAPI\adminAPI\obj\Debug\net8.0-windows\adminAPI.dll
+C:\Users\gloom\OneDrive\Рабочий стол\adminAPI\adminAPI\obj\Debug\net8.0-windows\refint\adminAPI.dll
+C:\Users\gloom\OneDrive\Рабочий стол\adminAPI\adminAPI\obj\Debug\net8.0-windows\adminAPI.pdb
+C:\Users\gloom\OneDrive\Рабочий стол\adminAPI\adminAPI\obj\Debug\net8.0-windows\adminAPI.genruntimeconfig.cache
+C:\Users\gloom\OneDrive\Рабочий стол\adminAPI\adminAPI\obj\Debug\net8.0-windows\ref\adminAPI.dll

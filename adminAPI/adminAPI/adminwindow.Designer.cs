@@ -31,20 +31,20 @@
             tabControl1 = new TabControl();
             account = new TabPage();
             users_grid = new DataGridView();
-            reload_users = new Button();
-            addcontact = new Button();
+            reload_users = new RoundedButton();
+            addcontact = new RoundedButton();
             contactId = new TextBox();
             myId = new TextBox();
             label10 = new Label();
             label9 = new Label();
             label8 = new Label();
-            reset_autoincrement_users = new Button();
-            delete_all_users = new Button();
-            delete_acc_by_id = new Button();
+            reset_autoincrement_users = new RoundedButton();
+            delete_all_users = new RoundedButton();
+            delete_acc_by_id = new RoundedButton();
             accid = new TextBox();
             label7 = new Label();
             label6 = new Label();
-            add = new Button();
+            add = new RoundedButton();
             post = new TextBox();
             fio = new TextBox();
             password = new TextBox();
@@ -55,10 +55,10 @@
             label2 = new Label();
             label1 = new Label();
             messages = new TabPage();
-            reload_messages = new Button();
+            reload_messages = new RoundedButton();
             messages_grid = new DataGridView();
-            delete_all_messages = new Button();
-            reset_autoincrement_messages = new Button();
+            delete_all_messages = new RoundedButton();
+            reset_autoincrement_messages = new RoundedButton();
             tabControl1.SuspendLayout();
             account.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)users_grid).BeginInit();
@@ -125,6 +125,12 @@
             // 
             // reload_users
             // 
+            reload_users.BackColor = Color.Transparent;
+            reload_users.BorderColor = Color.Yellow;
+            reload_users.BorderThickness = 1;
+            reload_users.CornerRadius = 20;
+            reload_users.FlatStyle = FlatStyle.Flat;
+            reload_users.HoverBackColor = Color.LightCoral;
             reload_users.Location = new Point(1054, 437);
             reload_users.Name = "reload_users";
             reload_users.Size = new Size(202, 48);
@@ -135,12 +141,19 @@
             // 
             // addcontact
             // 
-            addcontact.Location = new Point(381, 173);
+            addcontact.BackColor = Color.Transparent;
+            addcontact.BorderColor = Color.Yellow;
+            addcontact.BorderThickness = 1;
+            addcontact.CornerRadius = 20;
+            addcontact.FlatAppearance.BorderSize = 0;
+            addcontact.FlatStyle = FlatStyle.Flat;
+            addcontact.HoverBackColor = Color.LightCoral;
+            addcontact.Location = new Point(377, 163);
             addcontact.Name = "addcontact";
-            addcontact.Size = new Size(121, 23);
+            addcontact.Size = new Size(135, 41);
             addcontact.TabIndex = 22;
             addcontact.Text = "Добавить контакт";
-            addcontact.UseVisualStyleBackColor = true;
+            addcontact.UseVisualStyleBackColor = false;
             addcontact.Click += addcontact_Click;
             // 
             // contactId
@@ -186,9 +199,15 @@
             // 
             // reset_autoincrement_users
             // 
-            reset_autoincrement_users.Location = new Point(508, 105);
+            reset_autoincrement_users.BackColor = Color.Transparent;
+            reset_autoincrement_users.BorderColor = Color.Yellow;
+            reset_autoincrement_users.BorderThickness = 1;
+            reset_autoincrement_users.CornerRadius = 20;
+            reset_autoincrement_users.FlatStyle = FlatStyle.Flat;
+            reset_autoincrement_users.HoverBackColor = Color.LightCoral;
+            reset_autoincrement_users.Location = new Point(508, 95);
             reset_autoincrement_users.Name = "reset_autoincrement_users";
-            reset_autoincrement_users.Size = new Size(160, 23);
+            reset_autoincrement_users.Size = new Size(158, 40);
             reset_autoincrement_users.TabIndex = 16;
             reset_autoincrement_users.Text = "Сбросить автоинкремент";
             reset_autoincrement_users.UseVisualStyleBackColor = true;
@@ -196,9 +215,15 @@
             // 
             // delete_all_users
             // 
-            delete_all_users.Location = new Point(327, 105);
+            delete_all_users.BackColor = Color.Transparent;
+            delete_all_users.BorderColor = Color.Yellow;
+            delete_all_users.BorderThickness = 1;
+            delete_all_users.CornerRadius = 20;
+            delete_all_users.FlatStyle = FlatStyle.Flat;
+            delete_all_users.HoverBackColor = Color.LightCoral;
+            delete_all_users.Location = new Point(327, 94);
             delete_all_users.Name = "delete_all_users";
-            delete_all_users.Size = new Size(175, 23);
+            delete_all_users.Size = new Size(175, 41);
             delete_all_users.TabIndex = 15;
             delete_all_users.Text = "Удалить всех пользователей";
             delete_all_users.UseVisualStyleBackColor = true;
@@ -206,9 +231,15 @@
             // 
             // delete_acc_by_id
             // 
-            delete_acc_by_id.Location = new Point(178, 104);
+            delete_acc_by_id.BackColor = Color.Transparent;
+            delete_acc_by_id.BorderColor = Color.Yellow;
+            delete_acc_by_id.BorderThickness = 1;
+            delete_acc_by_id.CornerRadius = 20;
+            delete_acc_by_id.FlatStyle = FlatStyle.Flat;
+            delete_acc_by_id.HoverBackColor = Color.LightCoral;
+            delete_acc_by_id.Location = new Point(178, 94);
             delete_acc_by_id.Name = "delete_acc_by_id";
-            delete_acc_by_id.Size = new Size(143, 24);
+            delete_acc_by_id.Size = new Size(143, 41);
             delete_acc_by_id.TabIndex = 13;
             delete_acc_by_id.Text = "Удалить пользователя";
             delete_acc_by_id.UseVisualStyleBackColor = true;
@@ -241,9 +272,15 @@
             // 
             // add
             // 
-            add.Location = new Point(439, 48);
+            add.BackColor = Color.Transparent;
+            add.BorderColor = Color.Black;
+            add.BorderThickness = 1;
+            add.CornerRadius = 20;
+            add.FlatStyle = FlatStyle.Flat;
+            add.HoverBackColor = Color.LightCoral;
+            add.Location = new Point(439, 44);
             add.Name = "add";
-            add.Size = new Size(147, 24);
+            add.Size = new Size(165, 37);
             add.TabIndex = 9;
             add.Text = "Добавить пользователя";
             add.UseVisualStyleBackColor = true;
@@ -340,6 +377,12 @@
             // 
             // reload_messages
             // 
+            reload_messages.BackColor = Color.Transparent;
+            reload_messages.BorderColor = Color.Black;
+            reload_messages.BorderThickness = 1;
+            reload_messages.CornerRadius = 20;
+            reload_messages.FlatStyle = FlatStyle.Flat;
+            reload_messages.HoverBackColor = Color.LightCoral;
             reload_messages.Location = new Point(907, 432);
             reload_messages.Name = "reload_messages";
             reload_messages.Size = new Size(156, 46);
@@ -360,9 +403,15 @@
             // 
             // delete_all_messages
             // 
-            delete_all_messages.Location = new Point(202, 6);
+            delete_all_messages.BackColor = Color.Transparent;
+            delete_all_messages.BorderColor = Color.Black;
+            delete_all_messages.BorderThickness = 1;
+            delete_all_messages.CornerRadius = 20;
+            delete_all_messages.FlatStyle = FlatStyle.Flat;
+            delete_all_messages.HoverBackColor = Color.LightCoral;
+            delete_all_messages.Location = new Point(190, 3);
             delete_all_messages.Name = "delete_all_messages";
-            delete_all_messages.Size = new Size(178, 22);
+            delete_all_messages.Size = new Size(177, 36);
             delete_all_messages.TabIndex = 2;
             delete_all_messages.Text = "Удалить все сообщения";
             delete_all_messages.UseVisualStyleBackColor = true;
@@ -370,9 +419,15 @@
             // 
             // reset_autoincrement_messages
             // 
-            reset_autoincrement_messages.Location = new Point(6, 6);
+            reset_autoincrement_messages.BackColor = Color.Transparent;
+            reset_autoincrement_messages.BorderColor = Color.Yellow;
+            reset_autoincrement_messages.BorderThickness = 1;
+            reset_autoincrement_messages.CornerRadius = 20;
+            reset_autoincrement_messages.FlatStyle = FlatStyle.Flat;
+            reset_autoincrement_messages.HoverBackColor = Color.LightCoral;
+            reset_autoincrement_messages.Location = new Point(8, 3);
             reset_autoincrement_messages.Name = "reset_autoincrement_messages";
-            reset_autoincrement_messages.Size = new Size(178, 22);
+            reset_autoincrement_messages.Size = new Size(176, 36);
             reset_autoincrement_messages.TabIndex = 1;
             reset_autoincrement_messages.Text = "Сбросить автоинкеремент";
             reset_autoincrement_messages.UseVisualStyleBackColor = true;
@@ -399,7 +454,7 @@
 
         private TabControl tabControl1;
         private TabPage account;
-        private Button add;
+        private RoundedButton add;
         private TextBox post;
         private TextBox fio;
         private TextBox password;
@@ -412,21 +467,22 @@
         private TabPage messages;
         private Label label7;
         private Label label6;
-        private Button delete_acc_by_id;
+        private RoundedButton delete_acc_by_id;
         private TextBox accid;
-        private Button delete_all_users;
-        private Button reset_autoincrement_messages;
-        private Button delete_all_messages;
-        private Button reset_autoincrement_users;
+       
         private Label label9;
         private Label label8;
-        private Button addcontact;
+        private RoundedButton addcontact;
         private TextBox contactId;
         private TextBox myId;
         private Label label10;
-        private Button reload_users;
-        private Button reload_messages;
+        private RoundedButton reload_users;
+        private RoundedButton reload_messages;
         private DataGridView messages_grid;
         private DataGridView users_grid;
+        private RoundedButton delete_all_users;
+        private RoundedButton reset_autoincrement_messages;
+        private RoundedButton delete_all_messages;
+        private RoundedButton reset_autoincrement_users;
     }
 }
