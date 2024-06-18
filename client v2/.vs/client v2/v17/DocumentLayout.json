@@ -1,38 +1,18 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "P:\\VS\\messenger\\client v2\\",
+  "WorkspaceRootPath": "X:\\program\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\White_message\\client v2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{49E98482-8B9B-49C7-94E4-DFA87E5711E6}|client v2\\client v2.csproj|P:\\VS\\messenger\\client v2\\client v2\\messenger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{49E98482-8B9B-49C7-94E4-DFA87E5711E6}|client v2\\client v2.csproj|x:\\program\\\u043D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\\u043D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\white_message\\client v2\\client v2\\messenger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{49E98482-8B9B-49C7-94E4-DFA87E5711E6}|client v2\\client v2.csproj|solutionrelative:client v2\\messenger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{49E98482-8B9B-49C7-94E4-DFA87E5711E6}|client v2\\client v2.csproj|p:\\vs\\messenger\\client v2\\client v2\\messenger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{49E98482-8B9B-49C7-94E4-DFA87E5711E6}|client v2\\client v2.csproj|solutionrelative:client v2\\messenger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{49E98482-8B9B-49C7-94E4-DFA87E5711E6}|client v2\\client v2.csproj|p:\\vs\\messenger\\client v2\\client v2\\log_in_account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{49E98482-8B9B-49C7-94E4-DFA87E5711E6}|client v2\\client v2.csproj|solutionrelative:client v2\\log_in_account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{49E98482-8B9B-49C7-94E4-DFA87E5711E6}|client v2\\client v2.csproj|P:\\VS\\messenger\\client v2\\client v2\\log_in_account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{49E98482-8B9B-49C7-94E4-DFA87E5711E6}|client v2\\client v2.csproj|X:\\program\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\White_message\\client v2\\client v2\\log_in_account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{49E98482-8B9B-49C7-94E4-DFA87E5711E6}|client v2\\client v2.csproj|solutionrelative:client v2\\log_in_account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{49E98482-8B9B-49C7-94E4-DFA87E5711E6}|client v2\\client v2.csproj|p:\\vs\\messenger\\client v2\\client v2\\keys.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{49E98482-8B9B-49C7-94E4-DFA87E5711E6}|client v2\\client v2.csproj|solutionrelative:client v2\\keys.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{49E98482-8B9B-49C7-94E4-DFA87E5711E6}|client v2\\client v2.csproj|p:\\vs\\messenger\\client v2\\client v2\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{49E98482-8B9B-49C7-94E4-DFA87E5711E6}|client v2\\client v2.csproj|solutionrelative:client v2\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{49E98482-8B9B-49C7-94E4-DFA87E5711E6}|client v2\\client v2.csproj|p:\\vs\\messenger\\client v2\\client v2\\api.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{49E98482-8B9B-49C7-94E4-DFA87E5711E6}|client v2\\client v2.csproj|solutionrelative:client v2\\api.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{49E98482-8B9B-49C7-94E4-DFA87E5711E6}|client v2\\client v2.csproj|p:\\vs\\messenger\\client v2\\client v2\\messenger.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{49E98482-8B9B-49C7-94E4-DFA87E5711E6}|client v2\\client v2.csproj|solutionrelative:client v2\\messenger.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{49E98482-8B9B-49C7-94E4-DFA87E5711E6}|client v2\\client v2.csproj|x:\\program\\\u043D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\\u043D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\white_message\\client v2\\client v2\\log_in_account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{49E98482-8B9B-49C7-94E4-DFA87E5711E6}|client v2\\client v2.csproj|solutionrelative:client v2\\log_in_account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,105 +22,44 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Keys.cs",
-              "DocumentMoniker": "P:\\VS\\messenger\\client v2\\client v2\\Keys.cs",
-              "RelativeDocumentMoniker": "client v2\\Keys.cs",
-              "ToolTip": "P:\\VS\\messenger\\client v2\\client v2\\Keys.cs",
-              "RelativeToolTip": "client v2\\Keys.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAzAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-16T11:49:18.008Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "messenger.Designer.cs",
-              "DocumentMoniker": "P:\\VS\\messenger\\client v2\\client v2\\messenger.Designer.cs",
-              "RelativeDocumentMoniker": "client v2\\messenger.Designer.cs",
-              "ToolTip": "P:\\VS\\messenger\\client v2\\client v2\\messenger.Designer.cs",
-              "RelativeToolTip": "client v2\\messenger.Designer.cs",
-              "ViewState": "AQIAABsBAAAAAAAAAAAIwCgBAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-15T12:42:39.826Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Program.cs",
-              "DocumentMoniker": "P:\\VS\\messenger\\client v2\\client v2\\Program.cs",
-              "RelativeDocumentMoniker": "client v2\\Program.cs",
-              "ToolTip": "P:\\VS\\messenger\\client v2\\client v2\\Program.cs",
-              "RelativeToolTip": "client v2\\Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-12T16:51:20.377Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "messenger.cs",
-              "DocumentMoniker": "P:\\VS\\messenger\\client v2\\client v2\\messenger.cs",
+              "DocumentIndex": 0,
+              "Title": "messenger.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435]",
+              "DocumentMoniker": "X:\\program\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\White_message\\client v2\\client v2\\messenger.cs",
               "RelativeDocumentMoniker": "client v2\\messenger.cs",
-              "ToolTip": "P:\\VS\\messenger\\client v2\\client v2\\messenger.cs",
-              "RelativeToolTip": "client v2\\messenger.cs",
-              "ViewState": "AQIAALwBAAAAAAAAAAAAAMkBAAAJAAAA",
+              "ToolTip": "X:\\program\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\White_message\\client v2\\client v2\\messenger.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435]",
+              "RelativeToolTip": "client v2\\messenger.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-04T02:15:00.587Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-18T10:03:23.204Z",
+              "EditorCaption": " [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435]"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "log_in_account.cs",
-              "DocumentMoniker": "P:\\VS\\messenger\\client v2\\client v2\\log_in_account.cs",
+              "DocumentMoniker": "X:\\program\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\White_message\\client v2\\client v2\\log_in_account.cs",
               "RelativeDocumentMoniker": "client v2\\log_in_account.cs",
-              "ToolTip": "P:\\VS\\messenger\\client v2\\client v2\\log_in_account.cs",
+              "ToolTip": "X:\\program\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\White_message\\client v2\\client v2\\log_in_account.cs",
               "RelativeToolTip": "client v2\\log_in_account.cs",
-              "ViewState": "AQIAAAoAAAAAAAAAAAAAAC0AAAAjAAAA",
+              "ViewState": "AQIAAC0AAAAAAAAAAAAWwDwAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-08T04:23:44.238Z",
+              "WhenOpened": "2024-06-18T09:57:40.943Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "log_in_account.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435]",
-              "DocumentMoniker": "P:\\VS\\messenger\\client v2\\client v2\\log_in_account.cs",
+              "DocumentMoniker": "X:\\program\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\White_message\\client v2\\client v2\\log_in_account.cs",
               "RelativeDocumentMoniker": "client v2\\log_in_account.cs",
-              "ToolTip": "P:\\VS\\messenger\\client v2\\client v2\\log_in_account.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435]",
+              "ToolTip": "X:\\program\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (2)\\White_message\\client v2\\client v2\\log_in_account.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435]",
               "RelativeToolTip": "client v2\\log_in_account.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-08T04:23:41.979Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "messenger.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435]",
-              "DocumentMoniker": "P:\\VS\\messenger\\client v2\\client v2\\messenger.cs",
-              "RelativeDocumentMoniker": "client v2\\messenger.cs",
-              "ToolTip": "P:\\VS\\messenger\\client v2\\client v2\\messenger.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435]",
-              "RelativeToolTip": "client v2\\messenger.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-08T02:17:05.979Z",
+              "WhenOpened": "2024-06-18T08:46:36.456Z",
               "EditorCaption": " [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "api.cs",
-              "DocumentMoniker": "P:\\VS\\messenger\\client v2\\client v2\\api.cs",
-              "RelativeDocumentMoniker": "client v2\\api.cs",
-              "ToolTip": "P:\\VS\\messenger\\client v2\\client v2\\api.cs",
-              "RelativeToolTip": "client v2\\api.cs",
-              "ViewState": "AQIAAIwBAAAAAAAAAAAAAJkBAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-04T14:18:24.085Z"
             }
           ]
         }

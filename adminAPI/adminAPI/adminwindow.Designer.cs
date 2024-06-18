@@ -78,6 +78,7 @@
             // 
             // account
             // 
+            account.BackgroundImage = Properties.Resources.FonSvetlee;
             account.Controls.Add(users_grid);
             account.Controls.Add(reload_users);
             account.Controls.Add(addcontact);
@@ -113,6 +114,7 @@
             // users_grid
             // 
             users_grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            users_grid.BackgroundColor = Color.WhiteSmoke;
             users_grid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             users_grid.Location = new Point(3, 245);
             users_grid.Name = "users_grid";
@@ -322,6 +324,7 @@
             // 
             // messages
             // 
+            messages.BackgroundImage = Properties.Resources.FonSvetlee;
             messages.Controls.Add(reload_messages);
             messages.Controls.Add(messages_grid);
             messages.Controls.Add(delete_all_messages);
@@ -333,6 +336,7 @@
             messages.TabIndex = 1;
             messages.Text = "messages";
             messages.UseVisualStyleBackColor = true;
+            messages.Click += messages_Click;
             // 
             // reload_messages
             // 
@@ -346,6 +350,7 @@
             // 
             // messages_grid
             // 
+            messages_grid.BackgroundColor = Color.WhiteSmoke;
             messages_grid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             messages_grid.Location = new Point(3, 39);
             messages_grid.Name = "messages_grid";
