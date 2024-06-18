@@ -49,16 +49,6 @@ namespace client_v2
                 }
             }
             else MessageBox.Show("Заполните логин и пароль");
-        }
-
-        private void log_in_account_Load(object sender, EventArgs e)
-        {
-            System.Drawing.Drawing2D.GraphicsPath myPath =
-            new System.Drawing.Drawing2D.GraphicsPath();
-            myPath.AddEllipse(0, 0, log_in_button.Width, log_in_button.Height);
-
-            Region myRegion = new Region(myPath);
-            log_in_button.Region = myRegion;
-        }
+        }    
     }
 }

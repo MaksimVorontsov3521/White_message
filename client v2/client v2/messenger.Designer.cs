@@ -84,11 +84,7 @@
             // 
             // groupchat
             // 
-<<<<<<< HEAD
             groupchat.Controls.Add(send_group);
-=======
-            groupchat.BackgroundImage = Properties.Resources.FonSvetlee;
->>>>>>> 91db420fd6a2dc86184755e7d3a970eea00cf771
             groupchat.Controls.Add(yournick);
             groupchat.Controls.Add(IsYouOnline);
             groupchat.Controls.Add(reconnect);
@@ -162,7 +158,6 @@
             // 
             // mess
             // 
-            mess.BackColor = Color.WhiteSmoke;
             mess.Location = new Point(359, 450);
             mess.Margin = new Padding(4, 3, 4, 3);
             mess.Multiline = true;
@@ -172,7 +167,6 @@
             // 
             // online
             // 
-            online.BackColor = Color.WhiteSmoke;
             online.ContextMenuStrip = clientmenu;
             online.FormattingEnabled = true;
             online.ItemHeight = 15;
@@ -204,7 +198,6 @@
             // 
             // personmessages
             // 
-            personmessages.BackgroundImage = Properties.Resources.FonSvetlee;
             personmessages.Controls.Add(contact);
             personmessages.Controls.Add(yournickpers);
             personmessages.Controls.Add(IsYouOnlinePers);
@@ -268,7 +261,6 @@
             // 
             // personalmess
             // 
-            personalmess.BackColor = Color.WhiteSmoke;
             personalmess.Location = new Point(361, 437);
             personalmess.Margin = new Padding(4, 3, 4, 3);
             personalmess.Multiline = true;
@@ -298,7 +290,6 @@
             // 
             // yourcontacts
             // 
-            yourcontacts.BackColor = Color.WhiteSmoke;
             yourcontacts.ContextMenuStrip = clientmenu;
             yourcontacts.FormattingEnabled = true;
             yourcontacts.ItemHeight = 15;
