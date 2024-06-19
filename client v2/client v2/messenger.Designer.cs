@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(messenger));
             clientmenu = new ContextMenuStrip(components);
             ls = new ToolStripMenuItem();
             tabControl1 = new TabControl();
@@ -84,6 +85,7 @@
             // 
             // groupchat
             // 
+            groupchat.BackgroundImage = (Image)resources.GetObject("groupchat.BackgroundImage");
             groupchat.Controls.Add(send_group);
             groupchat.Controls.Add(yournick);
             groupchat.Controls.Add(IsYouOnline);
@@ -198,6 +200,7 @@
             // 
             // personmessages
             // 
+            personmessages.BackgroundImage = (Image)resources.GetObject("personmessages.BackgroundImage");
             personmessages.Controls.Add(contact);
             personmessages.Controls.Add(yournickpers);
             personmessages.Controls.Add(IsYouOnlinePers);
@@ -214,6 +217,7 @@
             personmessages.TabIndex = 1;
             personmessages.Text = "Личные сообщения";
             personmessages.UseVisualStyleBackColor = true;
+            personmessages.Click += personmessages_Click;
             // 
             // contact
             // 

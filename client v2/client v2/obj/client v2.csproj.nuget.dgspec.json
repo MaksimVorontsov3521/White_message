@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "P:\\VS\\messenger\\client v2\\client v2\\client v2.csproj": {}
+    "X:\\program\\Новая папка (2)\\White_message\\client v2\\client v2\\client v2.csproj": {}
   },
   "projects": {
-    "P:\\VS\\messenger\\client v2\\client v2\\client v2.csproj": {
+    "X:\\program\\Новая папка (2)\\White_message\\client v2\\client v2\\client v2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "P:\\VS\\messenger\\client v2\\client v2\\client v2.csproj",
+        "projectUniqueName": "X:\\program\\Новая папка (2)\\White_message\\client v2\\client v2\\client v2.csproj",
         "projectName": "client v2",
-        "projectPath": "P:\\VS\\messenger\\client v2\\client v2\\client v2.csproj",
-        "packagesPath": "C:\\Users\\gloom\\.nuget\\packages\\",
-        "outputPath": "P:\\VS\\messenger\\client v2\\client v2\\obj\\",
+        "projectPath": "X:\\program\\Новая папка (2)\\White_message\\client v2\\client v2\\client v2.csproj",
+        "packagesPath": "C:\\Users\\Maks\\.nuget\\packages\\",
+        "outputPath": "X:\\program\\Новая папка (2)\\White_message\\client v2\\client v2\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\gloom\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Maks\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -64,7 +64,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.301/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -477,5 +477,10 @@ namespace client_v2
                 mess.Clear();
             }
         }
+
+        private void personmessages_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
